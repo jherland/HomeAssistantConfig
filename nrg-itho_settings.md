@@ -1,9 +1,7 @@
-Unit: NRG-ITHO-B298
-===================
+# Relevant/customized settings on NRG-ITHO-B298
 
+## Wifi setup
 
-Wifi setup
-----------
 - SSID: `DeadDave`
 - Password: ***
 - Use DHCP: on
@@ -11,14 +9,14 @@ Wifi setup
 - ...
 
 
-System settings
----------------
+## System settings
+
 - ...
 - Itho RF remote support: on
 
 
-RF devices
-----------
+## RF devices
+
 ```
 index   id          name        remfunc         remtype
 0       96,CF,3B    office      Monitor Only    RFT CO2
@@ -27,8 +25,8 @@ index   id          name        remfunc         remtype
 3       97,ED,CF    bathroom    Monitor Only    RFT RV
 ```
 
-MQTT
-----
+## MQTT
+
 - MQTT Active: on
 - Server: `192.168.1.107`
 - Username: `mqttuser`

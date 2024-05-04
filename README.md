@@ -66,6 +66,7 @@ Dutch row house built in 2022, taken over in early 2024 with this infrastructure
 
 ## More resources
 
+- [Settings on my Itho CVE RFT WiFi add-on](nrg-itho_settings.md)
 - From Triple Solar, about the PVT panels:
     - https://triplesolar.eu/project/pvt-panelen-spoorzone-delft/
     - https://triplesolar.eu/wat-is-een-pvt-paneel/
