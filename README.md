@@ -50,7 +50,18 @@ Dutch row house built in 2022, taken over in early 2024 with this infrastructure
     - Meater thermometer (via cloud)
     - Phones for presence detection
 
-### Future plans:
+### Screenshots
+
+#### Default Energy View
+
+![Default Energy View](pictures/default_energy_screen.png)
+
+#### Customized Power View
+
+![Customized Power View](pictures/custom_power_screen.png)
+
+### Future plans
+
 - Control + monitor the ventilation unit more directly via its MODBUS interface, e.g. https://gathering.tweakers.net/forum/list_messages/2109156
 
 ## More resources
