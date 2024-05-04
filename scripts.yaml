@@ -1,0 +1,167 @@
+nibe_heating_allow:
+  alias: Allow heating
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: nibe/47371/set
+        payload: "1"
+        retain: false
+        qos: 0
+  mode: single
+  icon: mdi:heat-pump
+nibe_heating_disallow:
+  alias: Disallow heating
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: nibe/47371/set
+        payload: "0"
+        retain: false
+        qos: 0
+  mode: single
+  icon: mdi:heat-pump
+nibe_cooling_disallow:
+  alias: Disallow cooling
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: nibe/47372/set
+        payload: "0"
+        retain: false
+        qos: 0
+  mode: single
+  icon: mdi:heat-pump
+nibe_cooling_allow:
+  alias: Allow cooling
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: nibe/47372/set
+        payload: "1"
+        retain: false
+        qos: 0
+  mode: single
+  icon: mdi:heat-pump
+nibe_heat_2h:
+  alias: Heat for 2 hours
+  sequence:
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        message: Floor heating on (2h)
+    - service: mqtt.publish
+      data:
+        topic: nibe/47371/set
+        payload: "1"
+        retain: false
+        qos: 0
+    - delay:
+        hours: 2
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+    - service: mqtt.publish
+      data:
+        topic: nibe/47371/set
+        payload: "0"
+        retain: false
+        qos: 0
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        message: Floor heating off (2h)
+  mode: single
+  icon: mdi:heat-pump
+nibe_heat_8h:
+  alias: Heat for 2 hours
+  sequence:
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        message: Floor heating on (8h)
+    - service: mqtt.publish
+      data:
+        topic: nibe/47371/set
+        payload: "1"
+        retain: false
+        qos: 0
+    - delay:
+        hours: 8
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+    - service: mqtt.publish
+      data:
+        topic: nibe/47371/set
+        payload: "0"
+        retain: false
+        qos: 0
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        message: Floor heating off (8h)
+  mode: single
+  icon: mdi:heat-pump
+nibe_hotwater_lux:
+  alias: Enable extra hot water
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: nibe/47041/set
+        payload: "2"
+        retain: false
+        qos: 0
+  mode: single
+  icon: mdi:heat-pump
+nibe_hotwater_normal:
+  alias: Enable normal hot water
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: nibe/47041/set
+        payload: "1"
+        retain: false
+        qos: 0
+  mode: single
+  icon: mdi:heat-pump
+nibe_hotwater_economy:
+  alias: Enable eco hot water
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: nibe/47041/set
+        payload: "0"
+        retain: false
+        qos: 0
+  mode: single
+  icon: mdi:heat-pump
+nibe_hotwater_lux_2h:
+  alias: Enable extra hot water for 2 hours
+  sequence:
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        message: Extra hot water started (2h)
+    - service: mqtt.publish
+      data:
+        topic: nibe/47041/set
+        payload: "2"
+        retain: false
+        qos: 0
+    - delay:
+        hours: 2
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+    - service: mqtt.publish
+      data:
+        topic: nibe/47041/set
+        payload: "0"
+        retain: false
+        qos: 0
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        message: Extra hot water stopped (2h)
+  mode: single
+  icon: mdi:heat-pump

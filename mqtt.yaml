@@ -1,0 +1,74 @@
+sensor:
+  # Itho Daalderop sensors
+  - name: Itho Office CO2
+    state_topic: "itho/remotesinfo"
+    state_class: "measurement"
+    unit_of_measurement: "ppm"
+    value_template: "{{ value_json.office.co2 }}"
+    device_class: "carbon_dioxide"
+    unique_id: "itho_office_co2"
+  - name: Itho Office commandmsg
+    state_topic: "itho/remotesinfo"
+    value_template: "{{ value_json.office.lastcmdmsg }}"
+    unique_id: "itho_office_lastcmdmsg"
+  - name: Itho Office lastcmd
+    state_topic: "itho/remotesinfo"
+    value_template: "{{ value_json.office.lastcmd }}"
+    unique_id: "itho_office_lastcmd"
+
+  - name: Itho Kitchen CO2
+    state_topic: "itho/remotesinfo"
+    state_class: "measurement"
+    unit_of_measurement: "ppm"
+    value_template: "{{ value_json.kitchen.co2 }}"
+    device_class: "carbon_dioxide"
+    unique_id: "itho_kitchen_co2"
+  - name: Itho Kitchen commandmsg
+    state_topic: "itho/remotesinfo"
+    value_template: "{{ value_json.kitchen.lastcmdmsg }}"
+    unique_id: "itho_kitchen_lastcmdmsg"
+  - name: Itho Kitchen lastcmd
+    state_topic: "itho/remotesinfo"
+    value_template: "{{ value_json.kitchen.lastcmd }}"
+    unique_id: "itho_kitchen_lastcmd"
+
+  - name: Itho Bedroom CO2
+    state_topic: "itho/remotesinfo"
+    state_class: "measurement"
+    unit_of_measurement: "ppm"
+    value_template: "{{ value_json.bedroom.co2 }}"
+    device_class: "carbon_dioxide"
+    unique_id: "itho_bedroom_co2"
+  - name: Itho Bedroom commandmsg
+    state_topic: "itho/remotesinfo"
+    value_template: "{{ value_json.bedroom.lastcmdmsg }}"
+    unique_id: "itho_bedroom_lastcmdmsg"
+  - name: Itho Bedroom lastcmd
+    state_topic: "itho/remotesinfo"
+    value_template: "{{ value_json.bedroom.lastcmd }}"
+    unique_id: "itho_bedroom_lastcmd"
+
+  - name: Itho Bathroom temp
+    state_topic: "itho/remotesinfo"
+    state_class: "measurement"
+    unit_of_measurement: "°C"
+    value_template: "{{ value_json.bathroom.temp }}"
+    device_class: "temperature"
+    unique_id: "itho_bathroom_temp"
+  - name: Itho Bathroom humidity
+    state_topic: "itho/remotesinfo"
+    state_class: "measurement"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json.bathroom.hum }}"
+    device_class: "humidity"
+    unique_id: "itho_bathroom_humidity"
+  - name: Itho Bathroom commandmsg
+    state_topic: "itho/remotesinfo"
+    value_template: "{{ value_json.bathroom.lastcmdmsg }}"
+    unique_id: "itho_bathroom_lastcmdmsg"
+  - name: Itho Bathroom lastcmd
+    state_topic: "itho/remotesinfo"
+    value_template: "{{ value_json.bathroom.lastcmd }}"
+    unique_id: "itho_bathroom_lastcmd"
+
+  ### Growatt customizations:
