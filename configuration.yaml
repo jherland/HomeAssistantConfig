@@ -18,3 +18,17 @@ http:
 mqtt: !include mqtt.yaml
 
 homeassistant: !include customizations.yaml
+
+rest_command:
+  update_pvoutput:
+    url: https://pvoutput.org/service/r2/addstatus.jsp
+    method: post
+    content_type: "application/x-www-form-urlencoded"
+    headers:
+      X-Pvoutput-Apikey: !secret pvoutput_api_key
+      X-Pvoutput-SystemId: !secret pvoutput_system_id
+    payload: >-
+      d={{now().strftime("%Y%m%d")}}
+      &t={{now().strftime("%H:%M")}}
+      &c1=2
+      &v1={{(states('sensor.growatt_todaygenerate')|float*1000)|round(0) }}
