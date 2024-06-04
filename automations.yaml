@@ -1,37 +1,40 @@
-- id: '1712615457521'
+- id: "1712615457521"
   alias: Open door notification
   description: Send notification when a door is opened
   trigger:
-  - type: opened
-    platform: device
-    device_id: 9fc907dc8d33e9014ce3c84b403dbc8e
-    entity_id: 7869814d7349a434137aee7ccb86dcdf
-    domain: binary_sensor
-  - type: opened
-    platform: device
-    device_id: 51ae4a15022e68d022df57b6da7876ae
-    entity_id: 0096705ba6c964f1ac76e7b8296199c9
-    domain: binary_sensor
-  - type: opened
-    platform: device
-    device_id: ed6e309b9e1ee6ea23e8279a8105e54f
-    entity_id: f6b30763d5fda8a4d0a36f00702831e1
-    domain: binary_sensor
+    - type: opened
+      platform: device
+      device_id: 9fc907dc8d33e9014ce3c84b403dbc8e
+      entity_id: 7869814d7349a434137aee7ccb86dcdf
+      domain: binary_sensor
+    - type: opened
+      platform: device
+      device_id: 51ae4a15022e68d022df57b6da7876ae
+      entity_id: 0096705ba6c964f1ac76e7b8296199c9
+      domain: binary_sensor
+    - type: opened
+      platform: device
+      device_id: ed6e309b9e1ee6ea23e8279a8105e54f
+      entity_id: f6b30763d5fda8a4d0a36f00702831e1
+      domain: binary_sensor
   condition:
-  - condition: device
-    device_id: 08e82d3a8211d249742b9697050557ca
-    domain: device_tracker
-    entity_id: 00a03a286bc9472f94402cb92731fd30
-    type: is_not_home
+    - condition: device
+      device_id: 08e82d3a8211d249742b9697050557ca
+      domain: device_tracker
+      entity_id: 00a03a286bc9472f94402cb92731fd30
+      type: is_not_home
   action:
-  - service: notify.mobile_app_sm_s901b
-    metadata: {}
-    data:
-      title: Door opened
-      message: '{{ trigger.entity_id }}, Date: {{ now().strftime(''%Y-%m-%d'') }},
-        Time: {{ now().strftime(''%H:%M:%S'') }}'''
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        title: Door opened
+        message:
+          "{{ trigger.entity_id }}, Date: {{ now().strftime('%Y-%m-%d') }},
+          Time: {{ now().strftime('%H:%M:%S') }}'"
+        data:
+          ttl: 0
+          priority: high
   mode: single
-
 - id: "1715986630410"
   alias: Living Room Cube face-based control
   description: Control Living Room devices with Aqara Cube
