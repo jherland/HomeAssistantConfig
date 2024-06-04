@@ -35,3 +35,17 @@ rest_command:
       &t={{now().strftime("%H:%M")}}
       &c1=2
       &v1={{(states('sensor.growatt_todaygenerate')|float*1000)|round(0) }}
+
+sensor:
+  - platform: statistics
+    name: "Wash machine Average Power"
+    entity_id: sensor.wash_machine_power
+    state_characteristic: mean
+    max_age:
+      minutes: 1
+  - platform: statistics
+    name: "Dishwasher Average Power"
+    entity_id: sensor.dishwasher_power
+    state_characteristic: mean
+    max_age:
+      minutes: 1
