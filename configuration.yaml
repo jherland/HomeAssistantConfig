@@ -19,6 +19,9 @@ mqtt: !include mqtt.yaml
 
 homeassistant: !include customizations.yaml
 
+# Enable turning on LG OLED TV with WakeOnLan packet
+wake_on_lan:
+
 rest_command:
   update_pvoutput:
     url: https://pvoutput.org/service/r2/addstatus.jsp

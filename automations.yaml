@@ -261,3 +261,17 @@
       entity_id: 533bba4afb502dc1d1c37606690b5ad6
       type: close
   mode: single
+- id: "1717446926717"
+  alias: Turn on living room TV
+  description: Turn On Living Room TV with WakeOnLan
+  trigger:
+    - platform: device
+      device_id: ba337df91115b719aa417cd27aeb62b0
+      domain: webostv
+      type: webostv.turn_on
+  condition: []
+  action:
+    - service: wake_on_lan.send_magic_packet
+      data:
+        mac: b0:37:95:1a:11:8a
+  mode: single
