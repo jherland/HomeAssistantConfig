@@ -35,6 +35,20 @@
           ttl: 0
           priority: high
   mode: single
+- id: "1715862234975"
+  alias: PVoutput
+  description: Post solar power output to pvoutput.org every 5 minutes
+  trigger:
+    - platform: time_pattern
+      minutes: "5"
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.growatt_inputpower
+      above: 0
+  action:
+    - service: rest_command.update_pvoutput
+      data: {}
+  mode: single
 - id: "1715986630410"
   alias: Living Room Cube face-based control
   description: Control Living Room devices with Aqara Cube
