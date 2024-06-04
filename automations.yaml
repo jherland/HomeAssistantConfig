@@ -160,3 +160,38 @@
           target:
             device_id: ba337df91115b719aa417cd27aeb62b0
           data: {}
+- id: "1717101940680"
+  alias: Doorbell notification
+  description: ""
+  trigger:
+    - type: occupied
+      platform: device
+      device_id: 08bb8e0167e171210fbb2360c16e0c4c
+      entity_id: 9292ffaca4dbf1501b8aa19df0492caa
+      domain: binary_sensor
+  condition: []
+  action:
+    - service: notify.mobile_app_sm_s901b
+      data:
+        message: Someone is at the front door
+        data:
+          ttl: 0
+          priority: high
+    - service: notify.mobile_app_sm_g970f
+      data:
+        message: Someone is at the front door
+        data:
+          ttl: 0
+          priority: high
+    - service: notify.mobile_app_galaxy_tab
+      data:
+        message: Someone is at the front door
+        data:
+          ttl: 0
+          priority: high
+    - service: notify.lg_oled_tv
+      data:
+        message: Someone is at the front door
+        data:
+          icon: /home/homeassistant/images/doorbell.png
+  mode: single
