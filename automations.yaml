@@ -195,3 +195,69 @@
         data:
           icon: /home/homeassistant/images/doorbell.png
   mode: single
+- id: "1717183076711"
+  alias: Close curtains on sunset
+  description: ""
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: 0
+  condition: []
+  action:
+    - device_id: ad6695b6357acd3e5545e0d43e4b55c3
+      domain: cover
+      entity_id: 533bba4afb502dc1d1c37606690b5ad6
+      type: close
+  mode: single
+- id: "1717424745811"
+  alias: "Office switch: open curtains"
+  description: ""
+  trigger:
+    - platform: device
+      device_id: 233bc83db575dac2d0d5eb61d32c735c
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "004"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 004
+      value: 0
+  condition:
+    - condition: device
+      device_id: ad6695b6357acd3e5545e0d43e4b55c3
+      domain: cover
+      entity_id: 533bba4afb502dc1d1c37606690b5ad6
+      type: is_closed
+  action:
+    - device_id: ad6695b6357acd3e5545e0d43e4b55c3
+      domain: cover
+      entity_id: 533bba4afb502dc1d1c37606690b5ad6
+      type: open
+  mode: single
+- id: "1717424823777"
+  alias: "Office switch: close curtains"
+  description: ""
+  trigger:
+    - platform: device
+      device_id: 233bc83db575dac2d0d5eb61d32c735c
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "003"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 003
+      value: 0
+  condition:
+    - condition: device
+      device_id: ad6695b6357acd3e5545e0d43e4b55c3
+      domain: cover
+      entity_id: 533bba4afb502dc1d1c37606690b5ad6
+      type: is_open
+  action:
+    - device_id: ad6695b6357acd3e5545e0d43e4b55c3
+      domain: cover
+      entity_id: 533bba4afb502dc1d1c37606690b5ad6
+      type: close
+  mode: single
