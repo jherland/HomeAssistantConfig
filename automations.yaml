@@ -31,46 +31,115 @@
       message: '{{ trigger.entity_id }}, Date: {{ now().strftime(''%Y-%m-%d'') }},
         Time: {{ now().strftime(''%H:%M:%S'') }}'''
   mode: single
-- id: '1715700374569'
-  alias: Aqara Cube face-based
-  description: Controlling living room devices from the Aqara Cube
+
+- id: "1715986630410"
+  alias: Living Room Cube face-based control
+  description: Control Living Room devices with Aqara Cube
   use_blueprint:
-    path: EdwardTFN/aqara-cube-zha-simplified-face-based-device-control.yaml
+    path: rvaidya/aqara_magic_cube.yaml
     input:
-      cube: 732e88904629cafa6725df2c902ed953
-      last_face_input: input_number.aqara_cube_last_activated_face
-      face_1_knock:
-      - type: toggle
-        device_id: d124ae33ab3287f1e294480e0ac45236
-        entity_id: f5aeb4306985900cc361cd5b38d0f9dd
-        domain: light
-      face_1_rotate_counter_clockwise:
-      - device_id: d124ae33ab3287f1e294480e0ac45236
-        domain: light
-        entity_id: f5aeb4306985900cc361cd5b38d0f9dd
-        type: brightness_decrease
-      face_1_rotate_clockwise:
-      - device_id: d124ae33ab3287f1e294480e0ac45236
-        domain: light
-        entity_id: f5aeb4306985900cc361cd5b38d0f9dd
-        type: brightness_increase
-      face_2_rotate_counter_clockwise:
-      - service: media_player.volume_down
-        metadata: {}
-        data: {}
-        target:
-          entity_id:
-          - media_player.denon_dn_500av
-      face_2_rotate_clockwise:
-      - service: media_player.volume_up
-        metadata: {}
-        data: {}
-        target:
-          entity_id: media_player.denon_dn_500av
-      face_2_knock:
-      - service: media_player.volume_mute
-        metadata: {}
-        data:
-          is_volume_muted: false
-        target:
-          entity_id: media_player.denon_dn_500av
+      remote: 732e88904629cafa6725df2c902ed953
+      active_face: input_number.aqara_cube_last_activated_face
+      one_to_one:
+        - type: toggle
+          device_id: d124ae33ab3287f1e294480e0ac45236
+          entity_id: f5aeb4306985900cc361cd5b38d0f9dd
+          domain: light
+      slide_any_side: false
+      two_to_two:
+        - service: media_player.media_play_pause
+          metadata: {}
+          data: {}
+          target:
+            device_id: ba337df91115b719aa417cd27aeb62b0
+      rotate_left_side_1:
+        - device_id: d124ae33ab3287f1e294480e0ac45236
+          domain: light
+          entity_id: f5aeb4306985900cc361cd5b38d0f9dd
+          type: brightness_decrease
+      rotate_right_side_1:
+        - device_id: d124ae33ab3287f1e294480e0ac45236
+          domain: light
+          entity_id: f5aeb4306985900cc361cd5b38d0f9dd
+          type: brightness_increase
+      five_to_five:
+        - service: media_player.media_play_pause
+          metadata: {}
+          data: {}
+          target:
+            device_id: ba337df91115b719aa417cd27aeb62b0
+      rotate_left_side_5:
+        - service: media_player.media_previous_track
+          target:
+            device_id:
+              - ba337df91115b719aa417cd27aeb62b0
+          data: {}
+      rotate_right_side_5:
+        - service: media_player.media_next_track
+          target:
+            device_id:
+              - ba337df91115b719aa417cd27aeb62b0
+          data: {}
+      rotate_right_side_3:
+        - service: media_player.volume_up
+          target:
+            device_id: ba337df91115b719aa417cd27aeb62b0
+          data: {}
+      rotate_left_side_3:
+        - service: media_player.volume_down
+          target:
+            device_id:
+              - ba337df91115b719aa417cd27aeb62b0
+          data: {}
+      three_to_three:
+        - service: media_player.volume_mute
+          target:
+            device_id:
+              - ba337df91115b719aa417cd27aeb62b0
+          data:
+            is_volume_muted: true
+      four_to_four:
+        - type: toggle
+          device_id: d124ae33ab3287f1e294480e0ac45236
+          entity_id: f5aeb4306985900cc361cd5b38d0f9dd
+          domain: light
+      six_to_six:
+        - service: media_player.volume_mute
+          target:
+            device_id:
+              - ba337df91115b719aa417cd27aeb62b0
+          data:
+            is_volume_muted: true
+      rotate_left_side_2:
+        - service: media_player.media_previous_track
+          target:
+            device_id:
+              - ba337df91115b719aa417cd27aeb62b0
+          data: {}
+      rotate_left_side_4:
+        - device_id: d124ae33ab3287f1e294480e0ac45236
+          domain: light
+          entity_id: f5aeb4306985900cc361cd5b38d0f9dd
+          type: brightness_decrease
+      rotate_left_side_6:
+        - service: media_player.volume_down
+          target:
+            device_id:
+              - ba337df91115b719aa417cd27aeb62b0
+          data: {}
+      rotate_right_side_2:
+        - service: media_player.media_next_track
+          target:
+            device_id:
+              - ba337df91115b719aa417cd27aeb62b0
+          data: {}
+      rotate_right_side_4:
+        - device_id: d124ae33ab3287f1e294480e0ac45236
+          domain: light
+          entity_id: f5aeb4306985900cc361cd5b38d0f9dd
+          type: brightness_increase
+      rotate_right_side_6:
+        - service: media_player.volume_up
+          target:
+            device_id: ba337df91115b719aa417cd27aeb62b0
+          data: {}
