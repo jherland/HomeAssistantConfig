@@ -37,15 +37,18 @@ rest_command:
       &v1={{(states('sensor.growatt_todaygenerate')|float*1000)|round(0) }}
 
 sensor:
-  - platform: statistics
+  - platform: filter
     name: "Wash machine Average Power"
     entity_id: sensor.wash_machine_power
-    state_characteristic: mean
-    max_age:
-      minutes: 1
-  - platform: statistics
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "00:01"
+        precision: 2
+
+  - platform: filter
     name: "Dishwasher Average Power"
     entity_id: sensor.dishwasher_power
-    state_characteristic: mean
-    max_age:
-      minutes: 1
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "00:01"
+        precision: 2
