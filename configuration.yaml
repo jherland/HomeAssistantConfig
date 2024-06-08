@@ -22,6 +22,10 @@ homeassistant: !include customizations.yaml
 # Enable turning on LG OLED TV with WakeOnLan packet
 wake_on_lan:
 
+# Enable Python scripts
+python_script:
+
+# Auto-upload solar data to PVOutput
 rest_command:
   update_pvoutput:
     url: https://pvoutput.org/service/r2/addstatus.jsp
@@ -36,6 +40,7 @@ rest_command:
       &c1=2
       &v1={{(states('sensor.growatt_todaygenerate')|float*1000)|round(0) }}
 
+# Averaging sensors to enable deriving current state from power use:
 sensor:
   - platform: filter
     name: "Wash machine Average Power"
