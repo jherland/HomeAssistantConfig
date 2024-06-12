@@ -275,3 +275,13 @@
       data:
         mac: b0:37:95:1a:11:8a
   mode: single
+- id: "1717939911692"
+  alias: Basement Auto Light
+  description: Turn on Basement Light when Basement Motion is detected
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.basement_motion_motion
+      light_target:
+        area_id: basement
+      no_motion_wait: 60
