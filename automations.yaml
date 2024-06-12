@@ -161,7 +161,7 @@
             device_id: ba337df91115b719aa417cd27aeb62b0
           data: {}
 - id: "1717101940680"
-  alias: Doorbell notification
+  alias: Doorbell
   description: ""
   trigger:
     - type: occupied
@@ -171,6 +171,11 @@
       domain: binary_sensor
   condition: []
   action:
+    - service: siren.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: siren.kichen_siren_play_tone
     - service: notify.mobile_app_sm_s901b
       data:
         message: Someone is at the front door
