@@ -40,6 +40,7 @@ rest_command:
 # Averaging sensors to enable deriving current state from power use:
 sensor:
   - platform: filter
+    unique_id: wash_machine_average_power
     name: "Wash machine Average Power"
     entity_id: sensor.wash_machine_power
     filters:
@@ -48,6 +49,7 @@ sensor:
         precision: 2
 
   - platform: filter
+    unique_id: dishwasher_average_power
     name: "Dishwasher Average Power"
     entity_id: sensor.dishwasher_power
     filters:
