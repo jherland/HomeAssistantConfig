@@ -22,9 +22,6 @@ homeassistant: !include customizations.yaml
 # Enable turning on LG OLED TV with WakeOnLan packet
 wake_on_lan:
 
-# Enable Python scripts
-python_script:
-
 # Auto-upload solar data to PVOutput
 rest_command:
   update_pvoutput:
