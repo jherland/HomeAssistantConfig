@@ -7,6 +7,8 @@
 !*.md
 !/pictures/
 !/pictures/*
+!/blueprints/automation/custom/
+!/blueprints/automation/custom/*
 
 # Ignore folders.
 .storage
