@@ -410,6 +410,32 @@
       entity_id: 2f59f824e761191a665688ac274bf57f
       domain: light
   mode: single
+- id: "1718752490414"
+  alias: Towel Warmer enable in the morning
+  description: ""
+  trigger:
+    - platform: time
+      at: 07:00:00
+  condition: []
+  action:
+    - type: turn_on
+      device_id: 3f923661226182095dc856903ccbeda8
+      entity_id: b3dfb2ab8d9fc27211ddfc0af4318b4f
+      domain: switch
+  mode: single
+- id: "1718752536845"
+  alias: Towel Warmer disable in the evening
+  description: ""
+  trigger:
+    - platform: time
+      at: "21:00:00"
+  condition: []
+  action:
+    - type: turn_off
+      device_id: 3f923661226182095dc856903ccbeda8
+      entity_id: b3dfb2ab8d9fc27211ddfc0af4318b4f
+      domain: switch
+  mode: single
 - id: "1718814525340"
   alias: Kitchen Bench Lights toggled by Kitchen Switch
   description: ""
