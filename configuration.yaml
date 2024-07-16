@@ -56,3 +56,25 @@ sensor:
       - filter: time_simple_moving_average
         window_size: "00:01"
         precision: 2
+
+# Wash machine state derived from door state + average power use
+template:
+  - sensor:
+      - unique_id: wash_machine_state
+        name: "Wash machine State"
+        state: >
+          {% if is_state('binary_sensor.wash_machine_door_opening', 'on') %}
+            off
+          {% elif states("sensor.wash_machine_average_power")|float > 5.0 %}
+            on
+          {% else %}
+            standby
+          {% endif %}
+        icon: >
+          {% if is_state("sensor.wash_machine_state", "standby") %}
+            mdi:washing-machine-alert
+          {% elif is_state("sensor.wash_machine_state", "off") %}
+            mdi:washing-machine-off
+          {% else %}
+            mdi:washing-machine
+          {% endif %}
