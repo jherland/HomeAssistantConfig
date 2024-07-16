@@ -298,5 +298,233 @@
     input:
       motion_entity: binary_sensor.toilet_multisensor_motion_detection
       light_target:
-        area_id: toilet
+        entity_id: light.toilet_light_light
       no_motion_wait: 0
+- id: "1718200676292"
+  alias: Front Yard Auto Light
+  description:
+    Turn on front yard light if it's dark outside and someone is approaching
+    the front door.
+  use_blueprint:
+    path: custom/motion_light_w_conditions.yaml
+    input:
+      motion_entity: binary_sensor.g4_doorbell_motion
+      light_target:
+        entity_id: light.front_yard_light_light
+      additional_conditions:
+        - condition: or
+          conditions:
+            - condition: sun
+              before: sunrise
+            - condition: sun
+              after: sunset
+- id: "1718215095435"
+  alias: "Office switch: toggle front light"
+  description: ""
+  trigger:
+    - platform: device
+      device_id: 233bc83db575dac2d0d5eb61d32c735c
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "002"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 002
+  condition: []
+  action:
+    - type: toggle
+      device_id: 56025946c30e5ef7b8ac8ac60548b895
+      entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
+      domain: light
+  mode: single
+- id: "1718218472644"
+  alias: Hallway Auto Lights triggered by Front Door
+  description: ""
+  trigger:
+    - type: opened
+      platform: device
+      device_id: 9fc907dc8d33e9014ce3c84b403dbc8e
+      entity_id: 7869814d7349a434137aee7ccb86dcdf
+      domain: binary_sensor
+  condition: []
+  action:
+    - service: automation.trigger
+      metadata: {}
+      data:
+        skip_condition: true
+      target:
+        entity_id: automation.hallway_auto_lights
+  mode: single
+- id: "1718455866890"
+  alias: Smallway Auto Light
+  description: Turn on Smallway Light when Smallway Motion is detected
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.smallway_motion_motion
+      light_target:
+        entity_id: light.smallway_light_switch
+      no_motion_wait: 0
+- id: "1718473101835"
+  alias: Basement Auto Light triggered by Garage Door
+  description: ""
+  trigger:
+    - type: opened
+      platform: device
+      device_id: 0378c4c8cc2672593ceab15a22dbacda
+      entity_id: fb7fbe04e160bf11ab9c0dbe6257b2c7
+      domain: binary_sensor
+  condition: []
+  action:
+    - service: automation.trigger
+      metadata: {}
+      data:
+        skip_condition: true
+      target:
+        entity_id: automation.basement_auto_light
+  mode: single
+- id: "1718474653669"
+  alias: Hallway Auto Lights
+  description: ""
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.hallway_motion_motion
+      light_target:
+        device_id: 3d7979e7a881253ce40a59b05a3c01b0
+      no_motion_wait: 60
+- id: "1718477092437"
+  alias: Hallway Lights toggled by Hallway Switch
+  description: ""
+  trigger:
+    - platform: device
+      type: changed_states
+      device_id: 6913e0e962e339e964cfe6aff31d5aa5
+      entity_id: bd5b1f03d01b0979a6c92338a2a13717
+      domain: switch
+  condition: []
+  action:
+    - type: toggle
+      device_id: 3d7979e7a881253ce40a59b05a3c01b0
+      entity_id: 2f59f824e761191a665688ac274bf57f
+      domain: light
+  mode: single
+- id: "1718814525340"
+  alias: Kitchen Bench Lights toggled by Kitchen Switch
+  description: ""
+  trigger:
+    - platform: device
+      type: changed_states
+      device_id: 17cd0ed036f3894069751a0a8947ac57
+      entity_id: a1f4909bddb03ba63e716bbb54ceaeb4
+      domain: switch
+  condition: []
+  action:
+    - type: toggle
+      device_id: a7a21b91adad455aa2d19d9962c74233
+      entity_id: 34c02e482d0dc7c3f05bcd68f6d89b3e
+      domain: light
+  mode: single
+- id: "1718825185048"
+  alias: Kitchen table lights are toggled by Unknown Kitchen Switch
+  description: ""
+  trigger:
+    - platform: device
+      type: changed_states
+      device_id: 070edb653ffa8d1404898216667f949d
+      entity_id: 17249d76d4b0fdc55ff81821ec64d920
+      domain: switch
+  condition: []
+  action:
+    - type: toggle
+      device_id: 65b536ad50d383af79289083c65b6ba4
+      entity_id: 66981bb7adf15b89a514aeaca5a2efa7
+      domain: switch
+  mode: single
+- id: "1718825566036"
+  alias: Back Yard Auto Light
+  description:
+    Turn on front yard light if it's dark outside and someone is approaching
+    the front door.
+  use_blueprint:
+    path: custom/motion_light_w_conditions.yaml
+    input:
+      motion_entity: binary_sensor.g5_flex_motion
+      light_target:
+        entity_id: light.back_yard_light_switch
+      additional_conditions:
+        - condition: or
+          conditions:
+            - condition: sun
+              before: sunrise
+            - condition: sun
+              after: sunset
+- id: "1720697453857"
+  alias: Office Front Light toggled by Office Back Switch Bottom
+  description: ""
+  trigger:
+    - platform: device
+      type: changed_states
+      device_id: 6913e0e962e339e964cfe6aff31d5aa5
+      entity_id: 26cfcd4be57fc22dee261d4901bd5dd3
+      domain: switch
+  condition: []
+  action:
+    - type: toggle
+      device_id: 56025946c30e5ef7b8ac8ac60548b895
+      entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
+      domain: light
+  mode: single
+- id: "1720697593635"
+  alias: Office Back Light toggled by Office Back Switch Top
+  description: ""
+  trigger:
+    - platform: device
+      type: changed_states
+      device_id: 23e77876dfd2e5679a528e446ab9b501
+      entity_id: 9569f469aabaf4700b24d6e83f8b5ee9
+      domain: switch
+  condition: []
+  action:
+    - type: toggle
+      device_id: 1925b4cc2ac0929279d8520ca82fc7af
+      entity_id: 13125dfd884c1ddcc1969c54e2970e5e
+      domain: light
+  mode: single
+- id: "1720697694856"
+  alias: Office Front Light toggled by Hallway Switch Left
+  description: ""
+  trigger:
+    - platform: device
+      type: changed_states
+      device_id: 23e77876dfd2e5679a528e446ab9b501
+      entity_id: 4b4f0386927eeed0ac7f46e0499a4302
+      domain: switch
+  condition: []
+  action:
+    - type: toggle
+      device_id: 56025946c30e5ef7b8ac8ac60548b895
+      entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
+      domain: light
+  mode: single
+- id: "1720718449190"
+  alias: "Office switch: toggle back light"
+  description: ""
+  trigger:
+    - platform: device
+      device_id: 233bc83db575dac2d0d5eb61d32c735c
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "001"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 001
+  condition: []
+  action:
+    - type: toggle
+      device_id: 1925b4cc2ac0929279d8520ca82fc7af
+      entity_id: 13125dfd884c1ddcc1969c54e2970e5e
+      domain: light
+  mode: single
