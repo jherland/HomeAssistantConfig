@@ -2,6 +2,7 @@
 # An * ensures that everything will be ignored.
 *
 # You can whitelist files/folders with !, these will not be ignored.
+!*.h
 !*.yaml
 !.gitignore
 !*.md
@@ -9,6 +10,7 @@
 !/pictures/*
 !/blueprints/automation/custom/
 !/blueprints/automation/custom/*
+!/esphome/
 
 # Ignore folders.
 .storage

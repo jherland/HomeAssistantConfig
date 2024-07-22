@@ -1,0 +1,12 @@
+substitutions:
+  name: olimex-bluetooth-proxy-063b88
+  friendly_name: Living Room Bluetooth Proxy
+packages:
+  esphome.bluetooth-proxy: github://esphome/firmware/bluetooth-proxy/olimex-esp32-poe-iso.yaml@main
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+api:
+  encryption:
+    key: yELgBgoD90AJXFr5qz/lvuQAen6xqBQrthLd7erjWi4=
