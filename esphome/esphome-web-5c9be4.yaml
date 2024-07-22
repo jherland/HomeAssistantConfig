@@ -1,6 +1,6 @@
 substitutions:
   name: esphome-web-5c9be4
-  friendly_name: Atom S3 Lite
+  friendly_name: Atom S3 Lite in Master Bedroom
 
 esphome:
   name: ${name}
@@ -47,11 +47,6 @@ dashboard_import:
   package_import_url: github://esphome/firmware/esphome-web/esp32s3.yaml@main
   import_full_config: true
 
-# Sets up Bluetooth LE (Only on ESP32) to allow the user
-# to provision wifi credentials to the device.
-esp32_improv:
-  authorizer: none
-
 # To have a "next url" for improv serial
 web_server:
 
@@ -65,3 +60,7 @@ custom_component:
 - lambda: |-
     auto my_node = new BleNodeComponent("master_bedroom");
     return {my_node};
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
