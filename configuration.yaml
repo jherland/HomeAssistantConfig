@@ -65,7 +65,7 @@ template:
         state: >
           {% if is_state('binary_sensor.wash_machine_door_opening', 'on') %}
             off
-          {% elif states("sensor.wash_machine_average_power")|float > 5.0 %}
+          {% elif states("sensor.wash_machine_average_power")|float > 10.0 %}
             on
           {% else %}
             standby
