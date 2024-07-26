@@ -1,0 +1,1256 @@
+substitutions:
+  name: esphome-web-10c200
+  friendly_name: Itho HRU 400 Ventilation Modbus Controller
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  name_add_mac_suffix: false
+  project:
+    name: esphome.web
+    version: '1.0'
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  # level: DEBUG
+
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+- platform: esphome
+
+# Allow provisioning Wi-Fi via serial
+improv_serial:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # Set up a wifi access point
+  ap: {}
+
+# # In combination with the `ap` this allows the user
+# # to provision wifi credentials to the device via WiFi AP.
+# captive_portal:
+
+# dashboard_import:
+#   package_import_url: github://esphome/example-configs/esphome-web/esp32.yaml@main
+#   import_full_config: true
+
+# # Sets up Bluetooth LE (Only on ESP32) to allow the user
+# # to provision wifi credentials to the device.
+# esp32_improv:
+#   authorizer: none
+
+# # To have a "next url" for improv serial
+# web_server:
+
+modbus:
+  - id: modbus_hru
+    uart_id: uart_modbus_hru
+  
+uart:
+  - id: uart_modbus_hru
+    tx_pin: GPIO19
+    rx_pin: GPIO22
+    baud_rate: 19200
+    parity: even
+    data_bits: 8
+    stop_bits: 1
+  
+modbus_controller:
+  - id: hru
+    address: 72 # the Modbus device addr, was 0x1
+    modbus_id: modbus_hru
+    update_interval: 20s
+    setup_priority: -10
+    command_throttle: 200ms
+  
+sensor:
+  # These 3 are configured as read-only for now, but they are R/W
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40001 Modbus address"
+    id: hru_modbusaddress
+    register_type: holding
+    address: 0 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40002 Baud rate"
+    id: hru_baudrate
+    register_type: holding
+    address: 1 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40003 Parity"
+    id: hru_parity
+    register_type: holding
+    address: 2 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+
+  # Read-only status registers
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40011 Manufacturer group"
+    id: hru_manufacturergroup
+    register_type: holding
+    address: 10 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40012 Manufacturer sub-ID"
+    id: hru_manufacturersubid
+    register_type: holding
+    address: 11 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40013 Product ID"
+    id: hru_productid
+    register_type: holding
+    address: 12 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40014 Software version"
+    id: hru_softwareversion
+    register_type: holding
+    address: 13 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40015 Software revision"
+    id: hru_softwarerevision
+    register_type: holding
+    address: 14 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40016 List version"
+    id: hru_listversion
+    register_type: holding
+    address: 15 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40017 OEM code"
+    id: hru_oemcode
+    register_type: holding
+    address: 16 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40101 Serial number"
+    id: hru_serialnumber
+    register_type: holding
+    address: 100 # 0x000E
+    value_type: U_QWORD
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40200 Error number"
+    id: hru_errornummer
+    register_type: holding
+    address: 199 # 0x000E
+    value_type: U_WORD
+    # unit_of_measurement: "errornr"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43001 Highest % supply automode"
+    id: hru_supply_maxperc
+    register_type: holding
+    address: 3000 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "%"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43002 Highest % extract automode"
+    id: hru_extract_maxperc
+    register_type: holding
+    address: 3001 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "%"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43011 Highest % RV non-fan"
+    id: hru_RV_ext_maxperc
+    register_type: holding
+    address: 3010 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "%"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43012 Highest measured CO2 ppm"
+    id: hru_co2_maxppm
+    register_type: holding
+    address: 3011 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "ppm"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43021 Supply fan RPM"
+    id: hru_rpm_supplyfan
+    register_type: holding
+    address: 3020 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "rpm"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43022 Extract fan RPM"
+    id: hru_rpm_extractfan
+    register_type: holding
+    address: 3021 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "rpm"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43023 Supply fan power"
+    id: hru_pwr_supplyfan
+    register_type: holding
+    address: 3022 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "W"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43024 Extract fan power"
+    id: hru_pwr_extractfan
+    register_type: holding
+    address: 3023 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "W" 
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43025 Connected zone valves"
+    id: hru_zone_valves_connected
+    register_type: holding
+    address: 3024 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    # bitmask: 0x00 #(bit 0)
+    # Modbus error - last command: function code=0x3  register address = 0xBCC  registers count=5 payload size=0
+    # (idem met uitlezen op dit register register count=1 payload size =0)
+
+# binary_sensor:
+
+  ## Somehow I cannot get these to read out, but fortunately they're not variable, so not essential.
+
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "43025 Zone 1 valve connected"
+  #   id: hru_zone1_valve_connected
+  #   register_type: holding
+  #   skip_updates: 10
+  #   address: 3024 # 0x000E
+  #   bitmask: 0x0 #(bit 0)
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "43025 Zone 2 valve connected"
+  #   id: hru_zone2_valve_connected
+  #   register_type: holding
+  #   skip_updates: 10
+  #   address: 3024 # 0x000E
+  #   bitmask: 0x1 #(bit 1)
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "43025 Zone 3 valve connected"
+  #   id: hru_zone3_valve_connected
+  #   register_type: holding
+  #   skip_updates: 10
+  #   address: 3024 # 0x000E
+  #   bitmask: 0x2 #(bit 2)
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "43025 Zone 4 valve connected"
+  #   id: hru_zone4_valve_connected
+  #   register_type: holding
+  #   skip_updates: 10
+  #   address: 3024 # 0x000E
+  #   bitmask: 0x3 #(bit 3)
+
+  # Supply from outside
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43031 Supply flow from outside"
+    id: hru_m3h_supply_external
+    register_type: holding
+    address: 3030 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43032 Supply flow from outside"
+    id: hru_kgh_supply_external
+    register_type: holding
+    address: 3031 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: hru
+    name: "43033 Supply temperature from outside"
+    id: hru_temp_supply_external
+    register_type: holding
+    address: 3032 # 0x000E
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "°C"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43034 Supply humidity from outside"
+    id: hru_hum_supply_external
+    register_type: holding
+    address: 3033 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "%"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43041 Flow through frost valve"
+    id: hru_m3h_frostvalve
+    register_type: holding
+    address: 3040 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+
+  # Supply mixed
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43051 Supply flow mixed"
+    id: hru_m3h_supply_mixed
+    register_type: holding
+    address: 3050 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43052 Supply flow mixed"
+    id: hru_kgh_mixed
+    register_type: holding
+    address: 3051 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: hru
+    name: "43053 Supply temperature mixed"
+    id: hru_temp_supply_mixed
+    register_type: holding
+    address: 3052 # 0x000E
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "°C"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43054 Supply humidity mixed"
+    id: hru_hum_supply_mixed
+    register_type: holding
+    address: 3053 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+  # Supply to inside
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43061 Supply flow to inside"
+    id: hru_m3h_supply_internal
+    register_type: holding
+    address: 3060 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43062 Supply flow to inside"
+    id: hru_kgh_supply_internal
+    register_type: holding
+    address: 3061 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: hru
+    name: "43063 Supply temperature to inside"
+    id: hru_temp_supply_internal
+    register_type: holding
+    address: 3062 # 0x000E
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "°C"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43063 Supply humidity to inside"
+    id: hru_hum_supply_internal
+    register_type: holding
+    address: 3063 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "%"
+
+  # Extract from inside
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43071 Extract flow from inside"
+    id: hru_m3h_extract_internal
+    register_type: holding
+    address: 3070 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43072 Extract flow from inside"
+    id: hru_kgh_extract_internal
+    register_type: holding
+    address: 3071 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: hru
+    name: "43073 Extract temperature from inside"
+    id: hru_temp_extract_internal
+    register_type: holding
+    address: 3072 # 0x000E
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "°C"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43074 Extract humidity from inside"
+    id: hru_hum_extract_internal
+    register_type: holding
+    address: 3073 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "%"
+    # filters:
+    #   - or:
+    #       - delta: 1
+    #       - heartbeat: 60s
+    #   - lambda: 
+    #       float rand1 = rand() % 1;        
+    #       return x + rand1;
+
+  # Extract to outside
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43081 Extract flow to outside"
+    id: hru_m3h_extract_external
+    register_type: holding
+    address: 3080 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43082 Extract flow to outside"
+    id: hru_kgh_extract_external
+    register_type: holding
+    address: 3081 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "kg/h"
+  - platform: modbus_controller # 0x91 type, signed 16bit/10
+    modbus_controller_id: hru
+    name: "43082 Extract temperature to outside"
+    id: hru_temp_extract_external
+    register_type: holding
+    address: 3082 # 0x000E
+    value_type: S_WORD
+    filters:
+    - multiply: 0.1
+    unit_of_measurement: "°C"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43082 Extract humidity to outside"
+    id: hru_hum_extract_external
+    register_type: holding
+    address: 3083 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "%"
+  
+  # Flow demand
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43201 Zone 1 flow demand"
+    id: hru_m3h_ask_zone1
+    register_type: holding
+    address: 3200 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43202 Zone 2 flow demand"
+    id: hru_m3h_ask_zone2
+    register_type: holding
+    address: 3201 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43203 Zone 3 flow demand"
+    id: hru_m3h_ask_zone3
+    register_type: holding
+    address: 3202 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43204 Zone 4 flow demand"
+    id: hru_m3h_ask_zone4
+    register_type: holding
+    address: 3203 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43205 Zone 5 flow demand"
+    id: hru_m3h_ask_zone5
+    register_type: holding
+    address: 3204 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3/h"
+  
+  # Read-only counters
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "44001 Lifetime counter (MSB)"
+    id: hru_lifetime_counter_part1
+    register_type: holding
+    address: 4000 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "h"
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "44002 Lifetime counter (LSB)"
+    id: hru_lifetime_counter_part2
+    register_type: holding
+    address: 4001 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "h"
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "44003 Mixed flow counter (MSB)"
+    id: hru_mixed_flow_counter_part1
+    register_type: holding
+    address: 4002 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3"
+    skip_updates: 10
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "44004 Mixed flow counter (LSB)"
+    id: hru_mixed_flow_counter_part2
+    register_type: holding
+    address: 4003 # 0x000E
+    value_type: U_WORD
+    unit_of_measurement: "m3"
+    skip_updates: 10
+
+number:
+  # Error counting registers
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40201 error 01 count"
+    id: hru_error01count
+    register_type: holding
+    address: 200 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40202 error 02 count"
+    id: hru_error02count
+    register_type: holding
+    address: 201 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40203 error 03 count"
+    id: hru_error03count
+    register_type: holding
+    address: 202 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40204 error 04 count"
+    id: hru_error04count
+    register_type: holding
+    address: 203 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40211 error 11 count"
+    id: hru_error11count
+    register_type: holding
+    address: 210 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40212 error 12 count"
+    id: hru_error12count
+    register_type: holding
+    address: 211 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40213 error 13 count"
+    id: hru_error13count
+    register_type: holding
+    address: 212 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40214 error 14 count"
+    id: hru_error14count
+    register_type: holding
+    address: 213 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40215 error 15 count"
+    id: hru_error15count
+    register_type: holding
+    address: 214 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40216 error 16 count"
+    id: hru_error16count
+    register_type: holding
+    address: 215 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40217 error 17 count"
+    id: hru_error17count
+    register_type: holding
+    address: 216 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40218 error 18 count"
+    id: hru_error18count
+    register_type: holding
+    address: 217 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40219 error 19 count"
+    id: hru_error19count
+    register_type: holding
+    address: 218 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40220 error 20 count"
+    id: hru_error20count
+    register_type: holding
+    address: 219 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40221 error 21 count"
+    id: hru_error21count
+    register_type: holding
+    address: 220 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40222 error 22 count"
+    id: hru_error22count
+    register_type: holding
+    address: 221 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40223 error 23 count"
+    id: hru_error23count
+    register_type: holding
+    address: 222 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40231 error 31 count"
+    id: hru_error31count
+    register_type: holding
+    address: 230 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40232 error 32 count"
+    id: hru_error32count
+    register_type: holding
+    address: 231 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40233 error 33 count"
+    id: hru_error33count
+    register_type: holding
+    address: 232 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "40234 error 34 count"
+    id: hru_error34count
+    register_type: holding
+    address: 233 # 0x000E
+    value_type: U_WORD
+    skip_updates: 10
+    use_write_multiple: true
+
+  # Write-only register to reboot unit
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "40500 Reboot unit"
+  #   id: hru_reboot
+  #   register_type: holding
+  #   address: 499 # 0x000E
+  #   value_type: U_WORD
+  #   # skip_updates: 10 # ???
+  #   # use_write_multiple: true # ???
+
+  # Actual ventilation level, synchronized with BRDG (in-room RF-* units)
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42001 Actual ventilation level"
+    id: hru_actual_level
+    min_value: 1
+    max_value: 25
+    step: 1
+    register_type: holding
+    address: 2000 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42002 Actual ventilation level on/off"
+    id: hru_actual_level_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2001 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+
+  # Supply demand
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42011 Supply demand"
+    id: hru_supply_demand
+    min_value: 0
+    max_value: 65535 # max cap ???
+    step: 1
+    register_type: holding
+    address: 2010 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42012 Supply demand on/off"
+    id: hru_supply_demand_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2011 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+
+  # Extract demand
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42013 Extract demand"
+    id: hru_extract_demand
+    min_value: 0
+    max_value: 65535 # max cap ???
+    step: 1
+    register_type: holding
+    address: 2012 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42014 Extract demand on/off"
+    id: hru_extract_demand_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2013 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+
+  # Supply fan flow (no mass balance)
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42021 Supply fan flow"
+    id: hru_supply_fan_flow
+    min_value: 0
+    max_value: 65535 # max cap ???
+    step: 1
+    register_type: holding
+    address: 2020 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42022 Supply fan flow on/off"
+    id: hru_supply_fan_flow_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2021 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+
+  # Extract fan flow (no mass balance)
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42023 Extract fan flow"
+    id: hru_extract_fan_flow
+    min_value: 0
+    max_value: 65535 # max cap ???
+    step: 1
+    register_type: holding
+    address: 2022 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42024 Extract fan flow on/off"
+    id: hru_extract_fan_flow_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2023 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+
+  # Frost valve
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42031 Frost stepper position"
+    id: hru_frost_pos
+    min_value: 0
+    max_value: 510
+    step: 1
+    register_type: holding
+    address: 2030 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42032 Frost valve on/off"
+    id: hru_frost_pos_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2031 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+
+  # Bypass valve
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42033 Bypass stepper position"
+    id: hru_bypass_pos
+    min_value: 0
+    max_value: 550
+    step: 550
+    register_type: holding
+    address: 2032 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42034 Bypass valve on/off"
+    id: hru_bypass_pos_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2033 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+
+  # Zone valve stepper
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42035 Zone 1 valve stepper position"
+    id: hru_zone1_pos
+    min_value: 0
+    max_value: 550
+    step: 1
+    register_type: holding
+    address: 2034 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42036 Zone 1 valve on/off"
+    id: hru_zone1_pos_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2035 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42037 Zone 2 valve stepper position"
+    id: hru_zone2_pos
+    min_value: 0
+    max_value: 550
+    step: 1
+    register_type: holding
+    address: 2036 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42038 Zone 2 valve on/off"
+    id: hru_zone2_pos_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2037 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42039 Zone 3 valve stepper position"
+    id: hru_zone3_pos
+    min_value: 0
+    max_value: 550
+    step: 1
+    register_type: holding
+    address: 2038 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42040 Zone 3 valve on/off"
+    id: hru_zone3_pos_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2039 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42041 Zone 4 valve stepper position"
+    id: hru_zone4_pos
+    min_value: 0
+    max_value: 550
+    step: 1
+    register_type: holding
+    address: 2040 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42041 Zone 4 valve on/off"
+    id: hru_zone4_pos_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2041 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+
+  # Zone levels
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42201 Zone 1 ventilation level"
+    id: hru_zone1_level
+    min_value: 0
+    max_value: 25
+    step: 1
+    register_type: holding
+    address: 2200 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42202 Zone 1 ventilation level on/off"
+    id: hru_zone1_level_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2201 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42203 Zone 2 ventilation level"
+    id: hru_zone2_level
+    min_value: 0
+    max_value: 25
+    step: 1
+    register_type: holding
+    address: 2202 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42204 Zone 2 ventilation level on/off"
+    id: hru_zone2_level_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2203 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42205 Zone 3 ventilation level"
+    id: hru_zone3_level
+    min_value: 0
+    max_value: 25
+    step: 1
+    register_type: holding
+    address: 2204 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42206 Zone 3 ventilation level on/off"
+    id: hru_zone3_level_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2205 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42207 Zone 4 ventilation level"
+    id: hru_zone4_level
+    min_value: 0
+    max_value: 25
+    step: 1
+    register_type: holding
+    address: 2206 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42208 Zone 4 ventilation level on/off"
+    id: hru_zone4_level_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2207 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42209 Zone 5 ventilation level"
+    id: hru_zone5_level
+    min_value: 0
+    max_value: 25
+    step: 1
+    register_type: holding
+    address: 2208 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42210 Zone 5 ventilation level on/off"
+    id: hru_zone5_level_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2209 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  
+  # Zone flow demand
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42211 Zone 1 flow demand"
+    id: hru_zone1_ask
+    min_value: 0
+    max_value: 399  # max cap ???
+    step: 1
+    register_type: holding
+    address: 2210 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42212 Zone 1 flow demand on/off"
+    id: hru_zone1_ask_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2211 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42213 Zone 2 flow demand"
+    id: hru_zone2_ask
+    min_value: 0
+    max_value: 399  # max cap ???
+    step: 1
+    register_type: holding
+    address: 2212 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42214 Zone 2 flow demand on/off"
+    id: hru_zone2_ask_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2213 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42215 Zone 3 flow demand"
+    id: hru_zone3_ask
+    min_value: 0
+    max_value: 399  # max cap ???
+    step: 1
+    register_type: holding
+    address: 2214 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42216 Zone 3 flow demand on/off"
+    id: hru_zone3_ask_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2215 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42217 Zone 4 flow demand"
+    id: hru_zone4_ask
+    min_value: 0
+    max_value: 399  # max cap ???
+    step: 1
+    register_type: holding
+    address: 2216 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42218 Zone 4 flow demand on/off"
+    id: hru_zone4_ask_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2217 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42219 Zone 5 flow demand"
+    id: hru_zone5_ask
+    min_value: 0
+    max_value: 399  # max cap ???
+    step: 1
+    register_type: holding
+    address: 2218 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
+    unit_of_measurement: "m3/h"
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "42220 Zone 5 flow demand on/off"
+    id: hru_zone5_ask_enable
+    min_value: 0
+    max_value: 1
+    step: 1
+    register_type: holding
+    address: 2219 # 0x000E
+    value_type: U_WORD
+    use_write_multiple: true
