@@ -1,10 +1,6 @@
-substitutions:
-  name: esphome-web-10c200
-  friendly_name: Itho HRU 400 Ventilation Modbus Controller
-
 esphome:
-  name: ${name}
-  friendly_name: ${friendly_name}
+  name: esphome-web-10c200
+  friendly_name: "Itho HRU 400 Ventilation Modbus Controller"
   min_version: 2024.6.0
   name_add_mac_suffix: false
   project:
@@ -28,7 +24,7 @@ ota:
 - platform: esphome
 
 # Allow provisioning Wi-Fi via serial
-improv_serial:
+# improv_serial:
 
 wifi:
   ssid: !secret wifi_ssid
@@ -36,9 +32,9 @@ wifi:
   # Set up a wifi access point
   ap: {}
 
-# # In combination with the `ap` this allows the user
-# # to provision wifi credentials to the device via WiFi AP.
-# captive_portal:
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device via WiFi AP.
+captive_portal:
 
 # dashboard_import:
 #   package_import_url: github://esphome/example-configs/esphome-web/esp32.yaml@main
@@ -49,8 +45,8 @@ wifi:
 # esp32_improv:
 #   authorizer: none
 
-# # To have a "next url" for improv serial
-# web_server:
+# To have a "next url" for improv serial
+web_server:
 
 modbus:
   - id: modbus_hru
@@ -69,7 +65,7 @@ modbus_controller:
   - id: hru
     address: 72 # the Modbus device addr, was 0x1
     modbus_id: modbus_hru
-    update_interval: 20s
+    update_interval: 10s
     setup_priority: -10
     command_throttle: 200ms
   
@@ -78,19 +74,19 @@ sensor:
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40001 Modbus address"
-    id: hru_modbusaddress
+    id: hru_modbus_address
     register_type: holding
     address: 0 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40002 Baud rate"
-    id: hru_baudrate
+    id: hru_baud_rate
     register_type: holding
     address: 1 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40003 Parity"
@@ -98,97 +94,109 @@ sensor:
     register_type: holding
     address: 2 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
 
   # Read-only status registers
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40011 Manufacturer group"
-    id: hru_manufacturergroup
+    id: hru_manufacturer_group
     register_type: holding
     address: 10 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40012 Manufacturer sub-ID"
-    id: hru_manufacturersubid
+    id: hru_manufacturer_subid
     register_type: holding
     address: 11 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40013 Product ID"
-    id: hru_productid
+    id: hru_product_id
     register_type: holding
     address: 12 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40014 Software version"
-    id: hru_softwareversion
+    id: hru_software_version
     register_type: holding
     address: 13 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40015 Software revision"
-    id: hru_softwarerevision
+    id: hru_software_revision
     register_type: holding
     address: 14 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40016 List version"
-    id: hru_listversion
+    id: hru_list_version
     register_type: holding
     address: 15 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40017 OEM code"
-    id: hru_oemcode
+    id: hru_oem_code
     register_type: holding
     address: 16 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40101 Serial number"
-    id: hru_serialnumber
+    id: hru_serial_number
     register_type: holding
     address: 100 # 0x000E
     value_type: U_QWORD
-    skip_updates: 10
+    skip_updates: 60
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "40200 Error number"
-    id: hru_errornummer
+    id: hru_error_number
     register_type: holding
     address: 199 # 0x000E
     value_type: U_WORD
     # unit_of_measurement: "errornr"
+
+  # Bypass R/O position (also R/W further below)
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43001 Highest % supply automode"
-    id: hru_supply_maxperc
+    name: "42033 bypass position (read)"
+    id: hru_bypass_valve_pos_read
     register_type: holding
-    address: 3000 # 0x000E
+    address: 2032 # 0x000E
     value_type: U_WORD
-    unit_of_measurement: "%"
-  - platform: modbus_controller
-    modbus_controller_id: hru
-    name: "43002 Highest % extract automode"
-    id: hru_extract_maxperc
-    register_type: holding
-    address: 3001 # 0x000E
-    value_type: U_WORD
-    unit_of_measurement: "%"
+
+  # [E][modbus_controller:088]: Modbus error function code: 0x3 exception: 2
+  # [E][modbus_controller:097]: Modbus error - last command: function code=0x3  register address = 0xBB8  registers count=2 payload size=0
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "43001 Highest % supply automode"
+  #   id: hru_supply_maxperc
+  #   register_type: holding
+  #   address: 3000 # 0x000E
+  #   value_type: U_WORD
+  #   unit_of_measurement: "%"
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "43002 Highest % exhaust automode"
+  #   id: hru_exhaust_maxperc
+  #   register_type: holding
+  #   address: 3001 # 0x000E
+  #   value_type: U_WORD
+  #   unit_of_measurement: "%"
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "43011 Highest % RV non-fan"
@@ -215,8 +223,8 @@ sensor:
     unit_of_measurement: "rpm"
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43022 Extract fan RPM"
-    id: hru_rpm_extractfan
+    name: "43022 Exhaust fan RPM"
+    id: hru_rpm_exhaustfan
     register_type: holding
     address: 3021 # 0x000E
     value_type: U_WORD
@@ -231,60 +239,21 @@ sensor:
     unit_of_measurement: "W"
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43024 Extract fan power"
-    id: hru_pwr_extractfan
+    name: "43024 Exhaust fan power"
+    id: hru_pwr_exhaustfan
     register_type: holding
     address: 3023 # 0x000E
     value_type: U_WORD
     unit_of_measurement: "W" 
-  - platform: modbus_controller
-    modbus_controller_id: hru
-    name: "43025 Connected zone valves"
-    id: hru_zone_valves_connected
-    register_type: holding
-    address: 3024 # 0x000E
-    value_type: U_WORD
-    skip_updates: 10
-    # bitmask: 0x00 #(bit 0)
-    # Modbus error - last command: function code=0x3  register address = 0xBCC  registers count=5 payload size=0
-    # (idem met uitlezen op dit register register count=1 payload size =0)
-
-# binary_sensor:
-
-  ## Somehow I cannot get these to read out, but fortunately they're not variable, so not essential.
-
+  # The following is covered by 4 bitmasked entries in binary_sensor below
   # - platform: modbus_controller
   #   modbus_controller_id: hru
-  #   name: "43025 Zone 1 valve connected"
-  #   id: hru_zone1_valve_connected
+  #   name: "43025 Connected zone valves"
+  #   id: hru_zone_valves_connected
   #   register_type: holding
-  #   skip_updates: 10
   #   address: 3024 # 0x000E
-  #   bitmask: 0x0 #(bit 0)
-  # - platform: modbus_controller
-  #   modbus_controller_id: hru
-  #   name: "43025 Zone 2 valve connected"
-  #   id: hru_zone2_valve_connected
-  #   register_type: holding
-  #   skip_updates: 10
-  #   address: 3024 # 0x000E
-  #   bitmask: 0x1 #(bit 1)
-  # - platform: modbus_controller
-  #   modbus_controller_id: hru
-  #   name: "43025 Zone 3 valve connected"
-  #   id: hru_zone3_valve_connected
-  #   register_type: holding
-  #   skip_updates: 10
-  #   address: 3024 # 0x000E
-  #   bitmask: 0x2 #(bit 2)
-  # - platform: modbus_controller
-  #   modbus_controller_id: hru
-  #   name: "43025 Zone 4 valve connected"
-  #   id: hru_zone4_valve_connected
-  #   register_type: holding
-  #   skip_updates: 10
-  #   address: 3024 # 0x000E
-  #   bitmask: 0x3 #(bit 3)
+  #   value_type: U_WORD
+  #   skip_updates: 60
 
   # Supply from outside
   - platform: modbus_controller
@@ -321,10 +290,12 @@ sensor:
     address: 3033 # 0x000E
     value_type: U_WORD
     unit_of_measurement: "%"
+
+  # Supply flow through frost valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43041 Flow through frost valve"
-    id: hru_m3h_frostvalve
+    name: "43041 Supply flow frost valve"
+    id: hru_m3h_supply_frostvalve
     register_type: holding
     address: 3040 # 0x000E
     value_type: U_WORD
@@ -402,27 +373,27 @@ sensor:
     value_type: U_WORD
     unit_of_measurement: "%"
 
-  # Extract from inside
+  # Exhaust from inside
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43071 Extract flow from inside"
-    id: hru_m3h_extract_internal
+    name: "43071 Exhaust flow from inside"
+    id: hru_m3h_exhaust_internal
     register_type: holding
     address: 3070 # 0x000E
     value_type: U_WORD
     unit_of_measurement: "m3/h"
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43072 Extract flow from inside"
-    id: hru_kgh_extract_internal
+    name: "43072 Exhaust flow from inside"
+    id: hru_kgh_exhaust_internal
     register_type: holding
     address: 3071 # 0x000E
     value_type: U_WORD
     unit_of_measurement: "kg/h"
   - platform: modbus_controller # 0x91 type, signed 16bit/10
     modbus_controller_id: hru
-    name: "43073 Extract temperature from inside"
-    id: hru_temp_extract_internal
+    name: "43073 Exhaust temperature from inside"
+    id: hru_temp_exhaust_internal
     register_type: holding
     address: 3072 # 0x000E
     value_type: S_WORD
@@ -431,12 +402,13 @@ sensor:
     unit_of_measurement: "°C"
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43074 Extract humidity from inside"
-    id: hru_hum_extract_internal
+    name: "43074 Exhaust humidity from inside"
+    id: hru_hum_exhaust_internal
     register_type: holding
     address: 3073 # 0x000E
     value_type: U_WORD
     unit_of_measurement: "%"
+    # WTF is this? Disabled from the original source
     # filters:
     #   - or:
     #       - delta: 1
@@ -445,27 +417,27 @@ sensor:
     #       float rand1 = rand() % 1;        
     #       return x + rand1;
 
-  # Extract to outside
+  # Exhaust to outside
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43081 Extract flow to outside"
-    id: hru_m3h_extract_external
+    name: "43081 Exhaust flow to outside"
+    id: hru_m3h_exhaust_external
     register_type: holding
     address: 3080 # 0x000E
     value_type: U_WORD
     unit_of_measurement: "m3/h"
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43082 Extract flow to outside"
-    id: hru_kgh_extract_external
+    name: "43082 Exhaust flow to outside"
+    id: hru_kgh_exhaust_external
     register_type: holding
     address: 3081 # 0x000E
     value_type: U_WORD
     unit_of_measurement: "kg/h"
   - platform: modbus_controller # 0x91 type, signed 16bit/10
     modbus_controller_id: hru
-    name: "43082 Extract temperature to outside"
-    id: hru_temp_extract_external
+    name: "43082 Exhaust temperature to outside"
+    id: hru_temp_exhaust_external
     register_type: holding
     address: 3082 # 0x000E
     value_type: S_WORD
@@ -474,8 +446,8 @@ sensor:
     unit_of_measurement: "°C"
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "43082 Extract humidity to outside"
-    id: hru_hum_extract_external
+    name: "43082 Exhaust humidity to outside"
+    id: hru_hum_exhaust_external
     register_type: holding
     address: 3083 # 0x000E
     value_type: U_WORD
@@ -523,43 +495,68 @@ sensor:
     value_type: U_WORD
     unit_of_measurement: "m3/h"
   
-  # Read-only counters
+  # Read-only 32-bit counters
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "44001 Lifetime counter (MSB)"
-    id: hru_lifetime_counter_part1
+    name: "44001/2 Lifetime counter"
+    id: hru_lifetime_counter
     register_type: holding
     address: 4000 # 0x000E
-    value_type: U_WORD
+    value_type: U_DWORD
     unit_of_measurement: "h"
-    skip_updates: 10
+    skip_updates: 6
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "44002 Lifetime counter (LSB)"
-    id: hru_lifetime_counter_part2
-    register_type: holding
-    address: 4001 # 0x000E
-    value_type: U_WORD
-    unit_of_measurement: "h"
-    skip_updates: 10
-  - platform: modbus_controller
-    modbus_controller_id: hru
-    name: "44003 Mixed flow counter (MSB)"
-    id: hru_mixed_flow_counter_part1
+    name: "44003/4 Mixed flow counter"
+    id: hru_mixed_flow_counter
     register_type: holding
     address: 4002 # 0x000E
-    value_type: U_WORD
+    value_type: U_DWORD
     unit_of_measurement: "m3"
-    skip_updates: 10
+    skip_updates: 6
+
+binary_sensor:
+  # Bypass valve enabled
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "44004 Mixed flow counter (LSB)"
-    id: hru_mixed_flow_counter_part2
+    name: "42033 bypass position (binary_sensor)"
+    id: hru_bypass_valve_pos_binary_sensor
     register_type: holding
-    address: 4003 # 0x000E
-    value_type: U_WORD
-    unit_of_measurement: "m3"
-    skip_updates: 10
+    address: 2032 # 0x000E
+  # Zone valves connected
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43025 Zone 1 valve connected"
+    id: hru_zone1_valve_connected
+    register_type: holding
+    skip_updates: 60
+    address: 3024 # 0x000E
+    bitmask: 0x1 # bit 0
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43025 Zone 2 valve connected"
+    id: hru_zone2_valve_connected
+    register_type: holding
+    skip_updates: 60
+    address: 3024 # 0x000E
+    bitmask: 0x2 # bit 1
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43025 Zone 3 valve connected"
+    id: hru_zone3_valve_connected
+    register_type: holding
+    skip_updates: 60
+    address: 3024 # 0x000E
+    bitmask: 0x8 # bit 3
+  - platform: modbus_controller
+    modbus_controller_id: hru
+    name: "43025 Zone 4 valve connected"
+    id: hru_zone4_valve_connected
+    register_type: holding
+    skip_updates: 60
+    address: 3024 # 0x000E
+    bitmask: 0x10 # bit 4
+
 
 number:
   # Error counting registers
@@ -570,7 +567,7 @@ number:
     register_type: holding
     address: 200 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -579,7 +576,7 @@ number:
     register_type: holding
     address: 201 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -588,7 +585,7 @@ number:
     register_type: holding
     address: 202 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -597,7 +594,7 @@ number:
     register_type: holding
     address: 203 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -606,7 +603,7 @@ number:
     register_type: holding
     address: 210 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -615,7 +612,7 @@ number:
     register_type: holding
     address: 211 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -624,7 +621,7 @@ number:
     register_type: holding
     address: 212 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -633,7 +630,7 @@ number:
     register_type: holding
     address: 213 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -642,7 +639,7 @@ number:
     register_type: holding
     address: 214 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -651,7 +648,7 @@ number:
     register_type: holding
     address: 215 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -660,7 +657,7 @@ number:
     register_type: holding
     address: 216 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -669,7 +666,7 @@ number:
     register_type: holding
     address: 217 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -678,7 +675,7 @@ number:
     register_type: holding
     address: 218 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -687,7 +684,7 @@ number:
     register_type: holding
     address: 219 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -696,7 +693,7 @@ number:
     register_type: holding
     address: 220 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -705,7 +702,7 @@ number:
     register_type: holding
     address: 221 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -714,7 +711,7 @@ number:
     register_type: holding
     address: 222 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -723,7 +720,7 @@ number:
     register_type: holding
     address: 230 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -732,7 +729,7 @@ number:
     register_type: holding
     address: 231 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -741,7 +738,7 @@ number:
     register_type: holding
     address: 232 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
@@ -750,9 +747,11 @@ number:
     register_type: holding
     address: 233 # 0x000E
     value_type: U_WORD
-    skip_updates: 10
+    skip_updates: 6
     use_write_multiple: true
 
+  # [E][modbus_controller:088]: Modbus error function code: 0x3 exception: 2
+  # [E][modbus_controller:097]: Modbus error - last command: function code=0x3  register address = 0x1F3  registers count=1 payload size=0
   # Write-only register to reboot unit
   # - platform: modbus_controller
   #   modbus_controller_id: hru
@@ -788,55 +787,57 @@ number:
     value_type: U_WORD
     use_write_multiple: true
 
-  # Supply demand
-  - platform: modbus_controller
-    modbus_controller_id: hru
-    name: "42011 Supply demand"
-    id: hru_supply_demand
-    min_value: 0
-    max_value: 65535 # max cap ???
-    step: 1
-    register_type: holding
-    address: 2010 # 0x000E
-    value_type: U_WORD
-    use_write_multiple: true
-    unit_of_measurement: "m3/h"
-  - platform: modbus_controller
-    modbus_controller_id: hru
-    name: "42012 Supply demand on/off"
-    id: hru_supply_demand_enable
-    min_value: 0
-    max_value: 1
-    step: 1
-    register_type: holding
-    address: 2011 # 0x000E
-    value_type: U_WORD
-    use_write_multiple: true
-
-  # Extract demand
-  - platform: modbus_controller
-    modbus_controller_id: hru
-    name: "42013 Extract demand"
-    id: hru_extract_demand
-    min_value: 0
-    max_value: 65535 # max cap ???
-    step: 1
-    register_type: holding
-    address: 2012 # 0x000E
-    value_type: U_WORD
-    use_write_multiple: true
-    unit_of_measurement: "m3/h"
-  - platform: modbus_controller
-    modbus_controller_id: hru
-    name: "42014 Extract demand on/off"
-    id: hru_extract_demand_enable
-    min_value: 0
-    max_value: 1
-    step: 1
-    register_type: holding
-    address: 2013 # 0x000E
-    value_type: U_WORD
-    use_write_multiple: true
+  # [E][modbus_controller:088]: Modbus error function code: 0x3 exception: 2
+  # [E][modbus_controller:097]: Modbus error - last command: function code=0x3  register address = 0x7DA  registers count=4 payload size=0
+  # # Supply demand
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "42011 Supply demand"
+  #   id: hru_supply_demand
+  #   min_value: 0
+  #   max_value: 65535 # max cap ???
+  #   step: 1
+  #   register_type: holding
+  #   address: 2010 # 0x000E
+  #   value_type: U_WORD
+  #   use_write_multiple: true
+  #   unit_of_measurement: "m3/h"
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "42012 Supply demand on/off"
+  #   id: hru_supply_demand_enable
+  #   min_value: 0
+  #   max_value: 1
+  #   step: 1
+  #   register_type: holding
+  #   address: 2011 # 0x000E
+  #   value_type: U_WORD
+  #   use_write_multiple: true
+  #
+  # # Exhaust demand
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "42013 Exhaust demand"
+  #   id: hru_exhaust_demand
+  #   min_value: 0
+  #   max_value: 65535 # max cap ???
+  #   step: 1
+  #   register_type: holding
+  #   address: 2012 # 0x000E
+  #   value_type: U_WORD
+  #   use_write_multiple: true
+  #   unit_of_measurement: "m3/h"
+  # - platform: modbus_controller
+  #   modbus_controller_id: hru
+  #   name: "42014 Exhaust demand on/off"
+  #   id: hru_exhaust_demand_enable
+  #   min_value: 0
+  #   max_value: 1
+  #   step: 1
+  #   register_type: holding
+  #   address: 2013 # 0x000E
+  #   value_type: U_WORD
+  #   use_write_multiple: true
 
   # Supply fan flow (no mass balance)
   - platform: modbus_controller
@@ -863,11 +864,11 @@ number:
     value_type: U_WORD
     use_write_multiple: true
 
-  # Extract fan flow (no mass balance)
+  # Exhaust fan flow (no mass balance)
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42023 Extract fan flow"
-    id: hru_extract_fan_flow
+    name: "42023 Exhaust fan flow"
+    id: hru_exhaust_fan_flow
     min_value: 0
     max_value: 65535 # max cap ???
     step: 1
@@ -878,8 +879,8 @@ number:
     unit_of_measurement: "m3/h"
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42024 Extract fan flow on/off"
-    id: hru_extract_fan_flow_enable
+    name: "42024 Exhaust fan flow on/off"
+    id: hru_exhaust_fan_flow_enable
     min_value: 0
     max_value: 1
     step: 1
@@ -891,8 +892,8 @@ number:
   # Frost valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42031 Frost stepper position"
-    id: hru_frost_pos
+    name: "42031 Frost valve position"
+    id: hru_frost_valve_pos
     min_value: 0
     max_value: 510
     step: 1
@@ -903,7 +904,7 @@ number:
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "42032 Frost valve on/off"
-    id: hru_frost_pos_enable
+    id: hru_frost_valve_enable
     min_value: 0
     max_value: 1
     step: 1
@@ -915,8 +916,8 @@ number:
   # Bypass valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42033 Bypass stepper position"
-    id: hru_bypass_pos
+    name: "42033 Bypass valve position"
+    id: hru_bypass_valve_pos
     min_value: 0
     max_value: 550
     step: 550
@@ -927,7 +928,7 @@ number:
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "42034 Bypass valve on/off"
-    id: hru_bypass_pos_enable
+    id: hru_bypass_valve_enable
     min_value: 0
     max_value: 1
     step: 1
@@ -939,8 +940,8 @@ number:
   # Zone valve stepper
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42035 Zone 1 valve stepper position"
-    id: hru_zone1_pos
+    name: "42035 Zone 1 valve position"
+    id: hru_zone1_valve_pos
     min_value: 0
     max_value: 550
     step: 1
@@ -951,7 +952,7 @@ number:
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "42036 Zone 1 valve on/off"
-    id: hru_zone1_pos_enable
+    id: hru_zone1_valve_enable
     min_value: 0
     max_value: 1
     step: 1
@@ -961,8 +962,8 @@ number:
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42037 Zone 2 valve stepper position"
-    id: hru_zone2_pos
+    name: "42037 Zone 2 valve position"
+    id: hru_zone2_valve_pos
     min_value: 0
     max_value: 550
     step: 1
@@ -973,7 +974,7 @@ number:
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "42038 Zone 2 valve on/off"
-    id: hru_zone2_pos_enable
+    id: hru_zone2_valve_enable
     min_value: 0
     max_value: 1
     step: 1
@@ -983,8 +984,8 @@ number:
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42039 Zone 3 valve stepper position"
-    id: hru_zone3_pos
+    name: "42039 Zone 3 valve position"
+    id: hru_zone3_valve_pos
     min_value: 0
     max_value: 550
     step: 1
@@ -995,7 +996,7 @@ number:
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "42040 Zone 3 valve on/off"
-    id: hru_zone3_pos_enable
+    id: hru_zone3_valve_enable
     min_value: 0
     max_value: 1
     step: 1
@@ -1005,8 +1006,8 @@ number:
     use_write_multiple: true
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42041 Zone 4 valve stepper position"
-    id: hru_zone4_pos
+    name: "42041 Zone 4 valve position"
+    id: hru_zone4_valve_pos
     min_value: 0
     max_value: 550
     step: 1
@@ -1017,7 +1018,7 @@ number:
   - platform: modbus_controller
     modbus_controller_id: hru
     name: "42041 Zone 4 valve on/off"
-    id: hru_zone4_pos_enable
+    id: hru_zone4_valve_enable
     min_value: 0
     max_value: 1
     step: 1
