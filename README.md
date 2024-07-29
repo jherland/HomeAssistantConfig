@@ -29,7 +29,9 @@ Dutch row house built in 2022, taken over in early 2024 with this infrastructure
     - [Wi-Fi kWh meter 3-phase MID](https://www.homewizard.com/shop/wi-fi-kwh-meter-3-phase/) measures energy use of heat pump.
 - [Growatt ShineWiFi-X MQTT by SDR Engineering](https://www.sdr-engineering.nl/webshop/index.php?route=product/product&product_id=60) connects to the Growatt inverter and allows local monitoring (MQTT messages over local Wifi) of the solar inverter.
 - [NibePi](https://github.com/anerdins/nibepi) connects to heat pump over RS-485/MODBUS for more monitoring/control.
-- [Itho CVE RFT WiFi add-on](https://www.tindie.com/products/nrgwatch/itho-cve-rft-wifi-add-on/) monitoring the wireless communication between the Itho [RFT CO2](https://www.ithodaalderop.nl/nl-NL/professional/product/04-00045)/[RFT RV](https://www.ithodaalderop.nl/nl-NL/professional/product/04-00046) in-room units and the main ventilation unit. (This currently does not control the ventilation unit, but gives insight into the sensor values and commands being sent from the in-room units.)
+- [Itho CVE RFT WiFi add-on](https://www.tindie.com/products/nrgwatch/itho-cve-rft-wifi-add-on/) monitoring the wireless communication between the Itho [RFT CO2](https://www.ithodaalderop.nl/nl-NL/professional/product/04-00045)/[RFT RV](https://www.ithodaalderop.nl/nl-NL/professional/product/04-00046) in-room units and the main ventilation unit. (This currently does not control the ventilation unit, but monitors the sensor values and commands being sent from the in-room units.)
+- [M5Stack ATOM Lite ESP32](https://shop.m5stack.com/products/atom-lite-esp32-development-kit) with an [ATOMIC RS485 Base](https://shop.m5stack.com/products/atomic-rs485-base) connected to the MODBus port on the Itho HRU 400 ventilation unit. This provides insight into the operation of the ventilation, and some control of e.g. the bypass valve. Then ESPHome configuration is available [here](esphome/esphome-web-10c200.yaml).
+- Various Zigbee/Z-Wave/Wifi smart relays mounted behind light switches and light fixtures to provide wireless control of almost all lights.
 - Various other smart plugs (in decreasing order of preference):
     - [HomeWizard Energy sockets](https://www.homewizard.com/shop/wi-fi-energy-socket-16a-set/) (local WiFi) as already mentioned above
     - [BlitzWolf SHP-15](https://www.blitzwolfeurope.com/Blitzwolf-BW-SHP15-ZigBee-3-0-Smart-Socket-220V) (Zigbee)
@@ -44,7 +46,7 @@ Dutch row house built in 2022, taken over in early 2024 with this infrastructure
     - [Aeotec MultiSensor 7](https://aeotec.com/products/aeotec-multi-sensor-6/) presence/environment sensor (Z-Wave)
     - [Aeotec WallMote Quad](https://aeotec.com/products/aeotec-wallmote-quad/) buttons (Z-Wave)
 - Other smart devices hooked up to Home Assistant:
-    - Unifi Ubiquiti local network management
+    - Unifi Ubiquiti local network management and camera/NVR infra.
     - LG OLED TV
     - Denon DN-500AV surround receiver
     - Meater thermometer (via cloud)
