@@ -171,16 +171,6 @@ sensor:
     # unit_of_measurement: "errornr"
     icon: mdi:alert-circle
 
-  # Bypass R/O position (also R/W further below)
-  - platform: modbus_controller
-    modbus_controller_id: hru
-    name: "42033 bypass position (read)"
-    id: hru_bypass_valve_pos_read
-    register_type: holding
-    address: 2032 # 0x000E
-    value_type: U_WORD
-    icon: mdi:valve
-
   # [E][modbus_controller:088]: Modbus error function code: 0x3 exception: 2
   # [E][modbus_controller:097]: Modbus error - last command: function code=0x3  register address = 0xBB8  registers count=2 payload size=0
   # - platform: modbus_controller
@@ -553,13 +543,16 @@ sensor:
     icon: mdi:counter
 
 binary_sensor:
-  # Bypass valve enabled
+  # Bypass valve position a boolean (0 -> open -> true, 550 -> closed -> false)
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42033 bypass position (binary_sensor)"
-    id: hru_bypass_valve_pos_binary_sensor
+    name: "42033 Bypass position [bool]"
+    id: hru_bypass_valve_pos_bool
     register_type: holding
     address: 2032 # 0x000E
+    lambda: |-
+      ESP_LOGD("main", "Modbus Bypass valve incoming state = %i", x);
+      return !x;
     icon: mdi:valve
   # Zone valves connected
   - platform: modbus_controller
@@ -633,6 +626,60 @@ switch:
   #   bitmask: 0x1
   #   # use_write_multiple: true
   #   icon: mdi:toggle-switch
+
+  # Proper implementation of Bypass on/auto switch:
+  - platform: template
+    name: "Bypass valve" # Off = auto, On = manual/force open
+    id: hru_bypass_valve_switch
+    icon: mdi:toggle-switch-variant
+    lambda: |-
+      return id(hru_bypass_valve_override).state == 1 && id(hru_bypass_valve_pos).state == 0;
+    turn_on_action:
+      then:
+        - if:
+            condition:
+              lambda: "return id(hru_m3h_exhaust_internal).state > 200;"
+            then: 
+              # Force exhaust fan to below 200, and wait for it to spin down
+              - logger.log: "Exhaust flow > 200, temporarily lower exhaust flow"
+              - number.set:
+                  id: hru_exhaust_fan_flow
+                  value: 100
+              - number.set:
+                  id: hru_exhaust_fan_flow_override
+                  value: 1
+              - delay: 5s
+              # Force Bypass valve into open mode (== 0) and wait for it to open
+              - logger.log: "Open bypass valve after lowering exhaust flow"
+              - number.set:
+                  id: hru_bypass_valve_pos
+                  value: 0 # == open
+              - number.set:
+                  id: hru_bypass_valve_override
+                  value: 1
+              - delay: 5s
+              # Reset exhaust fan to auto mode
+              - logger.log: "Resetting exhaust flow to auto mode"
+              - number.set:
+                  id: hru_exhaust_fan_flow_override
+                  value: 0
+              - number.set:
+                  id: hru_exhaust_fan_flow
+                  value: 0
+            else:
+              - logger.log: "Open bypass valve"
+              - number.set:
+                  id: hru_bypass_valve_pos
+                  value: 0 # == open
+              - number.set:
+                  id: hru_bypass_valve_override
+                  value: 1
+    turn_off_action:
+      then:
+        - logger.log: "Reset bypass valve to auto"
+        - number.set:
+            id: hru_bypass_valve_override
+            value: 0
 
 number:
   # Error counting registers
@@ -879,8 +926,8 @@ number:
     icon: mdi:fan
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42002 Actual ventilation level on/off"
-    id: hru_actual_level_enable
+    name: "42002 Actual ventilation level override"
+    id: hru_actual_level_override
     min_value: 0
     max_value: 1
     step: 1
@@ -908,8 +955,8 @@ number:
   #   icon: mdi:home-import-outline
   # - platform: modbus_controller
   #   modbus_controller_id: hru
-  #   name: "42012 Supply demand on/off"
-  #   id: hru_supply_demand_enable
+  #   name: "42012 Supply demand override"
+  #   id: hru_supply_demand_override
   #   min_value: 0
   #   max_value: 1
   #   step: 1
@@ -935,8 +982,8 @@ number:
   #   icon: mdi:home-export-outline
   # - platform: modbus_controller
   #   modbus_controller_id: hru
-  #   name: "42014 Exhaust demand on/off"
-  #   id: hru_exhaust_demand_enable
+  #   name: "42014 Exhaust demand override"
+  #   id: hru_exhaust_demand_override
   #   min_value: 0
   #   max_value: 1
   #   step: 1
@@ -962,8 +1009,8 @@ number:
     icon: mdi:home-import-outline
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42022 Supply fan flow on/off"
-    id: hru_supply_fan_flow_enable
+    name: "42022 Supply fan flow override"
+    id: hru_supply_fan_flow_override
     min_value: 0
     max_value: 1
     step: 1
@@ -989,8 +1036,8 @@ number:
     icon: mdi:home-export-outline
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42024 Exhaust fan flow on/off"
-    id: hru_exhaust_fan_flow_enable
+    name: "42024 Exhaust fan flow override"
+    id: hru_exhaust_fan_flow_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1015,8 +1062,8 @@ number:
     icon: mdi:valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42032 Frost valve on/off"
-    id: hru_frost_valve_enable
+    name: "42032 Frost valve override"
+    id: hru_frost_valve_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1041,8 +1088,8 @@ number:
     icon: mdi:valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42034 Bypass valve on/off"
-    id: hru_bypass_valve_enable
+    name: "42034 Bypass valve override"
+    id: hru_bypass_valve_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1067,8 +1114,8 @@ number:
     icon: mdi:valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42036 Zone 1 valve on/off"
-    id: hru_zone1_valve_enable
+    name: "42036 Zone 1 valve override"
+    id: hru_zone1_valve_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1091,8 +1138,8 @@ number:
     icon: mdi:valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42038 Zone 2 valve on/off"
-    id: hru_zone2_valve_enable
+    name: "42038 Zone 2 valve override"
+    id: hru_zone2_valve_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1115,8 +1162,8 @@ number:
     icon: mdi:valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42040 Zone 3 valve on/off"
-    id: hru_zone3_valve_enable
+    name: "42040 Zone 3 valve override"
+    id: hru_zone3_valve_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1139,8 +1186,8 @@ number:
     icon: mdi:valve
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42041 Zone 4 valve on/off"
-    id: hru_zone4_valve_enable
+    name: "42041 Zone 4 valve override"
+    id: hru_zone4_valve_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1165,8 +1212,8 @@ number:
     icon: mdi:fan-speed-1
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42202 Zone 1 ventilation level on/off"
-    id: hru_zone1_level_enable
+    name: "42202 Zone 1 ventilation level override"
+    id: hru_zone1_level_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1189,8 +1236,8 @@ number:
     icon: mdi:fan-speed-2
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42204 Zone 2 ventilation level on/off"
-    id: hru_zone2_level_enable
+    name: "42204 Zone 2 ventilation level override"
+    id: hru_zone2_level_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1213,8 +1260,8 @@ number:
     icon: mdi:fan-speed-3
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42206 Zone 3 ventilation level on/off"
-    id: hru_zone3_level_enable
+    name: "42206 Zone 3 ventilation level override"
+    id: hru_zone3_level_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1237,8 +1284,8 @@ number:
     icon: mdi:fan-plus
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42208 Zone 4 ventilation level on/off"
-    id: hru_zone4_level_enable
+    name: "42208 Zone 4 ventilation level override"
+    id: hru_zone4_level_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1261,8 +1308,8 @@ number:
     icon: mdi:fan-plus
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42210 Zone 5 ventilation level on/off"
-    id: hru_zone5_level_enable
+    name: "42210 Zone 5 ventilation level override"
+    id: hru_zone5_level_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1288,8 +1335,8 @@ number:
     icon: mdi:fan-speed-1
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42212 Zone 1 flow demand on/off"
-    id: hru_zone1_ask_enable
+    name: "42212 Zone 1 flow demand override"
+    id: hru_zone1_ask_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1313,8 +1360,8 @@ number:
     icon: mdi:fan-speed-2
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42214 Zone 2 flow demand on/off"
-    id: hru_zone2_ask_enable
+    name: "42214 Zone 2 flow demand override"
+    id: hru_zone2_ask_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1338,8 +1385,8 @@ number:
     icon: mdi:fan-speed-3
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42216 Zone 3 flow demand on/off"
-    id: hru_zone3_ask_enable
+    name: "42216 Zone 3 flow demand override"
+    id: hru_zone3_ask_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1363,8 +1410,8 @@ number:
     icon: mdi:fan-plus
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42218 Zone 4 flow demand on/off"
-    id: hru_zone4_ask_enable
+    name: "42218 Zone 4 flow demand override"
+    id: hru_zone4_ask_override
     min_value: 0
     max_value: 1
     step: 1
@@ -1388,8 +1435,8 @@ number:
     icon: mdi:fan-plus
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "42220 Zone 5 flow demand on/off"
-    id: hru_zone5_ask_enable
+    name: "42220 Zone 5 flow demand override"
+    id: hru_zone5_ask_override
     min_value: 0
     max_value: 1
     step: 1
