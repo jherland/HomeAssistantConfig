@@ -62,13 +62,11 @@ Dutch row house built in 2022, taken over in early 2024 with this infrastructure
 
 ![Customized Power View](pictures/custom_power_screen.png)
 
-### Future plans
-
-- Control + monitor the ventilation unit more directly via its MODBUS interface, e.g. https://gathering.tweakers.net/forum/list_messages/2109156
-
 ## More resources
 
 - [Settings on my Itho CVE RFT WiFi add-on](nrg-itho_settings.md)
+- [Dutch manual for the Itho Daalderop HRU 400, with MODBus interface details](https://ithodaalderop.compano.com/Data/Environments/000001/Attachment/Bijlage/A04_Ventilatie/A04_02_Gebalanceerd/A04_02_01_HRU/A04_02_01_06_HRU_400/B01_06_MTE/01-03763-005%20%20HRU%20400-Handleiding.pdf)
+- [Tweakers thread on connecting to the MODBus interface on the Itho Daalderop HRU 400](https://gathering.tweakers.net/forum/list_messages/2109156)
 - From Triple Solar, about the PVT panels:
     - https://triplesolar.eu/project/pvt-panelen-spoorzone-delft/
     - https://triplesolar.eu/wat-is-een-pvt-paneel/
