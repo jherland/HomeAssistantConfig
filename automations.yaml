@@ -590,3 +590,83 @@
           priority: high
         message: Wash machine done!
   mode: single
+- id: "1722207820068"
+  alias: Notify when CO2 sensors go crazy
+  description: Send notification when any CO2 sensor shows a value above 1500.
+  trigger:
+    - platform: numeric_state
+      entity_id:
+        - sensor.ep1_co2
+        - sensor.itho_office_co2
+        - sensor.itho_bedroom_co2
+        - sensor.itho_kitchen_co2
+        - sensor.living_room_carbon_dioxide
+        - sensor.airthings_kitchen_carbon_dioxide
+      above: 1500
+  condition: []
+  action:
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        title: Crazy CO2
+        message:
+          "{{ trigger.entity_id }} > {{ trigger.above}}, When: {{ now().strftime('%Y-%m-%d
+          %H:%M:%S') }}, for {{ trigger.for }}"
+        data:
+          ttl: 0
+          priority: high
+  mode: single
+- id: "1722208826933"
+  alias: Notify when to disable bypass valve
+  description: "Send notification when supplied air is warmer than exhausted air. "
+  trigger:
+    - platform: numeric_state
+      entity_id:
+        - sensor.esphome_web_10c200_43063_supply_temperature_to_inside
+      above: sensor.esphome_web_10c200_43073_exhaust_temperature_from_inside
+      for:
+        hours: 0
+        minutes: 3
+        seconds: 0
+  condition:
+    - condition: state
+      entity_id: switch.esphome_web_10c200_bypass_valve
+      state: "on"
+  action:
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        title: Disable bypass?
+        message: Supply air is warmer than exhaust
+        data:
+          ttl: 0
+          priority: high
+  mode: single
+- id: "1722209272117"
+  alias: Notify when to enable bypass valve
+  description:
+    "Send notification when air from outside is being warned up by the
+    heat exchanger. "
+  trigger:
+    - platform: numeric_state
+      entity_id:
+        - sensor.esphome_web_10c200_43063_supply_temperature_to_inside
+      above: sensor.esphome_web_10c200_43033_supply_temperature_from_outside
+      for:
+        hours: 0
+        minutes: 3
+        seconds: 0
+  condition:
+    - condition: state
+      entity_id: switch.esphome_web_10c200_bypass_valve
+      state: "off"
+  action:
+    - service: notify.mobile_app_sm_s901b
+      metadata: {}
+      data:
+        title: Enable bypass?
+        message: Supplied air is warmer than outside
+        data:
+          ttl: 0
+          priority: high
+  mode: single
