@@ -4,22 +4,22 @@
   trigger:
     - type: opened
       platform: device
-      device_id: 9fc907dc8d33e9014ce3c84b403dbc8e
+      device_id: 118ce1941d4e6e1c22c43dbd00cb808e
       entity_id: 7869814d7349a434137aee7ccb86dcdf
       domain: binary_sensor
     - type: opened
       platform: device
-      device_id: 51ae4a15022e68d022df57b6da7876ae
-      entity_id: 0096705ba6c964f1ac76e7b8296199c9
+      device_id: 51eba2dd60daafcc2611bfac107f0a31
+      entity_id: fb7fbe04e160bf11ab9c0dbe6257b2c7
       domain: binary_sensor
     - type: opened
       platform: device
-      device_id: ed6e309b9e1ee6ea23e8279a8105e54f
-      entity_id: f6b30763d5fda8a4d0a36f00702831e1
+      device_id: 3dbd7ad9cc1ea49a2c10227fd8d7854a
+      entity_id: 0096705ba6c964f1ac76e7b8296199c9
       domain: binary_sensor
   condition:
     - condition: device
-      device_id: 08e82d3a8211d249742b9697050557ca
+      device_id: 93bb9cc2c571926bfbcc747d50237b45
       domain: device_tracker
       entity_id: 00a03a286bc9472f94402cb92731fd30
       type: is_not_home
@@ -55,11 +55,11 @@
   use_blueprint:
     path: rvaidya/aqara_magic_cube.yaml
     input:
-      remote: 732e88904629cafa6725df2c902ed953
+      remote: 102f4daa5c5b8899963b4ae9986998ef
       active_face: input_number.aqara_cube_last_activated_face
       one_to_one:
         - type: toggle
-          device_id: d124ae33ab3287f1e294480e0ac45236
+          device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
           entity_id: f5aeb4306985900cc361cd5b38d0f9dd
           domain: light
       slide_any_side: false
@@ -68,14 +68,15 @@
           metadata: {}
           data: {}
           target:
-            device_id: ba337df91115b719aa417cd27aeb62b0
+            device_id:
+              - 6bb780a1b238a8f164a25f6b6c881732
       rotate_left_side_1:
-        - device_id: d124ae33ab3287f1e294480e0ac45236
+        - device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
           domain: light
           entity_id: f5aeb4306985900cc361cd5b38d0f9dd
           type: brightness_decrease
       rotate_right_side_1:
-        - device_id: d124ae33ab3287f1e294480e0ac45236
+        - device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
           domain: light
           entity_id: f5aeb4306985900cc361cd5b38d0f9dd
           type: brightness_increase
@@ -84,57 +85,61 @@
           metadata: {}
           data: {}
           target:
-            device_id: ba337df91115b719aa417cd27aeb62b0
+            device_id:
+              - 6bb780a1b238a8f164a25f6b6c881732
       rotate_left_side_5:
         - service: media_player.media_previous_track
           target:
             device_id:
-              - ba337df91115b719aa417cd27aeb62b0
+              - 6bb780a1b238a8f164a25f6b6c881732
           data: {}
       rotate_right_side_5:
         - service: media_player.media_next_track
           target:
             device_id:
-              - ba337df91115b719aa417cd27aeb62b0
+              - 6bb780a1b238a8f164a25f6b6c881732
           data: {}
       rotate_right_side_3:
         - service: media_player.volume_up
           target:
-            device_id: ba337df91115b719aa417cd27aeb62b0
+            device_id:
+              - 6bb780a1b238a8f164a25f6b6c881732
+              - d6852b90354af73e87e7be7f58203262
           data: {}
       rotate_left_side_3:
         - service: media_player.volume_down
           target:
             device_id:
-              - ba337df91115b719aa417cd27aeb62b0
+              - 6bb780a1b238a8f164a25f6b6c881732
+              - d6852b90354af73e87e7be7f58203262
           data: {}
       three_to_three:
         - service: media_player.volume_mute
           target:
             device_id:
-              - ba337df91115b719aa417cd27aeb62b0
+              - 6bb780a1b238a8f164a25f6b6c881732
           data:
             is_volume_muted: true
       four_to_four:
         - type: toggle
-          device_id: d124ae33ab3287f1e294480e0ac45236
+          device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
           entity_id: f5aeb4306985900cc361cd5b38d0f9dd
           domain: light
       six_to_six:
         - service: media_player.volume_mute
           target:
             device_id:
-              - ba337df91115b719aa417cd27aeb62b0
+              - 6bb780a1b238a8f164a25f6b6c881732
           data:
             is_volume_muted: true
       rotate_left_side_2:
         - service: media_player.media_previous_track
           target:
             device_id:
-              - ba337df91115b719aa417cd27aeb62b0
+              - 6bb780a1b238a8f164a25f6b6c881732
           data: {}
       rotate_left_side_4:
-        - device_id: d124ae33ab3287f1e294480e0ac45236
+        - device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
           domain: light
           entity_id: f5aeb4306985900cc361cd5b38d0f9dd
           type: brightness_decrease
@@ -142,23 +147,26 @@
         - service: media_player.volume_down
           target:
             device_id:
-              - ba337df91115b719aa417cd27aeb62b0
+              - 6bb780a1b238a8f164a25f6b6c881732
+              - d6852b90354af73e87e7be7f58203262
           data: {}
       rotate_right_side_2:
         - service: media_player.media_next_track
           target:
             device_id:
-              - ba337df91115b719aa417cd27aeb62b0
+              - 6bb780a1b238a8f164a25f6b6c881732
           data: {}
       rotate_right_side_4:
-        - device_id: d124ae33ab3287f1e294480e0ac45236
+        - device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
           domain: light
           entity_id: f5aeb4306985900cc361cd5b38d0f9dd
           type: brightness_increase
       rotate_right_side_6:
         - service: media_player.volume_up
           target:
-            device_id: ba337df91115b719aa417cd27aeb62b0
+            device_id:
+              - 6bb780a1b238a8f164a25f6b6c881732
+              - d6852b90354af73e87e7be7f58203262
           data: {}
 - id: "1717101940680"
   alias: Doorbell
@@ -166,7 +174,7 @@
   trigger:
     - type: occupied
       platform: device
-      device_id: 08bb8e0167e171210fbb2360c16e0c4c
+      device_id: e619c22ee731ba11a006681b0e19301b
       entity_id: 9292ffaca4dbf1501b8aa19df0492caa
       domain: binary_sensor
   condition: []
@@ -209,9 +217,9 @@
       offset: 0
   condition: []
   action:
-    - device_id: ad6695b6357acd3e5545e0d43e4b55c3
+    - device_id: 75777aee4992dfd7fefbb79520c629bc
       domain: cover
-      entity_id: 533bba4afb502dc1d1c37606690b5ad6
+      entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
       type: close
   mode: single
 - id: "1717424745811"
@@ -219,7 +227,7 @@
   description: ""
   trigger:
     - platform: device
-      device_id: 233bc83db575dac2d0d5eb61d32c735c
+      device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -229,15 +237,17 @@
       subtype: Endpoint 0 Scene 004
       value: 0
   condition:
-    - condition: device
-      device_id: ad6695b6357acd3e5545e0d43e4b55c3
-      domain: cover
-      entity_id: 533bba4afb502dc1d1c37606690b5ad6
-      type: is_closed
+    - condition: not
+      conditions:
+        - condition: device
+          device_id: 75777aee4992dfd7fefbb79520c629bc
+          domain: cover
+          entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
+          type: is_open
   action:
-    - device_id: ad6695b6357acd3e5545e0d43e4b55c3
+    - device_id: 75777aee4992dfd7fefbb79520c629bc
       domain: cover
-      entity_id: 533bba4afb502dc1d1c37606690b5ad6
+      entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
       type: open
   mode: single
 - id: "1717424823777"
@@ -245,7 +255,7 @@
   description: ""
   trigger:
     - platform: device
-      device_id: 233bc83db575dac2d0d5eb61d32c735c
+      device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -255,15 +265,17 @@
       subtype: Endpoint 0 Scene 003
       value: 0
   condition:
-    - condition: device
-      device_id: ad6695b6357acd3e5545e0d43e4b55c3
-      domain: cover
-      entity_id: 533bba4afb502dc1d1c37606690b5ad6
-      type: is_open
+    - condition: not
+      conditions:
+        - condition: device
+          device_id: 75777aee4992dfd7fefbb79520c629bc
+          domain: cover
+          entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
+          type: is_closed
   action:
-    - device_id: ad6695b6357acd3e5545e0d43e4b55c3
+    - device_id: 75777aee4992dfd7fefbb79520c629bc
       domain: cover
-      entity_id: 533bba4afb502dc1d1c37606690b5ad6
+      entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
       type: close
   mode: single
 - id: "1717446926717"
@@ -271,7 +283,7 @@
   description: Turn On Living Room TV with WakeOnLan
   trigger:
     - platform: device
-      device_id: ba337df91115b719aa417cd27aeb62b0
+      device_id: 6bb780a1b238a8f164a25f6b6c881732
       domain: webostv
       type: webostv.turn_on
   condition: []
@@ -323,7 +335,7 @@
   description: ""
   trigger:
     - platform: device
-      device_id: 233bc83db575dac2d0d5eb61d32c735c
+      device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -331,10 +343,11 @@
       endpoint: 0
       command_class: 91
       subtype: Endpoint 0 Scene 002
+      value: 0
   condition: []
   action:
     - type: toggle
-      device_id: 56025946c30e5ef7b8ac8ac60548b895
+      device_id: 1ca8e922258f21814e3dc50869663e30
       entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
       domain: light
   mode: single
@@ -344,7 +357,7 @@
   trigger:
     - type: opened
       platform: device
-      device_id: 9fc907dc8d33e9014ce3c84b403dbc8e
+      device_id: 118ce1941d4e6e1c22c43dbd00cb808e
       entity_id: 7869814d7349a434137aee7ccb86dcdf
       domain: binary_sensor
   condition: []
@@ -372,7 +385,7 @@
   trigger:
     - type: opened
       platform: device
-      device_id: 0378c4c8cc2672593ceab15a22dbacda
+      device_id: 51eba2dd60daafcc2611bfac107f0a31
       entity_id: fb7fbe04e160bf11ab9c0dbe6257b2c7
       domain: binary_sensor
   condition: []
@@ -400,13 +413,13 @@
   trigger:
     - platform: device
       type: changed_states
-      device_id: 6913e0e962e339e964cfe6aff31d5aa5
+      device_id: 17d5bd308ecc8a23a4a8b36ba47fb585
       entity_id: bd5b1f03d01b0979a6c92338a2a13717
       domain: switch
   condition: []
   action:
     - type: toggle
-      device_id: 3d7979e7a881253ce40a59b05a3c01b0
+      device_id: 3ac4907cb0b4ad72f1fd6153b75e9cc8
       entity_id: 2f59f824e761191a665688ac274bf57f
       domain: light
   mode: single
@@ -419,7 +432,7 @@
   condition: []
   action:
     - type: turn_on
-      device_id: 3f923661226182095dc856903ccbeda8
+      device_id: 464da44378e18ac7a0f135d0101529b1
       entity_id: b3dfb2ab8d9fc27211ddfc0af4318b4f
       domain: switch
   mode: single
@@ -432,41 +445,41 @@
   condition: []
   action:
     - type: turn_off
-      device_id: 3f923661226182095dc856903ccbeda8
+      device_id: 464da44378e18ac7a0f135d0101529b1
       entity_id: b3dfb2ab8d9fc27211ddfc0af4318b4f
       domain: switch
   mode: single
 - id: "1718814525340"
-  alias: Kitchen Bench Lights toggled by Kitchen Switch
+  alias: Kitchen Bench Lights toggled by Unknown Kitchen North Switch
   description: ""
   trigger:
     - platform: device
       type: changed_states
-      device_id: 17cd0ed036f3894069751a0a8947ac57
+      device_id: 10a91df9e250ac37f97ce8f735f2724e
       entity_id: a1f4909bddb03ba63e716bbb54ceaeb4
       domain: switch
   condition: []
   action:
     - type: toggle
-      device_id: a7a21b91adad455aa2d19d9962c74233
+      device_id: 1cdd6fa955db8cd544aa569a5573e766
       entity_id: 34c02e482d0dc7c3f05bcd68f6d89b3e
       domain: light
   mode: single
 - id: "1718825185048"
-  alias: Kitchen table lights are toggled by Unknown Kitchen Switch
+  alias: Kitchen table lights are toggled by Unknown Kitchen South Switch
   description: ""
   trigger:
     - platform: device
       type: changed_states
-      device_id: 070edb653ffa8d1404898216667f949d
+      device_id: 52464dc1991cc4cd33614cf3b2ab4d14
       entity_id: 17249d76d4b0fdc55ff81821ec64d920
       domain: switch
   condition: []
   action:
     - type: toggle
-      device_id: 65b536ad50d383af79289083c65b6ba4
-      entity_id: 66981bb7adf15b89a514aeaca5a2efa7
-      domain: switch
+      device_id: a68d41b27b097a44f9381f27fe16924e
+      entity_id: f2e33f387ae03429b0c8abaeb21ec111
+      domain: light
   mode: single
 - id: "1718825566036"
   alias: Back Yard Auto Light
@@ -492,13 +505,13 @@
   trigger:
     - platform: device
       type: changed_states
-      device_id: 6913e0e962e339e964cfe6aff31d5aa5
+      device_id: 17d5bd308ecc8a23a4a8b36ba47fb585
       entity_id: 26cfcd4be57fc22dee261d4901bd5dd3
       domain: switch
   condition: []
   action:
     - type: toggle
-      device_id: 56025946c30e5ef7b8ac8ac60548b895
+      device_id: 1ca8e922258f21814e3dc50869663e30
       entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
       domain: light
   mode: single
@@ -508,13 +521,13 @@
   trigger:
     - platform: device
       type: changed_states
-      device_id: 23e77876dfd2e5679a528e446ab9b501
+      device_id: 8493ad33d9f7917e0a42e1fb5725f9ef
       entity_id: 9569f469aabaf4700b24d6e83f8b5ee9
       domain: switch
   condition: []
   action:
     - type: toggle
-      device_id: 1925b4cc2ac0929279d8520ca82fc7af
+      device_id: c4b6030b936448bbad3cb047d7990df8
       entity_id: 13125dfd884c1ddcc1969c54e2970e5e
       domain: light
   mode: single
@@ -524,13 +537,13 @@
   trigger:
     - platform: device
       type: changed_states
-      device_id: 23e77876dfd2e5679a528e446ab9b501
+      device_id: 8493ad33d9f7917e0a42e1fb5725f9ef
       entity_id: 4b4f0386927eeed0ac7f46e0499a4302
       domain: switch
   condition: []
   action:
     - type: toggle
-      device_id: 56025946c30e5ef7b8ac8ac60548b895
+      device_id: 1ca8e922258f21814e3dc50869663e30
       entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
       domain: light
   mode: single
@@ -539,7 +552,7 @@
   description: ""
   trigger:
     - platform: device
-      device_id: 233bc83db575dac2d0d5eb61d32c735c
+      device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -547,10 +560,11 @@
       endpoint: 0
       command_class: 91
       subtype: Endpoint 0 Scene 001
+      value: 0
   condition: []
   action:
     - type: toggle
-      device_id: 1925b4cc2ac0929279d8520ca82fc7af
+      device_id: c4b6030b936448bbad3cb047d7990df8
       entity_id: 13125dfd884c1ddcc1969c54e2970e5e
       domain: light
   mode: single
