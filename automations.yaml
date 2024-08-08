@@ -405,7 +405,7 @@
     input:
       motion_entity: binary_sensor.hallway_motion_motion
       light_target:
-        device_id: 3d7979e7a881253ce40a59b05a3c01b0
+        device_id: 3ac4907cb0b4ad72f1fd6153b75e9cc8
       no_motion_wait: 60
 - id: "1718477092437"
   alias: Hallway Lights toggled by Hallway Switch
