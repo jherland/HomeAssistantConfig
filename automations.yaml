@@ -466,20 +466,27 @@
       domain: light
   mode: single
 - id: "1718825185048"
-  alias: Kitchen table lights are toggled by Unknown Kitchen South Switch
+  alias: Kitchen Curtain is opened by Unknown Kitchen South Switch
   description: ""
   trigger:
-    - platform: device
-      type: changed_states
-      device_id: 52464dc1991cc4cd33614cf3b2ab4d14
-      entity_id: 17249d76d4b0fdc55ff81821ec64d920
-      domain: switch
-  condition: []
+    - platform: state
+      entity_id:
+        - switch.unknown_kitchen_south_switch_switch
+      from: "off"
+      to: "on"
+  condition:
+    - condition: not
+      conditions:
+        - condition: device
+          device_id: 02cde5166bb859522653908da91f67c3
+          domain: cover
+          entity_id: 2c466ba734a70ac556d00fcb9021dd36
+          type: is_open
   action:
-    - type: toggle
-      device_id: a68d41b27b097a44f9381f27fe16924e
-      entity_id: f2e33f387ae03429b0c8abaeb21ec111
-      domain: light
+    - device_id: 02cde5166bb859522653908da91f67c3
+      domain: cover
+      entity_id: 2c466ba734a70ac556d00fcb9021dd36
+      type: open
   mode: single
 - id: "1718825566036"
   alias: Back Yard Auto Light
@@ -683,4 +690,27 @@
         data:
           ttl: 0
           priority: high
+  mode: single
+- id: "1723103168887"
+  alias: Kitchen Curtain is closed by Unknown Kitchen South Switch
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.unknown_kitchen_south_switch_switch
+      from: "on"
+      to: "off"
+  condition:
+    - condition: not
+      conditions:
+        - condition: device
+          device_id: 02cde5166bb859522653908da91f67c3
+          domain: cover
+          entity_id: 2c466ba734a70ac556d00fcb9021dd36
+          type: is_closed
+  action:
+    - device_id: 02cde5166bb859522653908da91f67c3
+      domain: cover
+      entity_id: 2c466ba734a70ac556d00fcb9021dd36
+      type: close
   mode: single
