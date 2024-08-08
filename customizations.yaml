@@ -397,73 +397,73 @@ customize:
     state_class: measurement
 
   # Provide missing state_class for Growatt sensors
-  sensor.growatt_inputpower:
+  sensor.solar_inverter_inputpower:
     state_class: measurement
-  sensor.growatt_pv1voltage:
+  sensor.solar_inverter_pv1voltage:
     state_class: measurement
-  sensor.growatt_pv1inputcurrent:
+  sensor.solar_inverter_pv1inputcurrent:
     state_class: measurement
-  sensor.growatt_pv1inputpower:
+  sensor.solar_inverter_pv1inputpower:
     state_class: measurement
-  sensor.growatt_pv2voltage:
+  sensor.solar_inverter_pv2voltage:
     state_class: measurement
-  sensor.growatt_pv2inputcurrent:
+  sensor.solar_inverter_pv2inputcurrent:
     state_class: measurement
-  sensor.growatt_pv2inputpower:
+  sensor.solar_inverter_pv2inputpower:
     state_class: measurement
-  sensor.growatt_outputpower:
+  sensor.solar_inverter_outputpower:
     state_class: measurement
-  sensor.growatt_gridfrequency:
+  sensor.solar_inverter_gridfrequency:
     state_class: measurement
-  sensor.growatt_l1threephasegridvoltage:
+  sensor.solar_inverter_l1threephasegridvoltage:
     state_class: measurement
-  sensor.growatt_l1threephasegridoutputcurrent:
+  sensor.solar_inverter_l1threephasegridoutputcurrent:
     state_class: measurement
-  sensor.growatt_l1threephasegridoutputpower:
+  sensor.solar_inverter_l1threephasegridoutputpower:
     state_class: measurement
-  sensor.growatt_l2threephasegridvoltage:
+  sensor.solar_inverter_l2threephasegridvoltage:
     state_class: measurement
-  sensor.growatt_l2threephasegridoutputcurrent:
+  sensor.solar_inverter_l2threephasegridoutputcurrent:
     state_class: measurement
-  sensor.growatt_l2threephasegridoutputpower:
+  sensor.solar_inverter_l2threephasegridoutputpower:
     state_class: measurement
-  sensor.growatt_l3threephasegridvoltage:
+  sensor.solar_inverter_l3threephasegridvoltage:
     state_class: measurement
-  sensor.growatt_l3threephasegridoutputcurrent:
+  sensor.solar_inverter_l3threephasegridoutputcurrent:
     state_class: measurement
-  sensor.growatt_l3threephasegridoutputpower:
+  sensor.solar_inverter_l3threephasegridoutputpower:
     state_class: measurement
-  sensor.growatt_invertertemperature:
+  sensor.solar_inverter_invertertemperature:
     state_class: measurement
-  sensor.growatt_temperatureinsideipm:
+  sensor.solar_inverter_temperatureinsideipm:
     state_class: measurement
-  sensor.growatt_boosttemperature:
+  sensor.solar_inverter_boosttemperature:
     state_class: measurement
-  sensor.growatt_dischargepower:
+  sensor.solar_inverter_dischargepower:
     state_class: measurement
-  sensor.growatt_chargepower:
+  sensor.solar_inverter_chargepower:
     state_class: measurement
-  sensor.growatt_batteryvoltage:
+  sensor.solar_inverter_batteryvoltage:
     state_class: measurement
-  sensor.growatt_soc:
+  sensor.solar_inverter_soc:
     state_class: measurement
-  sensor.growatt_acpowertouser:
+  sensor.solar_inverter_acpowertouser:
     state_class: measurement
-  sensor.growatt_acpowertogrid:
+  sensor.solar_inverter_acpowertogrid:
     state_class: measurement
-  sensor.growatt_invpowertolocalload:
+  sensor.solar_inverter_invpowertolocalload:
     state_class: measurement
-  sensor.growatt_batterytemperature:
+  sensor.solar_inverter_batterytemperature:
     state_class: measurement
 
   # Fix incorrent details on some Growatt entities
-  # sensor.growatt_tworktimetotal:
+  # sensor.solar_inverter_tworktimetotal:
   #   device_class: duration
-  # sensor.growatt_acpowertousertotal:
+  # sensor.solar_inverter_acpowertousertotal:
   #   unit_of_measurement: "kWh"
-  # sensor.growatt_acpowertogridtotal:
+  # sensor.solar_inverter_acpowertogridtotal:
   #   unit_of_measurement: "kWh"
-  # sensor.growatt_invpowertolocalloadtotal:
+  # sensor.solar_inverter_invpowertolocalloadtotal:
   #   unit_of_measurement: "kWh"
 
   # Add configuration_url for NRG-ITHO-B298

@@ -43,7 +43,7 @@
       minutes: "5"
   condition:
     - condition: numeric_state
-      entity_id: sensor.growatt_inputpower
+      entity_id: sensor.solar_inverter_inputpower
       above: 0
   action:
     - service: rest_command.update_pvoutput

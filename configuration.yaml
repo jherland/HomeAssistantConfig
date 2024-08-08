@@ -35,7 +35,7 @@ rest_command:
       d={{now().strftime("%Y%m%d")}}
       &t={{now().strftime("%H:%M")}}
       &c1=2
-      &v1={{(states('sensor.growatt_todaygenerate')|float*1000)|round(0) }}
+      &v1={{(states('sensor.solar_inverter_todaygenerate')|float*1000)|round(0) }}
 
 # Averaging sensors to enable deriving current state from power use:
 sensor:
