@@ -576,14 +576,14 @@
       domain: light
   mode: single
 - id: "1721164596666"
-  alias: Wash machine done notification
+  alias: Washing machine done notification
   description:
     Send notification when wash machine goes from on to standby (i.e. finishes
     a cycle).
   trigger:
     - platform: state
       entity_id:
-        - sensor.wash_machine_state
+        - sensor.washing_machine_state
       from: "on"
       to: standby
       for:
@@ -592,24 +592,24 @@
         seconds: 0
   condition: []
   action:
-    - service: notify.mobile_app_galaxy_tab
-      data:
+    - data:
         data:
           ttl: 0
           priority: high
         message: Wash machine done!
-    - service: notify.mobile_app_sm_s901b
-      data:
+      action: notify.mobile_app_galaxy_tab
+    - data:
         data:
           ttl: 0
           priority: high
         message: Wash machine done!
-    - service: notify.mobile_app_sm_g970f
-      data:
+      action: notify.mobile_app_sm_s901b
+    - data:
         data:
           ttl: 0
           priority: high
         message: Wash machine done!
+      action: notify.mobile_app_sm_g970f
   mode: single
 - id: "1722207820068"
   alias: Notify when CO2 sensors go crazy
