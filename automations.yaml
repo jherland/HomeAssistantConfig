@@ -637,60 +637,6 @@
           ttl: 0
           priority: high
   mode: single
-- id: "1722208826933"
-  alias: Notify when to disable bypass valve
-  description: "Send notification when supplied air is warmer than exhausted air. "
-  trigger:
-    - platform: numeric_state
-      entity_id:
-        - sensor.esphome_web_10c200_43063_supply_temperature_to_inside
-      above: sensor.esphome_web_10c200_43073_exhaust_temperature_from_inside
-      for:
-        hours: 0
-        minutes: 3
-        seconds: 0
-  condition:
-    - condition: state
-      entity_id: switch.esphome_web_10c200_bypass_valve
-      state: "on"
-  action:
-    - service: notify.mobile_app_sm_s901b
-      metadata: {}
-      data:
-        title: Disable bypass?
-        message: Supply air is warmer than exhaust
-        data:
-          ttl: 0
-          priority: high
-  mode: single
-- id: "1722209272117"
-  alias: Notify when to enable bypass valve
-  description:
-    "Send notification when air from outside is being warned up by the
-    heat exchanger. "
-  trigger:
-    - platform: numeric_state
-      entity_id:
-        - sensor.esphome_web_10c200_43063_supply_temperature_to_inside
-      above: sensor.esphome_web_10c200_43033_supply_temperature_from_outside
-      for:
-        hours: 0
-        minutes: 3
-        seconds: 0
-  condition:
-    - condition: state
-      entity_id: switch.esphome_web_10c200_bypass_valve
-      state: "off"
-  action:
-    - service: notify.mobile_app_sm_s901b
-      metadata: {}
-      data:
-        title: Enable bypass?
-        message: Supplied air is warmer than outside
-        data:
-          ttl: 0
-          priority: high
-  mode: single
 - id: "1723103168887"
   alias: Kitchen Curtain is closed by Unknown Kitchen South Switch
   description: ""
@@ -713,4 +659,79 @@
       domain: cover
       entity_id: 2c466ba734a70ac556d00fcb9021dd36
       type: close
+  mode: single
+- id: "1724922622736"
+  alias: Notify when to enable/disable forced Bypass Valve
+  description:
+    Send notification when we want to force bypass valve open (to supply
+    cooler air from outside), or when to disable forced bypass valve (i.e outside
+    air is warmer than inside).
+  trigger:
+    - platform: numeric_state
+      entity_id:
+        - sensor.esphome_web_10c200_43063_supply_temperature_to_inside
+      above: sensor.esphome_web_10c200_43033_supply_temperature_from_outside
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+      value_template: "{{ state.state | float - 1 }}"
+      id: supply-to-inside-hotter-than-supply-from-outside
+    - platform: numeric_state
+      entity_id:
+        - sensor.esphome_web_10c200_43063_supply_temperature_to_inside
+      above: sensor.esphome_web_10c200_43073_exhaust_temperature_from_inside
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+      value_template: "{{ state.state | float - 1 }}"
+      id: supply-to-inside-hotter-than-exhaust-from-inside
+  condition:
+    - condition: or
+      conditions:
+        - condition: and
+          conditions:
+            - condition: trigger
+              id:
+                - supply-to-inside-hotter-than-supply-from-outside
+            - condition: state
+              entity_id: switch.esphome_web_10c200_bypass_valve
+              state: "off"
+        - condition: and
+          conditions:
+            - condition: trigger
+              id:
+                - supply-to-inside-hotter-than-exhaust-from-inside
+            - condition: state
+              entity_id: switch.esphome_web_10c200_bypass_valve
+              state: "on"
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - supply-to-inside-hotter-than-supply-from-outside
+          sequence:
+            - metadata: {}
+              data:
+                title: Enable bypass!
+                message: Outside air is cooler than inside!
+                data:
+                  ttl: 0
+                  priority: high
+              action: notify.mobile_app_sm_s901b
+        - conditions:
+            - condition: trigger
+              id:
+                - supply-to-inside-hotter-than-exhaust-from-inside
+          sequence:
+            - metadata: {}
+              data:
+                title: Disable bypass!
+                message: Hot outside air is supplied inside!
+                data:
+                  ttl: 0
+                  priority: high
+              action: notify.mobile_app_sm_s901b
   mode: single
