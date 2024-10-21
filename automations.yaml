@@ -331,8 +331,8 @@
             - condition: sun
               after: sunset
 - id: "1718215095435"
-  alias: "Office switch: toggle front light"
-  description: ""
+  alias: Office Front Light controlled by Office Switch top right button
+  description: Press to toggle, Hold to increase/decrease brightness.
   trigger:
     - platform: device
       device_id: f620bd40ab0a3299c0b46162b86aac7d
@@ -344,12 +344,51 @@
       command_class: 91
       subtype: Endpoint 0 Scene 002
       value: 0
+      id: press
+    - platform: device
+      device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "002"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 002
+      value: 2
+      id: hold
   condition: []
   action:
-    - type: toggle
-      device_id: 1ca8e922258f21814e3dc50869663e30
-      entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
-      domain: light
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - press
+          sequence:
+            - type: toggle
+              device_id: 1ca8e922258f21814e3dc50869663e30
+              entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
+              domain: light
+        - conditions:
+            - condition: trigger
+              id:
+                - hold
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: numeric_state
+                      entity_id: light.office_front_light_light
+                      attribute: brightness
+                      below: 250
+                  sequence:
+                    - device_id: 1ca8e922258f21814e3dc50869663e30
+                      domain: light
+                      entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
+                      type: brightness_increase
+              default:
+                - device_id: 1ca8e922258f21814e3dc50869663e30
+                  domain: light
+                  entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
+                  type: brightness_decrease
   mode: single
 - id: "1718218472644"
   alias: Hallway Auto Lights triggered by Front Door
