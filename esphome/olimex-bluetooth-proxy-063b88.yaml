@@ -1,12 +1,34 @@
 substitutions:
   name: olimex-bluetooth-proxy-063b88
   friendly_name: Living Room Bluetooth Proxy
+
 packages:
   esphome.bluetooth-proxy: github://esphome/firmware/bluetooth-proxy/olimex-esp32-poe-iso.yaml@main
+
 esphome:
   name: ${name}
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
+  # includes:
+  #   - ble-node.h
+  # libraries:
+  #   - "h2zero/NimBLE-Arduino"
+
 api:
   encryption:
     key: yELgBgoD90AJXFr5qz/lvuQAen6xqBQrthLd7erjWi4=
+
+mqtt:
+  broker: 192.168.1.107
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  discovery: true
+
+# custom_component:
+# - lambda: |-
+#     auto my_node = new BleNodeComponent("living_room");
+#     return {my_node};
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
