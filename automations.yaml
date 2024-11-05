@@ -417,7 +417,7 @@
       motion_entity: binary_sensor.smallway_motion_motion
       light_target:
         entity_id: light.smallway_light_switch
-      no_motion_wait: 0
+      no_motion_wait: 30
 - id: "1718473101835"
   alias: Basement Auto Light triggered by Garage Door
   description: ""
