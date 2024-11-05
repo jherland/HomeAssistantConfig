@@ -619,9 +619,8 @@
   description:
     Send notification when wash machine goes from on to standby (i.e. finishes
     a cycle).
-  trigger:
-    - platform: state
-      entity_id:
+  triggers:
+    - entity_id:
         - sensor.washing_machine_state
       from: "on"
       to: standby
@@ -629,8 +628,16 @@
         hours: 0
         minutes: 1
         seconds: 0
-  condition: []
-  action:
+      trigger: state
+  conditions:
+    - condition: state
+      entity_id: binary_sensor.washing_machine_door_opening
+      state: "off"
+      for:
+        hours: 0
+        minutes: 15
+        seconds: 0
+  actions:
     - data:
         data:
           ttl: 0
