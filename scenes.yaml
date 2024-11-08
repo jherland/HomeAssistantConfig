@@ -1,58 +1,65 @@
-- id: '1718486162745'
+- id: "1718486162745"
   name: Start work
   entities:
     cover.office_curtains:
-      current_position: 0
+      current_position: 100
       last_run_success: true
       device_class: curtain
       friendly_name: Office Curtains
       supported_features: 15
-      state: closed
+      state: open
     light.office_back_light_light:
       min_color_temp_kelvin: 2202
       max_color_temp_kelvin: 4000
       min_mireds: 250
       max_mireds: 454
       supported_color_modes:
-      - color_temp
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
+        - color_temp
+      color_mode: color_temp
+      brightness: 128
+      color_temp_kelvin: 3000
+      color_temp: 333
       hs_color:
+        - 27.82
+        - 56.814
       rgb_color:
+        - 255
+        - 177
+        - 110
       xy_color:
+        - 0.496
+        - 0.383
       off_with_transition: false
-      off_brightness: 128
-      friendly_name: Office Back Light
+      off_brightness:
+      friendly_name: Office Back Light Light
       supported_features: 40
-      state: 'off'
+      state: "on"
     light.office_front_light_light:
       min_color_temp_kelvin: 2202
       max_color_temp_kelvin: 4000
       min_mireds: 250
       max_mireds: 454
       supported_color_modes:
-      - color_temp
+        - color_temp
       color_mode: color_temp
       brightness: 128
-      color_temp_kelvin: 3012
+      color_temp_kelvin: 3000
       color_temp: 332
       hs_color:
-      - 27.806
-      - 56.57
+        - 27.806
+        - 56.57
       rgb_color:
-      - 255
-      - 177
-      - 110
+        - 255
+        - 177
+        - 110
       xy_color:
-      - 0.496
-      - 0.383
+        - 0.496
+        - 0.383
       off_with_transition: false
       off_brightness:
-      friendly_name: Office Front Light
+      friendly_name: Office Front Light Light
       supported_features: 40
-      state: 'on'
+      state: "on"
   icon: mdi:console-network-outline
   metadata:
     cover.office_curtains:
@@ -61,7 +68,7 @@
       entity_only: true
     light.office_front_light_light:
       entity_only: true
-- id: '1718486460756'
+- id: "1718486460756"
   name: Leave work
   entities:
     cover.office_curtains:
@@ -77,44 +84,37 @@
       min_mireds: 250
       max_mireds: 454
       supported_color_modes:
-      - color_temp
+        - color_temp
       color_mode:
-      brightness:
+      brightness: 0
       color_temp_kelvin:
-      color_temp:
+      color_temp: 3000
       hs_color:
       rgb_color:
       xy_color:
       off_with_transition: false
       off_brightness: 128
-      friendly_name: Office Back Light
+      friendly_name: Office Back Light Light
       supported_features: 40
-      state: 'off'
+      state: "off"
     light.office_front_light_light:
       min_color_temp_kelvin: 2202
       max_color_temp_kelvin: 4000
       min_mireds: 250
       max_mireds: 454
       supported_color_modes:
-      - color_temp
-      color_mode: color_temp
-      brightness: 128
-      color_temp_kelvin: 3012
-      color_temp: 332
+        - color_temp
+      color_mode:
+      brightness: 0
+      color_temp_kelvin:
+      color_temp: 3000
       hs_color:
-      - 27.806
-      - 56.57
       rgb_color:
-      - 255
-      - 177
-      - 110
       xy_color:
-      - 0.496
-      - 0.383
       off_with_transition: false
-      off_brightness:
-      friendly_name: Office Front Light
+      off_brightness: 128
+      friendly_name: Office Front Light Light
       supported_features: 40
-      state: 'on'
+      state: "off"
   icon: mdi:close-network-outline
   metadata: {}
