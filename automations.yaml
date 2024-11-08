@@ -211,23 +211,23 @@
 - id: "1717183076711"
   alias: Close curtains on sunset
   description: ""
-  trigger:
-    - platform: sun
-      event: sunset
+  triggers:
+    - event: sunset
       offset: 0
-  condition: []
-  action:
-    - device_id: 75777aee4992dfd7fefbb79520c629bc
-      domain: cover
-      entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
-      type: close
+      trigger: sun
+  conditions: []
+  actions:
+    - action: cover.close_cover
+      metadata: {}
+      data: {}
+      target:
+        area_id: office
   mode: single
 - id: "1717424745811"
   alias: "Office switch: open curtains"
   description: ""
-  trigger:
-    - platform: device
-      device_id: f620bd40ab0a3299c0b46162b86aac7d
+  triggers:
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -236,7 +236,8 @@
       command_class: 91
       subtype: Endpoint 0 Scene 004
       value: 0
-  condition:
+      trigger: device
+  conditions:
     - condition: not
       conditions:
         - condition: device
@@ -244,18 +245,18 @@
           domain: cover
           entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
           type: is_open
-  action:
-    - device_id: 75777aee4992dfd7fefbb79520c629bc
-      domain: cover
-      entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
-      type: open
+  actions:
+    - action: cover.open_cover
+      metadata: {}
+      data: {}
+      target:
+        area_id: office
   mode: single
 - id: "1717424823777"
   alias: "Office switch: close curtains"
   description: ""
-  trigger:
-    - platform: device
-      device_id: f620bd40ab0a3299c0b46162b86aac7d
+  triggers:
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -264,7 +265,8 @@
       command_class: 91
       subtype: Endpoint 0 Scene 003
       value: 0
-  condition:
+      trigger: device
+  conditions:
     - condition: not
       conditions:
         - condition: device
@@ -272,11 +274,12 @@
           domain: cover
           entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
           type: is_closed
-  action:
-    - device_id: 75777aee4992dfd7fefbb79520c629bc
-      domain: cover
-      entity_id: d1bdf03dc63ef5a1bbc725b9bf560fe9
-      type: close
+  actions:
+    - action: cover.close_cover
+      metadata: {}
+      data: {}
+      target:
+        area_id: office
   mode: single
 - id: "1717446926717"
   alias: Turn on living room TV
@@ -310,7 +313,7 @@
     input:
       motion_entity: binary_sensor.toilet_multisensor_motion_detection
       light_target:
-        entity_id: light.toilet_light_light
+        area_id: toilet
       no_motion_wait: 90
 - id: "1718200676292"
   alias: Front Yard Auto Light
@@ -322,7 +325,7 @@
     input:
       motion_entity: binary_sensor.g4_doorbell_motion
       light_target:
-        entity_id: light.front_yard_light_light
+        area_id: front_yard
       additional_conditions:
         - condition: or
           conditions:
@@ -333,9 +336,8 @@
 - id: "1718215095435"
   alias: Office Front Light controlled by Office Switch top right button
   description: Press to toggle, Hold to increase/decrease brightness.
-  trigger:
-    - platform: device
-      device_id: f620bd40ab0a3299c0b46162b86aac7d
+  triggers:
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -345,8 +347,8 @@
       subtype: Endpoint 0 Scene 002
       value: 0
       id: press
-    - platform: device
-      device_id: f620bd40ab0a3299c0b46162b86aac7d
+      trigger: device
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -356,18 +358,20 @@
       subtype: Endpoint 0 Scene 002
       value: 2
       id: hold
-  condition: []
-  action:
+      trigger: device
+  conditions: []
+  actions:
     - choose:
         - conditions:
             - condition: trigger
               id:
                 - press
           sequence:
-            - type: toggle
-              device_id: 1ca8e922258f21814e3dc50869663e30
-              entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
-              domain: light
+            - action: light.toggle
+              metadata: {}
+              data: {}
+              target:
+                device_id: 1ca8e922258f21814e3dc50869663e30
         - conditions:
             - condition: trigger
               id:
@@ -380,15 +384,19 @@
                       attribute: brightness
                       below: 250
                   sequence:
-                    - device_id: 1ca8e922258f21814e3dc50869663e30
-                      domain: light
-                      entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
-                      type: brightness_increase
+                    - action: light.turn_on
+                      metadata: {}
+                      data:
+                        brightness_step_pct: 10
+                      target:
+                        device_id: 1ca8e922258f21814e3dc50869663e30
               default:
-                - device_id: 1ca8e922258f21814e3dc50869663e30
-                  domain: light
-                  entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
-                  type: brightness_decrease
+                - action: light.turn_on
+                  metadata: {}
+                  data:
+                    brightness_step_pct: -10
+                  target:
+                    device_id: 1ca8e922258f21814e3dc50869663e30
   mode: single
 - id: "1718218472644"
   alias: Hallway Auto Lights triggered by Front Door
@@ -416,7 +424,7 @@
     input:
       motion_entity: binary_sensor.smallway_motion_motion
       light_target:
-        entity_id: light.smallway_light_switch
+        area_id: small_hallway
       no_motion_wait: 30
 - id: "1718473101835"
   alias: Basement Auto Light triggered by Garage Door
@@ -449,71 +457,75 @@
 - id: "1718477092437"
   alias: Hallway Lights toggled by Hallway Switch
   description: ""
-  trigger:
-    - platform: device
-      type: changed_states
+  triggers:
+    - type: changed_states
       device_id: 17d5bd308ecc8a23a4a8b36ba47fb585
       entity_id: bd5b1f03d01b0979a6c92338a2a13717
       domain: switch
-  condition: []
-  action:
-    - type: toggle
-      device_id: 3ac4907cb0b4ad72f1fd6153b75e9cc8
-      entity_id: 2f59f824e761191a665688ac274bf57f
-      domain: light
+      trigger: device
+  conditions: []
+  actions:
+    - action: light.toggle
+      metadata: {}
+      data: {}
+      target:
+        device_id: 3ac4907cb0b4ad72f1fd6153b75e9cc8
   mode: single
 - id: "1718752490414"
   alias: Towel Warmer enable in the morning
   description: ""
-  trigger:
-    - platform: time
-      at: 07:00:00
-  condition: []
-  action:
-    - type: turn_on
-      device_id: 464da44378e18ac7a0f135d0101529b1
-      entity_id: b3dfb2ab8d9fc27211ddfc0af4318b4f
-      domain: switch
+  triggers:
+    - at: 07:00:00
+      trigger: time
+  conditions: []
+  actions:
+    - action: switch.turn_on
+      metadata: {}
+      data: {}
+      target:
+        device_id: 464da44378e18ac7a0f135d0101529b1
   mode: single
 - id: "1718752536845"
   alias: Towel Warmer disable in the evening
   description: ""
-  trigger:
-    - platform: time
-      at: "21:00:00"
-  condition: []
-  action:
-    - type: turn_off
-      device_id: 464da44378e18ac7a0f135d0101529b1
-      entity_id: b3dfb2ab8d9fc27211ddfc0af4318b4f
-      domain: switch
+  triggers:
+    - at: "22:00:00"
+      trigger: time
+  conditions: []
+  actions:
+    - action: switch.turn_off
+      metadata: {}
+      data: {}
+      target:
+        device_id: 464da44378e18ac7a0f135d0101529b1
   mode: single
 - id: "1718814525340"
   alias: Kitchen Bench Lights toggled by Unknown Kitchen North Switch
   description: ""
-  trigger:
-    - platform: device
-      type: changed_states
+  triggers:
+    - type: changed_states
       device_id: 10a91df9e250ac37f97ce8f735f2724e
       entity_id: a1f4909bddb03ba63e716bbb54ceaeb4
       domain: switch
-  condition: []
-  action:
-    - type: toggle
-      device_id: 1cdd6fa955db8cd544aa569a5573e766
-      entity_id: 34c02e482d0dc7c3f05bcd68f6d89b3e
-      domain: light
+      trigger: device
+  conditions: []
+  actions:
+    - action: light.toggle
+      metadata: {}
+      data: {}
+      target:
+        device_id: 1cdd6fa955db8cd544aa569a5573e766
   mode: single
 - id: "1718825185048"
   alias: Kitchen Curtain is opened by Unknown Kitchen South Switch
   description: ""
-  trigger:
-    - platform: state
-      entity_id:
+  triggers:
+    - entity_id:
         - switch.unknown_kitchen_south_switch_switch
       from: "off"
       to: "on"
-  condition:
+      trigger: state
+  conditions:
     - condition: not
       conditions:
         - condition: device
@@ -521,11 +533,12 @@
           domain: cover
           entity_id: 2c466ba734a70ac556d00fcb9021dd36
           type: is_open
-  action:
-    - device_id: 02cde5166bb859522653908da91f67c3
-      domain: cover
-      entity_id: 2c466ba734a70ac556d00fcb9021dd36
-      type: open
+  actions:
+    - action: cover.open_cover
+      metadata: {}
+      data: {}
+      target:
+        area_id: kitchen
   mode: single
 - id: "1718825566036"
   alias: Back Yard Auto Light
@@ -537,7 +550,7 @@
     input:
       motion_entity: binary_sensor.g5_flex_motion
       light_target:
-        entity_id: light.back_yard_light_switch
+        area_id: back_yard
       additional_conditions:
         - condition: or
           conditions:
@@ -548,57 +561,59 @@
 - id: "1720697453857"
   alias: Office Front Light toggled by Office Back Switch Bottom
   description: ""
-  trigger:
-    - platform: device
-      type: changed_states
+  triggers:
+    - type: changed_states
       device_id: 17d5bd308ecc8a23a4a8b36ba47fb585
       entity_id: 26cfcd4be57fc22dee261d4901bd5dd3
       domain: switch
-  condition: []
-  action:
-    - type: toggle
-      device_id: 1ca8e922258f21814e3dc50869663e30
-      entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
-      domain: light
+      trigger: device
+  conditions: []
+  actions:
+    - action: light.toggle
+      metadata: {}
+      data: {}
+      target:
+        device_id: 1ca8e922258f21814e3dc50869663e30
   mode: single
 - id: "1720697593635"
   alias: Office Back Light toggled by Office Back Switch Top
   description: ""
-  trigger:
-    - platform: device
-      type: changed_states
+  triggers:
+    - type: changed_states
       device_id: 8493ad33d9f7917e0a42e1fb5725f9ef
       entity_id: 9569f469aabaf4700b24d6e83f8b5ee9
       domain: switch
-  condition: []
-  action:
-    - type: toggle
-      device_id: c4b6030b936448bbad3cb047d7990df8
-      entity_id: 13125dfd884c1ddcc1969c54e2970e5e
-      domain: light
+      trigger: device
+  conditions: []
+  actions:
+    - action: light.toggle
+      metadata: {}
+      data: {}
+      target:
+        device_id: c4b6030b936448bbad3cb047d7990df8
   mode: single
 - id: "1720697694856"
   alias: Office Front Light toggled by Hallway Switch Left
   description: ""
-  trigger:
-    - platform: device
-      type: changed_states
+  triggers:
+    - type: changed_states
       device_id: 8493ad33d9f7917e0a42e1fb5725f9ef
       entity_id: 4b4f0386927eeed0ac7f46e0499a4302
       domain: switch
-  condition: []
-  action:
-    - type: toggle
-      device_id: 1ca8e922258f21814e3dc50869663e30
-      entity_id: 7b7f713bdab95eccdb1c6988ecb441c4
-      domain: light
+      trigger: device
+  conditions: []
+  actions:
+    - action: light.toggle
+      metadata: {}
+      data: {}
+      target:
+        device_id: 1ca8e922258f21814e3dc50869663e30
   mode: single
 - id: "1720718449190"
   alias: "Office switch: toggle back light"
   description: ""
-  trigger:
-    - platform: device
-      device_id: f620bd40ab0a3299c0b46162b86aac7d
+  triggers:
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
       domain: zwave_js
       type: event.value_notification.central_scene
       property: scene
@@ -607,12 +622,14 @@
       command_class: 91
       subtype: Endpoint 0 Scene 001
       value: 0
-  condition: []
-  action:
-    - type: toggle
-      device_id: c4b6030b936448bbad3cb047d7990df8
-      entity_id: 13125dfd884c1ddcc1969c54e2970e5e
-      domain: light
+      trigger: device
+  conditions: []
+  actions:
+    - action: light.toggle
+      metadata: {}
+      data: {}
+      target:
+        device_id: c4b6030b936448bbad3cb047d7990df8
   mode: single
 - id: "1721164596666"
   alias: Washing machine done notification
@@ -686,13 +703,13 @@
 - id: "1723103168887"
   alias: Kitchen Curtain is closed by Unknown Kitchen South Switch
   description: ""
-  trigger:
-    - platform: state
-      entity_id:
+  triggers:
+    - entity_id:
         - switch.unknown_kitchen_south_switch_switch
       from: "on"
       to: "off"
-  condition:
+      trigger: state
+  conditions:
     - condition: not
       conditions:
         - condition: device
@@ -700,11 +717,12 @@
           domain: cover
           entity_id: 2c466ba734a70ac556d00fcb9021dd36
           type: is_closed
-  action:
-    - device_id: 02cde5166bb859522653908da91f67c3
-      domain: cover
-      entity_id: 2c466ba734a70ac556d00fcb9021dd36
-      type: close
+  actions:
+    - action: cover.close_cover
+      metadata: {}
+      data: {}
+      target:
+        area_id: kitchen
   mode: single
 - id: "1724922622736"
   alias: Notify when to enable/disable forced Bypass Valve
