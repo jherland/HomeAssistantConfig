@@ -802,18 +802,18 @@
 - id: "1725614457662"
   alias: Espresso Machine reminder
   description: Notify when espresso machine is on for more than half an hour.
-  trigger:
-    - platform: device
-      type: turned_on
+  triggers:
+    - type: turned_on
       device_id: 36d09d5b3b6a0fa142e1b15cde05452c
       entity_id: 7445552922caf15b977d2e69c4779b34
       domain: switch
       for:
-        hours: 0
-        minutes: 45
+        hours: 1
+        minutes: 0
         seconds: 0
-  condition: []
-  action:
+      trigger: device
+  conditions: []
+  actions:
     - data:
         data:
           ttl: 0
