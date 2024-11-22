@@ -827,6 +827,35 @@
         message: Espresso machine is still on
       action: notify.mobile_app_sm_g970f
   mode: single
+- id: "1731283258102"
+  alias: 2nd Stairs Auto Lights
+  description: Turn on 2nd stairs light when motion is detected in 2nd stairs
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.2nd_stairs_motion_motion
+      light_target:
+        entity_id: light.tech_room_dual_light_relay_2
+      no_motion_wait: 60
+- id: "1731283486937"
+  alias: 2nd Stairs Auto Lights triggered by Upstairs Sliding Door
+  description: ""
+  triggers:
+    - type: opened
+      device_id: fbf54465cb72b4cb9193a30ae5ee7b01
+      entity_id: deee8c18363104da4524d829289b8c5d
+      domain: binary_sensor
+      trigger: device
+  conditions: []
+  actions:
+    - metadata: {}
+      data:
+        skip_condition: true
+      target:
+        entity_id:
+          - automation.2nd_stairs_light_controlled_by_2nd_stairs_motion
+      action: automation.trigger
+  mode: single
 - id: "1731718005326"
   alias: Office Front Wall Switch
   description: Button assignments for Office Front Wall Switch
