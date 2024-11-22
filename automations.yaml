@@ -827,3 +827,183 @@
         message: Espresso machine is still on
       action: notify.mobile_app_sm_g970f
   mode: single
+- id: "1731718005326"
+  alias: Office Front Wall Switch
+  description: Button assignments for Office Front Wall Switch
+  triggers:
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "001"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 001
+      trigger: device
+      id: Left Up Press
+      value: 0
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "001"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 001
+      trigger: device
+      id: Left Up Hold
+      value: 2
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "003"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 003
+      trigger: device
+      id: Left Down Press
+      value: 0
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "003"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 003
+      trigger: device
+      id: Left Down Hold
+      value: 2
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "002"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 002
+      trigger: device
+      id: Right Up Press
+      value: 0
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "002"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 002
+      trigger: device
+      id: Right Up Hold
+      value: 2
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "004"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 004
+      trigger: device
+      id: Right Down Press
+      value: 0
+    - device_id: f620bd40ab0a3299c0b46162b86aac7d
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "004"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 004
+      trigger: device
+      id: Right Down Hold
+      value: 2
+  conditions: []
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - Left Up Press
+          sequence:
+            - action: light.toggle
+              metadata: {}
+              data: {}
+              target:
+                device_id: c4b6030b936448bbad3cb047d7990df8
+        - conditions:
+            - condition: trigger
+              id:
+                - Left Up Hold
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                brightness_step_pct: 5
+              target:
+                device_id: c4b6030b936448bbad3cb047d7990df8
+        - conditions:
+            - condition: trigger
+              id:
+                - Left Down Press
+          sequence:
+            - action: cover.close_cover
+              metadata: {}
+              data: {}
+              target:
+                area_id: office
+        - conditions:
+            - condition: trigger
+              id:
+                - Left Down Hold
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                brightness_step_pct: -5
+              target:
+                device_id: c4b6030b936448bbad3cb047d7990df8
+        - conditions:
+            - condition: trigger
+              id:
+                - Right Up Press
+          sequence:
+            - action: light.toggle
+              metadata: {}
+              data: {}
+              target:
+                device_id: 1ca8e922258f21814e3dc50869663e30
+        - conditions:
+            - condition: trigger
+              id:
+                - Right Up Hold
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                brightness_step_pct: 5
+              target:
+                device_id: 1ca8e922258f21814e3dc50869663e30
+        - conditions:
+            - condition: trigger
+              id:
+                - Right Down Press
+          sequence:
+            - action: cover.open_cover
+              metadata: {}
+              data: {}
+              target:
+                area_id: office
+        - conditions:
+            - condition: trigger
+              id:
+                - Right Down Hold
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                brightness_step_pct: -5
+              target:
+                device_id: 1ca8e922258f21814e3dc50869663e30
+  mode: single
