@@ -856,6 +856,230 @@
           - automation.2nd_stairs_light_controlled_by_2nd_stairs_motion
       action: automation.trigger
   mode: single
+- id: "1731698738612"
+  alias: Living Room Wall Switch
+  description: Button assignments for Living Room Wall Switch
+  triggers:
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "001"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 001
+      trigger: device
+      value: 0
+      id: Left Up Press
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "001"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 001
+      trigger: device
+      value: 2
+      id: Left Up Hold
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "002"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 002
+      trigger: device
+      id: Left Down Press
+      value: 0
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "002"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 002
+      trigger: device
+      id: Left Down Hold
+      value: 2
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "003"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 003
+      trigger: device
+      id: Middle Up Press
+      value: 0
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "003"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 003
+      trigger: device
+      id: Middle Up Hold
+      value: 2
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "004"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 004
+      trigger: device
+      id: Middle Down Press
+      value: 0
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "004"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 004
+      trigger: device
+      id: Middle Down Hold
+      value: 2
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "005"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 005
+      trigger: device
+      id: Right Up Press
+      value: 0
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "005"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 005
+      trigger: device
+      id: Right Up Hold
+      value: 2
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "006"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 006
+      trigger: device
+      id: Right Down Press
+      value: 0
+    - device_id: 0d7dcf21810ad18fd103a6ac644e26b4
+      domain: zwave_js
+      type: event.value_notification.central_scene
+      property: scene
+      property_key: "006"
+      endpoint: 0
+      command_class: 91
+      subtype: Endpoint 0 Scene 006
+      trigger: device
+      id: Right Down Hold
+      value: 2
+  conditions: []
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - Left Up Press
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data: {}
+              target:
+                entity_id: light.tech_room_dual_light_relay_2
+        - conditions:
+            - condition: trigger
+              id:
+                - Left Down Press
+          sequence:
+            - action: light.turn_off
+              metadata: {}
+              data: {}
+              target:
+                entity_id: light.tech_room_dual_light_relay_2
+        - conditions:
+            - condition: trigger
+              id:
+                - Middle Up Press
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data: {}
+              target:
+                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+        - conditions:
+            - condition: trigger
+              id:
+                - Middle Up Hold
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                brightness_step_pct: 5
+              target:
+                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+        - conditions:
+            - condition: trigger
+              id:
+                - Middle Down Press
+          sequence:
+            - action: light.turn_off
+              metadata: {}
+              data: {}
+              target:
+                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+        - conditions:
+            - condition: trigger
+              id:
+                - Middle Down Hold
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                brightness_step_pct: -5
+              target:
+                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+        - conditions:
+            - condition: trigger
+              id:
+                - Right Up Press
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                brightness_step_pct: 10
+              target:
+                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+        - conditions:
+            - condition: trigger
+              id:
+                - Right Down Press
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                brightness_step_pct: -10
+              target:
+                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+  mode: single
 - id: "1731718005326"
   alias: Office Front Wall Switch
   description: Button assignments for Office Front Wall Switch
