@@ -1062,23 +1062,21 @@
               id:
                 - Right Up Press
           sequence:
-            - action: light.turn_on
+            - action: cover.open_cover
               metadata: {}
-              data:
-                brightness_step_pct: 10
+              data: {}
               target:
-                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+                area_id: living_room
         - conditions:
             - condition: trigger
               id:
                 - Right Down Press
           sequence:
-            - action: light.turn_on
+            - action: cover.close_cover
               metadata: {}
-              data:
-                brightness_step_pct: -10
+              data: {}
               target:
-                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+                area_id: living_room
   mode: single
 - id: "1731718005326"
   alias: Office Front Wall Switch
