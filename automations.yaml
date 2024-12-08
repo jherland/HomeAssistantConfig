@@ -1260,3 +1260,52 @@
               target:
                 device_id: 1ca8e922258f21814e3dc50869663e30
   mode: single
+- id: "1732321411417"
+  alias: Living Room Light controlled by EP Lite
+  description: ""
+  triggers:
+    - type: occupied
+      device_id: a45fe439a66578475578781062bc6fbf
+      entity_id: c244755ac3c9aa958ea25ff1f24cd844
+      domain: binary_sensor
+      trigger: device
+      id: Enter
+    - type: not_occupied
+      device_id: a45fe439a66578475578781062bc6fbf
+      entity_id: c244755ac3c9aa958ea25ff1f24cd844
+      domain: binary_sensor
+      trigger: device
+      id: Leave
+      for:
+        hours: 0
+        minutes: 5
+        seconds: 0
+  conditions: []
+  actions:
+    - action: light.turn_on
+      metadata: {}
+      data: {}
+      target:
+        device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - Enter
+          sequence:
+            - action: light.turn_on
+              metadata: {}
+              data: {}
+              target:
+                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+        - conditions:
+            - condition: trigger
+              id:
+                - Leave
+          sequence:
+            - action: light.turn_off
+              metadata: {}
+              data: {}
+              target:
+                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+  mode: single
