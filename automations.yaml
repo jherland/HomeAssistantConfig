@@ -1022,9 +1022,10 @@
           sequence:
             - action: light.turn_on
               metadata: {}
-              data: {}
+              data:
+                kelvin: 3006
               target:
-                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+                area_id: living_room
         - conditions:
             - condition: trigger
               id:
@@ -1035,7 +1036,7 @@
               data:
                 brightness_step_pct: 5
               target:
-                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+                area_id: living_room
         - conditions:
             - condition: trigger
               id:
@@ -1045,7 +1046,7 @@
               metadata: {}
               data: {}
               target:
-                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+                area_id: living_room
         - conditions:
             - condition: trigger
               id:
@@ -1056,7 +1057,7 @@
               data:
                 brightness_step_pct: -5
               target:
-                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+                area_id: living_room
         - conditions:
             - condition: trigger
               id:
