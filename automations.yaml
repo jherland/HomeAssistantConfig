@@ -1309,3 +1309,55 @@
               target:
                 device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
   mode: single
+- id: "1732928590880"
+  alias: Meterkast power notifications
+  description: "Notify when Meterkast UPS is no longer online. "
+  triggers:
+    - trigger: state
+      entity_id:
+        - sensor.meterkast_ups_status
+      from: Online
+      id: offline
+    - trigger: state
+      entity_id:
+        - sensor.meterkast_ups_status
+      id: online
+      to: Online
+  conditions: []
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - offline
+          sequence:
+            - data:
+                data:
+                  ttl: 0
+                  priority: high
+                message: Meterkast lost power!
+              action: notify.mobile_app_sm_s901b
+            - data:
+                data:
+                  ttl: 0
+                  priority: high
+                message: Meterkast lost power!
+              action: notify.mobile_app_sm_g970f
+        - conditions:
+            - condition: trigger
+              id:
+                - online
+          sequence:
+            - data:
+                data:
+                  ttl: 0
+                  priority: high
+                message: Meterkast got power!
+              action: notify.mobile_app_sm_s901b
+            - data:
+                data:
+                  ttl: 0
+                  priority: high
+                message: Meterkast got power!
+              action: notify.mobile_app_sm_g970f
+  mode: single
