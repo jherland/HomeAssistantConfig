@@ -221,7 +221,7 @@
       metadata: {}
       data: {}
       target:
-        area_id: office
+        device_id: 75777aee4992dfd7fefbb79520c629bc
   mode: single
 - id: "1717424745811"
   alias: "Office switch: open curtains"
@@ -1205,7 +1205,7 @@
               metadata: {}
               data: {}
               target:
-                area_id: office
+                device_id: 75777aee4992dfd7fefbb79520c629bc
         - conditions:
             - condition: trigger
               id:
@@ -1247,7 +1247,7 @@
               metadata: {}
               data: {}
               target:
-                area_id: office
+                device_id: 75777aee4992dfd7fefbb79520c629bc
         - conditions:
             - condition: trigger
               id:
