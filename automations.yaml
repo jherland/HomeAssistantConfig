@@ -1316,3 +1316,13 @@
               target:
                 label_id: audio_system
   mode: single
+- id: "1733946770473"
+  alias: 1st Stairs Lights
+  description: Turn on 1st stairs light when motion is detected in 1st stairs
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.1st_stairs_motion_motion
+      light_target:
+        device_id: 7934e00e7c0b15a9354dda732a3c8926
+      no_motion_wait: 60
