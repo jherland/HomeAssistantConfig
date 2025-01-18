@@ -497,11 +497,16 @@
   alias: Office Front Light toggled by Office Back Switch Bottom
   description: ""
   triggers:
-    - type: changed_states
-      device_id: 17d5bd308ecc8a23a4a8b36ba47fb585
-      entity_id: 26cfcd4be57fc22dee261d4901bd5dd3
-      domain: switch
-      trigger: device
+    - trigger: state
+      entity_id:
+        - switch.hallway_switch_switch_2
+      from: "on"
+      to: "off"
+    - trigger: state
+      entity_id:
+        - switch.hallway_switch_switch_2
+      from: "off"
+      to: "on"
   conditions: []
   actions:
     - action: light.toggle
