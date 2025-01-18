@@ -1326,3 +1326,13 @@
       light_target:
         device_id: 7934e00e7c0b15a9354dda732a3c8926
       no_motion_wait: 60
+- id: "1733962053614"
+  alias: Upstairs Auto Lights
+  description: "Motion-controlled lights in upstairs hallway"
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.upstairs_motion_motion
+      light_target:
+        device_id: d0747de4d136fe6e5c58b67b5e6de6fd
+      no_motion_wait: 60
