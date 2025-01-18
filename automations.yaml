@@ -1278,3 +1278,41 @@
                 message: Meterkast got power!
               action: notify.mobile_app_sm_g970f
   mode: single
+- id: "1733706246677"
+  alias: Surround Receiver power controls AV Speakers power
+  description: Turn on/off all speakers when Surround receiver is turned on/off
+  triggers:
+    - trigger: state
+      entity_id:
+        - media_player.denon_dn_500av
+      to: "on"
+      id: Receiver On
+    - trigger: state
+      entity_id:
+        - media_player.denon_dn_500av
+      to: "off"
+      id: Receiver Off
+  conditions: []
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - Receiver On
+          sequence:
+            - action: switch.turn_on
+              metadata: {}
+              data: {}
+              target:
+                label_id: audio_system
+        - conditions:
+            - condition: trigger
+              id:
+                - Receiver Off
+          sequence:
+            - action: switch.turn_off
+              metadata: {}
+              data: {}
+              target:
+                label_id: audio_system
+  mode: single
