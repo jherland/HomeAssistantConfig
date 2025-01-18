@@ -530,7 +530,8 @@
       metadata: {}
       data: {}
       target:
-        device_id: c4b6030b936448bbad3cb047d7990df8
+        device_id:
+          - 09cda4cbfecc871d2aefcb24d22b2df8
   mode: single
 - id: "1720697694856"
   alias: Office Front Light toggled by Hallway Switch Left
@@ -1101,7 +1102,8 @@
               metadata: {}
               data: {}
               target:
-                device_id: c4b6030b936448bbad3cb047d7990df8
+                device_id:
+                  - 09cda4cbfecc871d2aefcb24d22b2df8
         - conditions:
             - condition: trigger
               id:
@@ -1112,7 +1114,8 @@
               data:
                 brightness_step_pct: 5
               target:
-                device_id: c4b6030b936448bbad3cb047d7990df8
+                device_id:
+                  - 09cda4cbfecc871d2aefcb24d22b2df8
         - conditions:
             - condition: trigger
               id:
@@ -1133,7 +1136,8 @@
               data:
                 brightness_step_pct: -5
               target:
-                device_id: c4b6030b936448bbad3cb047d7990df8
+                device_id:
+                  - 09cda4cbfecc871d2aefcb24d22b2df8
         - conditions:
             - condition: trigger
               id:
