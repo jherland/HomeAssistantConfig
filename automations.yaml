@@ -941,9 +941,9 @@
             - action: light.turn_on
               metadata: {}
               data:
-                kelvin: 3006
+                kelvin: 2700
               target:
-                area_id: living_room
+                entity_id: light.living_room_lights
         - conditions:
             - condition: trigger
               id:
@@ -954,7 +954,7 @@
               data:
                 brightness_step_pct: 5
               target:
-                area_id: living_room
+                entity_id: light.living_room_lights
         - conditions:
             - condition: trigger
               id:
@@ -964,7 +964,7 @@
               metadata: {}
               data: {}
               target:
-                area_id: living_room
+                entity_id: light.living_room_lights
         - conditions:
             - condition: trigger
               id:
@@ -975,7 +975,7 @@
               data:
                 brightness_step_pct: -5
               target:
-                area_id: living_room
+                entity_id: light.living_room_lights
         - conditions:
             - condition: trigger
               id:
