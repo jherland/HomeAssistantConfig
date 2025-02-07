@@ -2,7 +2,7 @@ substitutions:
   name: everything-presence-one-ec5e2c
   friendly_name: Everything Presence One ec5e2c
 packages:
-  Everything_Smart_Technology.Everything_Presence_One: github://everythingsmarthome/everything-presence-one/everything-presence-one-sen0609-co2.yaml@main
+  Everything_Smart_Technology.Everything_Presence_One: github://everythingsmarthome/everything-presence-one/everything-presence-one-sen0609-ble-co2.yaml@main
 esphome:
   name: ${name}
   name_add_mac_suffix: false

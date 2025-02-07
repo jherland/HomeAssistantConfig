@@ -64,3 +64,5 @@ custom_component:
 time:
   - platform: homeassistant
     id: homeassistant_time
+
+bluetooth_proxy:
