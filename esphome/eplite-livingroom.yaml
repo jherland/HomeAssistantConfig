@@ -1,6 +1,6 @@
 substitutions:
-  name: everything-presence-lite-60c2b8
-  friendly_name: Everything Presence Lite 60c2b8
+  name: "eplite-livingroom"
+  friendly_name: Everything Presence Lite Living Room
 packages:
   EverythingSmartTechnology.Everything_Presence_Lite: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha.yaml@main
 esphome:
