@@ -1295,3 +1295,51 @@
       light_target:
         device_id: d0747de4d136fe6e5c58b67b5e6de6fd
       no_motion_wait: 60
+- id: "1743777457767"
+  alias: Stop sunlight entering Master Bedroom
+  description:
+    Automatically lower Master Bedrooom blinds when sun is entering in
+    the afternoon. Automatically raise blinds on sunset.
+  triggers:
+    - trigger: time
+      at: "14:30:00"
+      id: afternoon
+    - event: sunset
+      offset: 0
+      trigger: sun
+      id: sunset
+  conditions:
+    - condition: or
+      conditions:
+        - condition: trigger
+          id:
+            - sunset
+        - condition: state
+          entity_id: weather.buienradar
+          state:
+            - clear-night
+            - exceptional
+            - sunny
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - afternoon
+          sequence:
+            - action: cover.close_cover
+              metadata: {}
+              data: {}
+              target:
+                area_id: bedroom
+        - conditions:
+            - condition: trigger
+              id:
+                - sunset
+          sequence:
+            - action: cover.open_cover
+              metadata: {}
+              data: {}
+              target:
+                area_id: bedroom
+  mode: single
