@@ -541,12 +541,12 @@
           priority: high
         message: Wash machine done!
       action: notify.mobile_app_sm_s901b
-    - data:
+    - action: notify.mobile_app_sm_s921b
+      data:
         data:
           ttl: 0
           priority: high
         message: Wash machine done!
-      action: notify.mobile_app_sm_g970f
   mode: single
 - id: "1722207820068"
   alias: Notify when CO2 sensors go crazy
@@ -694,12 +694,12 @@
           priority: high
         message: Espresso machine is still on
       action: notify.mobile_app_sm_s901b
-    - data:
+    - action: notify.mobile_app_sm_s921b
+      data:
+        message: Espresso machine is still on
         data:
           ttl: 0
           priority: high
-        message: Espresso machine is still on
-      action: notify.mobile_app_sm_g970f
   mode: single
 - id: "1731283258102"
   alias: 2nd Stairs Auto Lights
@@ -1287,7 +1287,7 @@
       no_motion_wait: 60
 - id: "1733962053614"
   alias: Upstairs Auto Lights
-  description: "Motion-controlled lights in upstairs hallway"
+  description: Motion-controlled lights in upstairs hallway
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
