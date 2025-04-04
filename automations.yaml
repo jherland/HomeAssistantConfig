@@ -171,42 +171,49 @@
 - id: "1717101940680"
   alias: Doorbell
   description: ""
-  trigger:
+  triggers:
     - type: occupied
-      platform: device
       device_id: e619c22ee731ba11a006681b0e19301b
       entity_id: 9292ffaca4dbf1501b8aa19df0492caa
       domain: binary_sensor
-  condition: []
-  action:
-    - service: siren.turn_on
-      metadata: {}
+      trigger: device
+  conditions: []
+  actions:
+    - metadata: {}
       data: {}
       target:
         entity_id: siren.kichen_siren_play_tone
-    - service: notify.mobile_app_sm_s901b
-      data:
+      action: siren.turn_on
+    - data:
         message: Someone is at the front door
         data:
           ttl: 0
           priority: high
-    - service: notify.mobile_app_sm_g970f
-      data:
+      action: notify.mobile_app_sm_s901b
+    - data:
         message: Someone is at the front door
         data:
           ttl: 0
           priority: high
-    - service: notify.mobile_app_galaxy_tab
+      action: notify.mobile_app_sm_g970f
+      enabled: false
+    - action: notify.mobile_app_sm_s921b
       data:
+        data:
+          ttl: 0
+          priority: high
+        message: Someone is at the front door
+    - data:
         message: Someone is at the front door
         data:
           ttl: 0
           priority: high
-    - service: notify.lg_oled_tv
-      data:
+      action: notify.mobile_app_galaxy_tab
+    - data:
         message: Someone is at the front door
         data:
           icon: /home/homeassistant/images/doorbell.png
+      action: notify.lg_oled_tv
   mode: single
 - id: "1717183076711"
   alias: Close curtains on sunset
