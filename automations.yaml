@@ -356,32 +356,38 @@
         device_id: 3ac4907cb0b4ad72f1fd6153b75e9cc8
   mode: single
 - id: "1718752490414"
-  alias: Towel Warmer enable in the morning
-  description: ""
+  alias: Towel Warmer off at night
+  description: Turn on towel warmer in the morning, and turn it off at night.
   triggers:
     - at: 07:00:00
       trigger: time
+      id: morning
+    - trigger: time
+      at: "22:00:00"
+      id: evening
   conditions: []
   actions:
-    - action: switch.turn_on
-      metadata: {}
-      data: {}
-      target:
-        device_id: 464da44378e18ac7a0f135d0101529b1
-  mode: single
-- id: "1718752536845"
-  alias: Towel Warmer disable in the evening
-  description: ""
-  triggers:
-    - at: "22:00:00"
-      trigger: time
-  conditions: []
-  actions:
-    - action: switch.turn_off
-      metadata: {}
-      data: {}
-      target:
-        device_id: 464da44378e18ac7a0f135d0101529b1
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - morning
+          sequence:
+            - action: switch.turn_on
+              metadata: {}
+              data: {}
+              target:
+                device_id: 464da44378e18ac7a0f135d0101529b1
+        - conditions:
+            - condition: trigger
+              id:
+                - evening
+          sequence:
+            - action: switch.turn_off
+              metadata: {}
+              data: {}
+              target:
+                device_id: 464da44378e18ac7a0f135d0101529b1
   mode: single
 - id: "1718814525340"
   alias: Kitchen Bench Lights toggled by Unknown Kitchen North Switch
