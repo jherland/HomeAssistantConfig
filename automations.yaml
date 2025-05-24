@@ -1354,3 +1354,72 @@
               target:
                 area_id: bedroom
   mode: single
+- id: "1748094220557"
+  alias: Clean/Replace ventilation filters
+  description:
+    Notify when WTW unit reports that it's time to clean/replace ventilation
+    filters.
+  triggers:
+    - trigger: numeric_state
+      entity_id:
+        - sensor.esphome_web_10c200_40200_error_number
+      above: 0
+      below: 3
+    - trigger: state
+      entity_id:
+        - number.esphome_web_10c200_40201_error_01_count
+        - number.esphome_web_10c200_40202_error_02_count
+  conditions: []
+  actions:
+    - data:
+        data:
+          ttl: 0
+          priority: high
+        message: Clean or replace filters in ventilation unit
+      action: notify.mobile_app_sm_s901b
+    - action: notify.mobile_app_sm_s921b
+      data:
+        message: Clean or replace filters in ventilation unit
+        data:
+          ttl: 0
+          priority: high
+  mode: single
+- id: "1748094678567"
+  alias: Ventilation errors
+  description: Notify when WTW unit reports error codes out of the ordinary
+  triggers:
+    - trigger: numeric_state
+      entity_id:
+        - sensor.esphome_web_10c200_40200_error_number
+      above: 2
+      below: 255
+    - trigger: state
+      entity_id:
+        - number.esphome_web_10c200_40203_error_03_count
+        - number.esphome_web_10c200_40204_error_04_count
+        - number.esphome_web_10c200_40211_error_11_count
+        - number.esphome_web_10c200_40212_error_12_count
+        - number.esphome_web_10c200_40213_error_13_count
+        - number.esphome_web_10c200_40214_error_14_count
+        - number.esphome_web_10c200_40215_error_15_count
+        - number.esphome_web_10c200_40216_error_16_count
+        - number.esphome_web_10c200_40217_error_17_count
+        - number.esphome_web_10c200_40218_error_18_count
+        - number.esphome_web_10c200_40219_error_19_count
+        - number.esphome_web_10c200_40220_error_20_count
+        - number.esphome_web_10c200_40221_error_21_count
+        - number.esphome_web_10c200_40222_error_22_count
+        - number.esphome_web_10c200_40223_error_23_count
+        - number.esphome_web_10c200_40231_error_31_count
+        - number.esphome_web_10c200_40232_error_32_count
+        - number.esphome_web_10c200_40233_error_33_count
+        - number.esphome_web_10c200_40234_error_34_count
+  conditions: []
+  actions:
+    - data:
+        data:
+          ttl: 0
+          priority: high
+        message: Ventilation unit error!
+      action: notify.mobile_app_sm_s901b
+  mode: single
