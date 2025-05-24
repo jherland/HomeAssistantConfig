@@ -398,6 +398,17 @@
       entity_id: a1f4909bddb03ba63e716bbb54ceaeb4
       domain: switch
       trigger: device
+      enabled: false
+    - trigger: state
+      entity_id:
+        - switch.kitchen_switch
+      from: "off"
+      to: "on"
+    - trigger: state
+      entity_id:
+        - switch.kitchen_switch
+      from: "on"
+      to: "off"
   conditions: []
   actions:
     - action: light.toggle
