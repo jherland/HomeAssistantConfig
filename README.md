@@ -22,15 +22,16 @@ Dutch row house built in 2022, taken over in early 2024 with this infrastructure
     - supports Power-over-Ethernet and comes with built-in ZigBee radio/controller,
     - additional [Aeotec Z Stick 5](https://aeotec.com/products/aeotec-z-stick-gen5/) Z-Wave radio/controller connected via USB,
     - using [Tailscale](https://tailscale.com) for secure access from anywhere.
-- [Homewizard](https://www.homewizard.com) monitorting devices:
-    - [Wi-Fi P1 meter](https://www.homewizard.com/shop/wi-fi-p1-meter-rj12-2/) measure power to/from grid.
+- [Homewizard](https://www.homewizard.com) devices:
+    - [Plug-in Battery](https://www.homewizard.com/nl/plug-in-battery/) stores excess solar energy in daytime and supplies back to the house at night.
+    - [Wi-Fi P1 meter](https://www.homewizard.com/shop/wi-fi-p1-meter-rj12-2/) measures power to/from grid.
     - [Wi-Fi Watermeter](https://www.homewizard.com/shop/wi-fi-watermeter/) measures overall water consumption.
     - [Energy sockets](https://www.homewizard.com/shop/wi-fi-energy-socket-16a-set/) controls various devices and measures their energy use.
     - [Wi-Fi kWh meter 3-phase MID](https://www.homewizard.com/shop/wi-fi-kwh-meter-3-phase/) measures energy use of heat pump.
 - [Growatt ShineWiFi-X MQTT by SDR Engineering](https://www.sdr-engineering.nl/webshop/index.php?route=product/product&product_id=60) connects to the Growatt inverter and allows local monitoring (MQTT messages over local Wifi) of the solar inverter.
 - [NibePi](https://github.com/anerdins/nibepi) connects to heat pump over RS-485/MODBUS for more monitoring/control.
 - [Itho CVE RFT WiFi add-on](https://www.tindie.com/products/nrgwatch/itho-cve-rft-wifi-add-on/) monitoring the wireless communication between the Itho [RFT CO2](https://www.ithodaalderop.nl/nl-NL/professional/product/04-00045)/[RFT RV](https://www.ithodaalderop.nl/nl-NL/professional/product/04-00046) in-room units and the main ventilation unit. (This currently does not control the ventilation unit, but monitors the sensor values and commands being sent from the in-room units.)
-- [M5Stack ATOM Lite ESP32](https://shop.m5stack.com/products/atom-lite-esp32-development-kit) with an [ATOMIC RS485 Base](https://shop.m5stack.com/products/atomic-rs485-base) connected to the MODBus port on the Itho HRU 400 ventilation unit. This provides insight into the operation of the ventilation, and some control of e.g. the bypass valve. Then ESPHome configuration is available [here](esphome/esphome-web-10c200.yaml).
+- [M5Stack ATOM Lite ESP32](https://shop.m5stack.com/products/atom-lite-esp32-development-kit) with an [ATOMIC RS485 Base](https://shop.m5stack.com/products/atomic-rs485-base) connected to the MODBus port on the Itho HRU 400 ventilation unit. This provides insight into the operation of the ventilation, and some control of e.g. the bypass valve. The ESPHome configuration is available [here](esphome/esphome-web-10c200.yaml).
 - Various Zigbee/Z-Wave/Wifi smart relays mounted behind light switches and light fixtures to provide wireless control of almost all lights.
 - Various other smart plugs (in decreasing order of preference):
     - [HomeWizard Energy sockets](https://www.homewizard.com/shop/wi-fi-energy-socket-16a-set/) (local WiFi) as already mentioned above
@@ -39,8 +40,10 @@ Dutch row house built in 2022, taken over in early 2024 with this infrastructure
     - [Hombli Smart Socket Duo](https://www.hombli.com/products/smart-socket-duo/) (WiFi via Tuya cloud)
     - [Nexa AN-180](https://nexa.se/smarta-hem/z-wave/an-180) (Z-Wave, only <1500W)
 - Various other sensors:
+    - Everything Presence [Lite](https://shop.everythingsmart.io/products/everything-presence-lite) and [One](https://shop.everythingsmart.io/products/everything-presence-one-kit) from [Everything Smart Technology](https://everythingsmart.io) (ESPHome/Wifi)
     - Airthings air quality sensors, [View Plus](https://www.airthings.com/view-plus) and [Wave Plus](https://www.airthings.com/wave-plus) (via cloud)
-    - Various [IKEA TRÅDFRI]() bulbs (ZigBee)
+    - Various [Philips Hue](https://www.philips-hue.com/en-us/products/smart-light-bulbs?filters=FK_HUEWIRELESS_GU10) bulbs (ZigBee)
+    - Various [IKEA TRÅDFRI](https://www.ikea.com/us/en/cat/tradfri-series-700598/?filters=f-base%3A49107%7C49105%7C53270) bulbs (ZigBee)
     - [IKEA BADRING](https://www.ikea.com/nl/en/p/badring-water-leakage-sensor-smart-60504352/) water leak sensors (ZigBee)
     - [IKEA PARASOLL](https://www.ikea.com/nl/en/p/parasoll-door-window-sensor-smart-white-80504308/) door/window sensor (ZigBee)
     - [Aeotec MultiSensor 7](https://aeotec.com/products/aeotec-multi-sensor-6/) presence/environment sensor (Z-Wave)
