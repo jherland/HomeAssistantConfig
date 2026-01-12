@@ -1,0 +1,58 @@
+blueprint:
+  name: Robb smarrt rotary button
+  description: "This blueprint is for the Robb smarrt rotary button panel (ROBB
+    ROB_200-018-0) when used with ZHA."
+  domain: automation
+  author: Johan Herland
+  input:
+    input_button:
+      name: Button
+      description: Rotary button to use
+      selector:
+        device:
+          filter:
+            - integration: zha
+              model: ROB_200-018-0
+          multiple: false
+    target_light:
+      name: Light
+      description: Dimmable light to be controlled
+      selector:
+        target:
+          entity:
+            domain:
+              - light
+mode: restart
+max_exceeded: silent
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input input_button
+actions:
+  - variables:
+      cmd: "{{ trigger.event.data.command }}"
+  - choose:
+      - conditions:
+          - '{{ cmd == "on" }}'
+        sequence:
+          - action: light.turn_on
+            target: !input target_light
+            data: >
+              {{ { "transition": 0.5 } }}
+      - conditions:
+          - '{{ cmd == "off" }}'
+        sequence:
+          - action: light.turn_off
+            target: !input target_light
+            data: >
+              {{ { "transition": 0.5 } }}
+      - conditions:
+          - '{{ cmd == "move_to_level_with_on_off" }}'
+        sequence:
+          - variables:
+              brightness: "{{ trigger.event.data.params.level }}"
+          - action: light.turn_on
+            target: !input target_light
+            data: >
+              {{ { "brightness": brightness, "transition": 0.1 } }}
