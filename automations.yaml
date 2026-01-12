@@ -672,8 +672,20 @@
   mode: single
 - id: "1725614457662"
   alias: Espresso Machine reminder
-  description: Notify when espresso machine is on for more than half an hour.
+  description:
+    Notify when espresso machine is ready to go (after 15m) or when we
+    forgot to turn off (after 1h).
   triggers:
+    - type: turned_on
+      device_id: 36d09d5b3b6a0fa142e1b15cde05452c
+      entity_id: 7445552922caf15b977d2e69c4779b34
+      domain: switch
+      for:
+        hours: 0
+        minutes: 15
+        seconds: 0
+      trigger: device
+      id: After 15m
     - type: turned_on
       device_id: 36d09d5b3b6a0fa142e1b15cde05452c
       entity_id: 7445552922caf15b977d2e69c4779b34
@@ -683,20 +695,41 @@
         minutes: 0
         seconds: 0
       trigger: device
+      id: After 1h
   conditions: []
   actions:
-    - data:
-        data:
-          ttl: 0
-          priority: high
-        message: Espresso machine is still on
-      action: notify.mobile_app_sm_s901b
-    - action: notify.mobile_app_sm_s921b
-      data:
-        message: Espresso machine is still on
-        data:
-          ttl: 0
-          priority: high
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - After 15m
+          sequence:
+            - action: notify.mobile_app_sm_s921b
+              data:
+                data:
+                  ttl: 0
+                  priority: high
+                  tag: espresso_machine
+                message: Coffee?
+        - conditions:
+            - condition: trigger
+              id:
+                - After 1h
+          sequence:
+            - data:
+                data:
+                  ttl: 0
+                  priority: high
+                  tag: espresso_machine
+                message: Espresso machine is still on
+              action: notify.mobile_app_sm_s901b
+            - action: notify.mobile_app_sm_s921b
+              data:
+                message: Espresso machine is still on
+                data:
+                  ttl: 0
+                  priority: high
+                  tag: espresso_machine
   mode: single
 - id: "1731283258102"
   alias: 2nd Stairs Auto Lights
