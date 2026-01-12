@@ -190,25 +190,12 @@
           ttl: 0
           priority: high
       action: notify.mobile_app_sm_s901b
-    - data:
-        message: Someone is at the front door
-        data:
-          ttl: 0
-          priority: high
-      action: notify.mobile_app_sm_g970f
-      enabled: false
     - action: notify.mobile_app_sm_s921b
       data:
         data:
           ttl: 0
           priority: high
         message: Someone is at the front door
-    - data:
-        message: Someone is at the front door
-        data:
-          ttl: 0
-          priority: high
-      action: notify.mobile_app_galaxy_tab
     - data:
         message: Someone is at the front door
         data:
@@ -415,7 +402,8 @@
       metadata: {}
       data: {}
       target:
-        device_id: 1cdd6fa955db8cd544aa569a5573e766
+        device_id:
+          - 55f0092c8602aceaa824eed0f4b4dcf1
   mode: single
 - id: "1718825185048"
   alias: Kitchen Curtain is opened by Unknown Kitchen South Switch
@@ -544,12 +532,7 @@
         data:
           ttl: 0
           priority: high
-        message: Wash machine done!
-      action: notify.mobile_app_galaxy_tab
-    - data:
-        data:
-          ttl: 0
-          priority: high
+          tag: washing_machine
         message: Wash machine done!
       action: notify.mobile_app_sm_s901b
     - action: notify.mobile_app_sm_s921b
@@ -557,6 +540,7 @@
         data:
           ttl: 0
           priority: high
+          tag: washing_machine
         message: Wash machine done!
   mode: single
 - id: "1722207820068"
@@ -615,19 +599,18 @@
     Send notification when we want to force bypass valve open (to supply
     cooler air from outside), or when to disable forced bypass valve (i.e outside
     air is warmer than inside).
-  trigger:
-    - platform: numeric_state
-      entity_id:
+  triggers:
+    - entity_id:
         - sensor.esphome_web_10c200_43063_supply_temperature_to_inside
       above: sensor.esphome_web_10c200_43033_supply_temperature_from_outside
       for:
         hours: 0
         minutes: 0
         seconds: 0
-      value_template: "{{ state.state | float - 1 }}"
+      value_template: "{{ state.state | float - 3 }}"
       id: supply-to-inside-hotter-than-supply-from-outside
-    - platform: numeric_state
-      entity_id:
+      trigger: numeric_state
+    - entity_id:
         - sensor.esphome_web_10c200_43063_supply_temperature_to_inside
       above: sensor.esphome_web_10c200_43073_exhaust_temperature_from_inside
       for:
@@ -636,7 +619,8 @@
         seconds: 0
       value_template: "{{ state.state | float - 1 }}"
       id: supply-to-inside-hotter-than-exhaust-from-inside
-  condition:
+      trigger: numeric_state
+  conditions:
     - condition: or
       conditions:
         - condition: and
@@ -655,7 +639,7 @@
             - condition: state
               entity_id: switch.esphome_web_10c200_bypass_valve
               state: "on"
-  action:
+  actions:
     - choose:
         - conditions:
             - condition: trigger
@@ -669,6 +653,7 @@
                 data:
                   ttl: 0
                   priority: high
+                  tag: bypass_valve
               action: notify.mobile_app_sm_s901b
         - conditions:
             - condition: trigger
@@ -682,6 +667,7 @@
                 data:
                   ttl: 0
                   priority: high
+                  tag: bypass_valve
               action: notify.mobile_app_sm_s901b
   mode: single
 - id: "1725614457662"
@@ -1369,12 +1355,15 @@
       entity_id:
         - number.esphome_web_10c200_40201_error_01_count
         - number.esphome_web_10c200_40202_error_02_count
+      from:
+      to:
   conditions: []
   actions:
     - data:
         data:
           ttl: 0
           priority: high
+          tag: ventilation_filter
         message: Clean or replace filters in ventilation unit
       action: notify.mobile_app_sm_s901b
     - action: notify.mobile_app_sm_s921b
@@ -1383,6 +1372,7 @@
         data:
           ttl: 0
           priority: high
+          tag: ventilation_filter
   mode: single
 - id: "1748094678567"
   alias: Ventilation errors
@@ -1414,12 +1404,15 @@
         - number.esphome_web_10c200_40232_error_32_count
         - number.esphome_web_10c200_40233_error_33_count
         - number.esphome_web_10c200_40234_error_34_count
+      from:
+      to:
   conditions: []
   actions:
     - data:
         data:
           ttl: 0
           priority: high
+          tag: ventilation_error
         message: Ventilation unit error!
       action: notify.mobile_app_sm_s901b
   mode: single
