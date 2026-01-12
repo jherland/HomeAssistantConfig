@@ -78,3 +78,12 @@ template:
           {% else %}
             mdi:washing-machine
           {% endif %}
+
+# Entities controllable via HassControl (Garmin IQ app)
+group:
+  garmin:
+    name: Garmin
+    entities:
+      - light.living_room_lights
+      - light.office_front_light_light
+      - light.kitchen_table_lights
