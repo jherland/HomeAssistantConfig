@@ -1449,6 +1449,158 @@
         message: Ventilation unit error!
       action: notify.mobile_app_sm_s901b
   mode: single
+- id: "1768163821773"
+  alias: Robb smarrt 8-button switch
+  description: ""
+  use_blueprint:
+    path: Bekkie/robb-smarrt-8-switch-ROB_200-007-0.yaml
+    input:
+      remote: 6f789cc07e6a01b3d6ff901ed1b1c23c
+      on_button_1_short:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id: light.living_room_spot_1_light
+          data:
+            transition: 1
+        - choose:
+            - conditions:
+                - condition: device
+                  type: is_off
+                  device_id: e40d3eab4778acf65130fb07fbdd0ce9
+                  entity_id: 1d31cb69aede9f6696a9b254dc56ba62
+                  domain: light
+              sequence:
+                - action: light.turn_on
+                  metadata: {}
+                  target:
+                    entity_id: light.living_room_spot_1_light
+                  data:
+                    transition: 1
+          default:
+            - action: light.turn_on
+              metadata: {}
+              target:
+                entity_id: light.living_room_spot_1_light
+              data:
+                brightness_step_pct: 10
+      off_button_1_short:
+        - action: light.turn_off
+          metadata: {}
+          target:
+            entity_id: light.living_room_spot_1_light
+          data:
+            transition: 1
+      on_button_1_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id: light.living_room_spot_1_light
+          data:
+            brightness_step_pct: 25
+      off_button_1_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id: light.living_room_spot_1_light
+          data:
+            brightness_step_pct: -25
+      on_button_2_short:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_2_light
+          data:
+            transition: 1
+      on_button_3_short:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_3_light
+          data:
+            transition: 1
+      on_button_4_short:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_4_light
+          data:
+            transition: 1
+      off_button_2_short:
+        - action: light.turn_off
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_2_light
+          data:
+            transition: 1
+      off_button_3_short:
+        - action: light.turn_off
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_3_light
+          data:
+            transition: 1
+      off_button_4_short:
+        - action: light.turn_off
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_4_light
+          data:
+            transition: 1
+      on_button_2_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_2_light
+          data:
+            brightness_step_pct: 25
+      on_button_3_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_3_light
+          data:
+            brightness_step_pct: 25
+      on_button_4_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_4_light
+          data:
+            brightness_step_pct: 25
+      off_button_2_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_2_light
+          data:
+            brightness_step_pct: -25
+      off_button_3_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_3_light
+          data:
+            brightness_step_pct: -25
+      off_button_4_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.living_room_spot_4_light
+          data:
+            brightness_step_pct: -25
 - id: "1768168113790"
   alias: Robb smarrt rotary button
   description: ""
