@@ -1423,3 +1423,15 @@
         message: Ventilation unit error!
       action: notify.mobile_app_sm_s901b
   mode: single
+- id: "1768168113790"
+  alias: Robb smarrt rotary button
+  description: ""
+  use_blueprint:
+    path: homeassistant/robb-smarrt-rotary-button.yaml
+    input:
+      remote: 22e7b0e75bd7cfe4ed26b12bcc394f66
+      light: bb786a051e5065260a041e15285f834c
+      input_button: 22e7b0e75bd7cfe4ed26b12bcc394f66
+      target_light:
+        entity_id:
+          - light.living_room_lights
