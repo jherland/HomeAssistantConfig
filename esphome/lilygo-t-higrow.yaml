@@ -165,6 +165,9 @@ sensor:
       allow_other_uses: true
     name: "${friendly_name} Battery"
     id: "${devicename}_percent"
+    icon: "mdi:battery-high"
+    device_class: "battery"
+    state_class: "measurement"
     attenuation: 12db
     accuracy_decimals: 2
     unit_of_measurement: "%"

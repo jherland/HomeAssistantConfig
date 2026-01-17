@@ -11,7 +11,6 @@ api:
   encryption:
     key: 0ThkloAsE6SrifB7/iGMN/UMOFBxsRG8Veavy0C1yRs=
 
-
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
