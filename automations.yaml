@@ -522,20 +522,20 @@
 - id: "1722207820068"
   alias: Notify when CO2 sensors go crazy
   description: Send notification when any CO2 sensor shows a value above 1500.
-  trigger:
-    - platform: numeric_state
-      entity_id:
+  triggers:
+    - entity_id:
         - sensor.ep1_co2
         - sensor.itho_office_co2
         - sensor.itho_bedroom_co2
         - sensor.itho_kitchen_co2
-        - sensor.living_room_carbon_dioxide
-        - sensor.airthings_kitchen_carbon_dioxide
+        - sensor.airthings_living_room_carbon_dioxide
+        - sensor.airthings_master_bedroom_carbon_dioxide
+        - sensor.everything_presence_lite_b1c548_co2
       above: 1500
-  condition: []
-  action:
-    - service: notify.mobile_app_sm_s901b
-      metadata: {}
+      trigger: numeric_state
+  conditions: []
+  actions:
+    - metadata: {}
       data:
         title: Crazy CO2
         message:
