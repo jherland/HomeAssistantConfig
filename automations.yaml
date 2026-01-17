@@ -405,30 +405,6 @@
         device_id:
           - 55f0092c8602aceaa824eed0f4b4dcf1
   mode: single
-- id: "1718825185048"
-  alias: Kitchen Curtain is opened by Unknown Kitchen South Switch
-  description: ""
-  triggers:
-    - entity_id:
-        - switch.unknown_kitchen_south_switch_switch
-      from: "off"
-      to: "on"
-      trigger: state
-  conditions:
-    - condition: not
-      conditions:
-        - condition: device
-          device_id: 02cde5166bb859522653908da91f67c3
-          domain: cover
-          entity_id: 2c466ba734a70ac556d00fcb9021dd36
-          type: is_open
-  actions:
-    - action: cover.open_cover
-      metadata: {}
-      data: {}
-      target:
-        area_id: kitchen
-  mode: single
 - id: "1718825566036"
   alias: Back Yard Auto Light
   description:
@@ -568,30 +544,7 @@
         data:
           ttl: 0
           priority: high
-  mode: single
-- id: "1723103168887"
-  alias: Kitchen Curtain is closed by Unknown Kitchen South Switch
-  description: ""
-  triggers:
-    - entity_id:
-        - switch.unknown_kitchen_south_switch_switch
-      from: "on"
-      to: "off"
-      trigger: state
-  conditions:
-    - condition: not
-      conditions:
-        - condition: device
-          device_id: 02cde5166bb859522653908da91f67c3
-          domain: cover
-          entity_id: 2c466ba734a70ac556d00fcb9021dd36
-          type: is_closed
-  actions:
-    - action: cover.close_cover
-      metadata: {}
-      data: {}
-      target:
-        area_id: kitchen
+      action: notify.mobile_app_sm_s901b
   mode: single
 - id: "1724922622736"
   alias: Notify when to enable/disable forced Bypass Valve
