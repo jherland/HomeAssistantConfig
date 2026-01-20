@@ -202,21 +202,6 @@
           icon: /home/homeassistant/images/doorbell.png
       action: notify.lg_oled_tv
   mode: single
-- id: "1717183076711"
-  alias: Close curtains on sunset
-  description: ""
-  triggers:
-    - event: sunset
-      offset: 0
-      trigger: sun
-  conditions: []
-  actions:
-    - action: cover.close_cover
-      metadata: {}
-      data: {}
-      target:
-        device_id: 75777aee4992dfd7fefbb79520c629bc
-  mode: single
 - id: "1717446926717"
   alias: Turn on living room TV
   description: Turn On Living Room TV with WakeOnLan
