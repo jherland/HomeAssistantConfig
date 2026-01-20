@@ -361,35 +361,6 @@
               target:
                 device_id: 464da44378e18ac7a0f135d0101529b1
   mode: single
-- id: "1718814525340"
-  alias: Kitchen Bench Lights toggled by Unknown Kitchen North Switch
-  description: ""
-  triggers:
-    - type: changed_states
-      device_id: 10a91df9e250ac37f97ce8f735f2724e
-      entity_id: a1f4909bddb03ba63e716bbb54ceaeb4
-      domain: switch
-      trigger: device
-      enabled: false
-    - trigger: state
-      entity_id:
-        - switch.kitchen_switch
-      from: "off"
-      to: "on"
-    - trigger: state
-      entity_id:
-        - switch.kitchen_switch
-      from: "on"
-      to: "off"
-  conditions: []
-  actions:
-    - action: light.toggle
-      metadata: {}
-      data: {}
-      target:
-        device_id:
-          - 55f0092c8602aceaa824eed0f4b4dcf1
-  mode: single
 - id: "1718825566036"
   alias: Back Yard Auto Light
   description:
@@ -1551,3 +1522,98 @@
       target_light:
         entity_id:
           - light.living_room_lights
+- id: "1768868216213"
+  alias: Kitchen North Left Switch
+  description:
+    Program the battery-powered switch on the protruding wall between the
+    kitchen sink and the bookcase. Right switch controls Kitchen Bench Lights. Left
+    switch controls bookcase lights
+  use_blueprint:
+    path: homeassistant/robb-smarrt-2-switch-ROB_200-081-0.yaml
+    input:
+      remote: a116f61b527fa742bfb1de47567ef615
+      on_button_1_short:
+        - choose:
+            - conditions:
+                - condition: state
+                  entity_id: light.kitchen_bench_lights
+                  state:
+                    - "on"
+              sequence:
+                - action: light.turn_on
+                  metadata: {}
+                  target:
+                    entity_id: light.kitchen_bench_lights
+                  data:
+                    brightness_step_pct: 10
+          default:
+            - action: light.turn_on
+              metadata: {}
+              target:
+                entity_id: light.kitchen_bench_lights
+              data: {}
+      off_button_1_short:
+        - action: light.turn_off
+          metadata: {}
+          target:
+            entity_id: light.kitchen_bench_lights
+          data: {}
+      off_button_2_short:
+        - action: light.turn_off
+          metadata: {}
+          data:
+            transition: 0.2
+          target:
+            entity_id: light.bookcase
+      on_button_2_short:
+        - choose:
+            - conditions:
+                - condition: state
+                  entity_id: light.bookcase
+                  state:
+                    - "on"
+              sequence:
+                - action: light.turn_on
+                  metadata: {}
+                  data:
+                    brightness_step_pct: 10
+                    transition: 0.1
+                  target:
+                    entity_id: light.bookcase
+          default:
+            - action: light.turn_on
+              metadata: {}
+              data:
+                transition: 0.2
+              target:
+                entity_id: light.bookcase
+      on_button_1_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id: light.kitchen_bench_lights
+          data:
+            brightness_step_pct: 10
+      off_button_1_long:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id: light.kitchen_bench_lights
+          data:
+            brightness_step_pct: -10
+      on_button_2_long:
+        - action: light.turn_on
+          metadata: {}
+          data:
+            brightness_step_pct: 10
+            transition: 0.1
+          target:
+            entity_id: light.bookcase
+      off_button_2_long:
+        - action: light.turn_on
+          metadata: {}
+          data:
+            brightness_step_pct: -10
+            transition: 0.1
+          target:
+            entity_id: light.bookcase
