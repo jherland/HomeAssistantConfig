@@ -208,7 +208,7 @@ sensor:
     attenuation: 12db
     accuracy_decimals: '${ 5 if calibration_mode else 2 }'
     unit_of_measurement: '${ "V" if calibration_mode else "µS/cm" }'
-    # device_class: '' # for now home assistant does not support this class
+    device_class: 'conductivity'
     state_class: 'measurement'
     filters:
       - calibrate_linear:
