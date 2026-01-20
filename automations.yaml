@@ -1015,11 +1015,11 @@
               id:
                 - Left Down Press
           sequence:
-            - action: cover.close_cover
+            - action: light.turn_off
               metadata: {}
               data: {}
               target:
-                device_id: 75777aee4992dfd7fefbb79520c629bc
+                device_id: 09cda4cbfecc871d2aefcb24d22b2df8
         - conditions:
             - condition: trigger
               id:
@@ -1058,11 +1058,11 @@
               id:
                 - Right Down Press
           sequence:
-            - action: cover.open_cover
+            - action: light.turn_off
               metadata: {}
-              data: {}
               target:
-                device_id: 75777aee4992dfd7fefbb79520c629bc
+                device_id: 1ca8e922258f21814e3dc50869663e30
+              data: {}
         - conditions:
             - condition: trigger
               id:
@@ -1215,7 +1215,7 @@
                 label_id: audio_system
   mode: single
 - id: "1733946770473"
-  alias: 1st Stairs Lights
+  alias: 1st Stairs Auto Lights
   description: Turn on 1st stairs light when motion is detected in 1st stairs
   use_blueprint:
     path: homeassistant/motion_light.yaml
@@ -1511,7 +1511,7 @@
           data:
             brightness_step_pct: -25
 - id: "1768168113790"
-  alias: Robb smarrt rotary button
+  alias: Living Room North Dimmer Button
   description: ""
   use_blueprint:
     path: homeassistant/robb-smarrt-rotary-button.yaml
