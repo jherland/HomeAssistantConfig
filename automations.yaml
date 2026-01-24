@@ -1604,3 +1604,22 @@
             transition: 0.1
           target:
             entity_id: light.bookcase
+- id: "1769194346264"
+  alias:
+    Kitchen Island Lights controlled by Kitchen Island Light Switch on south
+    wall
+  description: ""
+  triggers:
+    - type: changed_states
+      device_id: a68d41b27b097a44f9381f27fe16924e
+      entity_id: d2e1f6762759a175ef2dc246b157999d
+      domain: switch
+      trigger: device
+  conditions: []
+  actions:
+    - action: light.toggle
+      metadata: {}
+      target:
+        entity_id: light.kitchen_island_lights
+      data: {}
+  mode: single
