@@ -84,6 +84,6 @@ group:
   garmin:
     name: Garmin
     entities:
-      - light.living_room_lights
+      - light.lounge_lights
       - light.office_front_light_light
       - light.kitchen_table_lights
