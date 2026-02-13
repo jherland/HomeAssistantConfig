@@ -109,7 +109,7 @@
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
-      motion_entity: binary_sensor.basement_motion_motion
+      motion_entity: binary_sensor.basement_motion_occupancy_2
       light_target:
         area_id: basement
       no_motion_wait: 60
@@ -165,27 +165,27 @@
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
-      motion_entity: binary_sensor.smallway_motion_motion
+      motion_entity: binary_sensor.smallway_motion_occupancy_2
       light_target:
         area_id: small_hallway
       no_motion_wait: 30
 - id: "1718473101835"
   alias: Basement Auto Light triggered by Garage Door
   description: ""
-  trigger:
+  triggers:
     - type: opened
-      platform: device
-      device_id: 51eba2dd60daafcc2611bfac107f0a31
-      entity_id: fb7fbe04e160bf11ab9c0dbe6257b2c7
+      device_id: 059ae17009ef7ad0ee4230d22915434c
+      entity_id: 8f9497863266e0af4455a8c24b5f8913
       domain: binary_sensor
-  condition: []
-  action:
-    - service: automation.trigger
-      metadata: {}
+      trigger: device
+  conditions: []
+  actions:
+    - metadata: {}
       data:
         skip_condition: true
       target:
         entity_id: automation.basement_auto_light
+      action: automation.trigger
   mode: single
 - id: "1718474653669"
   alias: Hallway Auto Lights
@@ -193,17 +193,17 @@
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
-      motion_entity: binary_sensor.hallway_motion_motion
+      motion_entity: binary_sensor.hallway_motion_occupancy_2
       light_target:
-        device_id: 3ac4907cb0b4ad72f1fd6153b75e9cc8
+        area_id: hallway
       no_motion_wait: 60
 - id: "1718477092437"
   alias: Hallway Lights toggled by Hallway Switch
   description: ""
   triggers:
     - type: changed_states
-      device_id: 17d5bd308ecc8a23a4a8b36ba47fb585
-      entity_id: bd5b1f03d01b0979a6c92338a2a13717
+      device_id: 778118ab23b80084936ec1b8913ff12b
+      entity_id: d58b079f762d5915be4ffac87fb707f9
       domain: switch
       trigger: device
   conditions: []
@@ -236,7 +236,8 @@
               metadata: {}
               data: {}
               target:
-                device_id: 464da44378e18ac7a0f135d0101529b1
+                device_id:
+                  - a6751bb806706930a6bb384634aab131
         - conditions:
             - condition: trigger
               id:
@@ -246,7 +247,8 @@
               metadata: {}
               data: {}
               target:
-                device_id: 464da44378e18ac7a0f135d0101529b1
+                device_id:
+                  - a6751bb806706930a6bb384634aab131
   mode: single
 - id: "1718825566036"
   alias: Back Yard Auto Light
@@ -272,21 +274,26 @@
   triggers:
     - trigger: state
       entity_id:
-        - switch.hallway_switch_switch_2
-      from: "on"
-      to: "off"
+        - switch.hallway_light_switches_2
+      from:
+        - "on"
+      to:
+        - "off"
     - trigger: state
       entity_id:
-        - switch.hallway_switch_switch_2
-      from: "off"
-      to: "on"
+        - switch.hallway_light_switches_2
+      from:
+        - "off"
+      to:
+        - "on"
   conditions: []
   actions:
     - action: light.toggle
       metadata: {}
       data: {}
       target:
-        device_id: 1ca8e922258f21814e3dc50869663e30
+        device_id:
+          - dce5a1ef0cf8db54cdc838e3fab12095
   mode: single
 - id: "1720697593635"
   alias: Office Back Light toggled by Office Back Switch Top
@@ -303,8 +310,7 @@
       metadata: {}
       data: {}
       target:
-        device_id:
-          - 09cda4cbfecc871d2aefcb24d22b2df8
+        entity_id: light.office_back_light
   mode: single
 - id: "1720697694856"
   alias: Office Front Light toggled by Hallway Switch Left
@@ -321,7 +327,8 @@
       metadata: {}
       data: {}
       target:
-        device_id: 1ca8e922258f21814e3dc50869663e30
+        device_id:
+          - dce5a1ef0cf8db54cdc838e3fab12095
   mode: single
 - id: "1721164596666"
   alias: Washing machine done notification
@@ -340,8 +347,9 @@
       trigger: state
   conditions:
     - condition: state
-      entity_id: binary_sensor.washing_machine_door_opening
-      state: "off"
+      entity_id: binary_sensor.washing_machine_door_contact
+      state:
+        - "off"
       for:
         hours: 0
         minutes: 15
@@ -529,21 +537,21 @@
   mode: single
 - id: "1731283258102"
   alias: 2nd Stairs Auto Lights
-  description: Turn on 2nd stairs light when motion is detected in 2nd stairs
+  description: ""
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
-      motion_entity: binary_sensor.2nd_stairs_motion_motion
+      motion_entity: binary_sensor.2nd_stairs_occupancy
       light_target:
-        entity_id: light.tech_room_dual_light_relay_2
-      no_motion_wait: 60
+        area_id: 2nd_stairs
+      no_motion_wait: 30
 - id: "1731283486937"
   alias: 2nd Stairs Auto Lights triggered by Upstairs Sliding Door
   description: ""
   triggers:
     - type: opened
-      device_id: fbf54465cb72b4cb9193a30ae5ee7b01
-      entity_id: deee8c18363104da4524d829289b8c5d
+      device_id: a08f8c6f957c732ccbb035fdd0f7460d
+      entity_id: 492e1666c5858af1932dc5408f37b353
       domain: binary_sensor
       trigger: device
   conditions: []
@@ -552,8 +560,7 @@
       data:
         skip_condition: true
       target:
-        entity_id:
-          - automation.2nd_stairs_light_controlled_by_2nd_stairs_motion
+        entity_id: automation.2nd_stairs_light_controlled_by_2nd_stairs_motion
       action: automation.trigger
   mode: single
 - id: "1731698738612"
@@ -704,7 +711,7 @@
               metadata: {}
               data: {}
               target:
-                entity_id: light.tech_room_dual_light_relay_2
+                area_id: 2nd_stairs
         - conditions:
             - condition: trigger
               id:
@@ -714,7 +721,7 @@
               metadata: {}
               data: {}
               target:
-                entity_id: light.tech_room_dual_light_relay_2
+                area_id: 2nd_stairs
         - conditions:
             - condition: trigger
               id:
@@ -722,10 +729,10 @@
           sequence:
             - action: light.turn_on
               metadata: {}
-              data:
-                kelvin: 2700
+              data: {}
               target:
-                entity_id: light.lounge_lights
+                entity_id:
+                  - light.lounge_lights_2
         - conditions:
             - condition: trigger
               id:
@@ -736,7 +743,8 @@
               data:
                 brightness_step_pct: 5
               target:
-                entity_id: light.lounge_lights
+                entity_id:
+                  - light.lounge_lights_2
         - conditions:
             - condition: trigger
               id:
@@ -746,7 +754,8 @@
               metadata: {}
               data: {}
               target:
-                entity_id: light.lounge_lights
+                entity_id:
+                  - light.lounge_lights_2
         - conditions:
             - condition: trigger
               id:
@@ -757,7 +766,8 @@
               data:
                 brightness_step_pct: -5
               target:
-                entity_id: light.lounge_lights
+                entity_id:
+                  - light.lounge_lights_2
         - conditions:
             - condition: trigger
               id:
@@ -883,8 +893,7 @@
               metadata: {}
               data: {}
               target:
-                device_id:
-                  - 09cda4cbfecc871d2aefcb24d22b2df8
+                entity_id: light.office_back_light
         - conditions:
             - condition: trigger
               id:
@@ -895,8 +904,7 @@
               data:
                 brightness_step_pct: 5
               target:
-                device_id:
-                  - 09cda4cbfecc871d2aefcb24d22b2df8
+                entity_id: light.office_back_light
         - conditions:
             - condition: trigger
               id:
@@ -906,7 +914,7 @@
               metadata: {}
               data: {}
               target:
-                device_id: 09cda4cbfecc871d2aefcb24d22b2df8
+                entity_id: light.office_back_light
         - conditions:
             - condition: trigger
               id:
@@ -917,8 +925,7 @@
               data:
                 brightness_step_pct: -5
               target:
-                device_id:
-                  - 09cda4cbfecc871d2aefcb24d22b2df8
+                entity_id: light.office_back_light
         - conditions:
             - condition: trigger
               id:
@@ -928,7 +935,8 @@
               metadata: {}
               data: {}
               target:
-                device_id: 1ca8e922258f21814e3dc50869663e30
+                device_id:
+                  - dce5a1ef0cf8db54cdc838e3fab12095
         - conditions:
             - condition: trigger
               id:
@@ -939,7 +947,8 @@
               data:
                 brightness_step_pct: 5
               target:
-                device_id: 1ca8e922258f21814e3dc50869663e30
+                device_id:
+                  - dce5a1ef0cf8db54cdc838e3fab12095
         - conditions:
             - condition: trigger
               id:
@@ -948,7 +957,8 @@
             - action: light.turn_off
               metadata: {}
               target:
-                device_id: 1ca8e922258f21814e3dc50869663e30
+                device_id:
+                  - dce5a1ef0cf8db54cdc838e3fab12095
               data: {}
         - conditions:
             - condition: trigger
@@ -960,56 +970,8 @@
               data:
                 brightness_step_pct: -5
               target:
-                device_id: 1ca8e922258f21814e3dc50869663e30
-  mode: single
-- id: "1732321411417"
-  alias: Living Room Light controlled by EP Lite
-  description: ""
-  triggers:
-    - type: occupied
-      device_id: a45fe439a66578475578781062bc6fbf
-      entity_id: c244755ac3c9aa958ea25ff1f24cd844
-      domain: binary_sensor
-      trigger: device
-      id: Enter
-    - type: not_occupied
-      device_id: a45fe439a66578475578781062bc6fbf
-      entity_id: c244755ac3c9aa958ea25ff1f24cd844
-      domain: binary_sensor
-      trigger: device
-      id: Leave
-      for:
-        hours: 0
-        minutes: 5
-        seconds: 0
-  conditions: []
-  actions:
-    - action: light.turn_on
-      metadata: {}
-      data: {}
-      target:
-        device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - Enter
-          sequence:
-            - action: light.turn_on
-              metadata: {}
-              data: {}
-              target:
-                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
-        - conditions:
-            - condition: trigger
-              id:
-                - Leave
-          sequence:
-            - action: light.turn_off
-              metadata: {}
-              data: {}
-              target:
-                device_id: ce8c1ddb8e57dfd64442f197ca0c1b67
+                device_id:
+                  - dce5a1ef0cf8db54cdc838e3fab12095
   mode: single
 - id: "1732928590880"
   alias: Meterkast power notifications
@@ -1103,23 +1065,23 @@
   mode: single
 - id: "1733946770473"
   alias: 1st Stairs Auto Lights
-  description: Turn on 1st stairs light when motion is detected in 1st stairs
+  description: ""
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
-      motion_entity: binary_sensor.1st_stairs_motion_motion
+      motion_entity: binary_sensor.1st_stairs_occupancy
       light_target:
-        device_id: 7934e00e7c0b15a9354dda732a3c8926
-      no_motion_wait: 60
+        area_id: 1st_stairs
+      no_motion_wait: 30
 - id: "1733962053614"
   alias: Upstairs Auto Lights
   description: Motion-controlled lights in upstairs hallway
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
-      motion_entity: binary_sensor.upstairs_motion_motion
+      motion_entity: binary_sensor.upstairs_motion_occupancy
       light_target:
-        device_id: d0747de4d136fe6e5c58b67b5e6de6fd
+        area_id: upstairs
       no_motion_wait: 60
 - id: "1743777457767"
   alias: Stop sunlight entering Master Bedroom
