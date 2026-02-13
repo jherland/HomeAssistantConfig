@@ -84,12 +84,12 @@ group:
   garmin:
     name: Garmin
     entities:
-      - light.upstairs_light_light
-      - light.lounge_lights
-      - light.dining_table_lights
-      - light.bookcase
-      - light.kitchen_island_lights
-      - light.kitchen_bench_lights
-      - light.kitchen_cupboards_lights
-      - light.office_front_light_light
-      - light.office_back_light_light
+      - light.upstairs_lights
+      - light.lounge_lights_2
+      - light.dining_table_lights_2
+      - light.bookcase_ligths
+      - light.kitchen_island_lights_2
+      - light.kitchen_bench_lights_2
+      - light.kitchen_cupboards
+      - light.office_front_light
+      - light.office_back_light
