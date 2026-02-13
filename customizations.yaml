@@ -457,14 +457,14 @@ customize:
     state_class: measurement
 
   # Fix incorrent details on some Growatt entities
-  # sensor.solar_inverter_tworktimetotal:
-  #   device_class: duration
-  # sensor.solar_inverter_acpowertousertotal:
-  #   unit_of_measurement: "kWh"
-  # sensor.solar_inverter_acpowertogridtotal:
-  #   unit_of_measurement: "kWh"
-  # sensor.solar_inverter_invpowertolocalloadtotal:
-  #   unit_of_measurement: "kWh"
+  sensor.solar_inverter_tworktimetotal:
+    device_class: duration
+  sensor.solar_inverter_acpowertousertotal:
+    unit_of_measurement: "kWh"
+  sensor.solar_inverter_acpowertogridtotal:
+    unit_of_measurement: "kWh"
+  sensor.solar_inverter_invpowertolocalloadtotal:
+    unit_of_measurement: "kWh"
 
   # Add configuration_url for NRG-ITHO-B298
   # fan.nrg_itho_b298_fan:
