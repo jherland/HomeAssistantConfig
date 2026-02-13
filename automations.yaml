@@ -1,39 +1,45 @@
 - id: "1712615457521"
   alias: Open door notification
-  description: Send notification when a door is opened
-  trigger:
+  description:
+    Send notification when a door is opened. The notification uses the
+    title of the corresponding trigger, so remember to rename each trigger appropriately.
+  triggers:
     - type: opened
-      platform: device
       device_id: 118ce1941d4e6e1c22c43dbd00cb808e
       entity_id: 7869814d7349a434137aee7ccb86dcdf
       domain: binary_sensor
+      trigger: device
+      alias: Front Door opened
     - type: opened
-      platform: device
-      device_id: 51eba2dd60daafcc2611bfac107f0a31
-      entity_id: fb7fbe04e160bf11ab9c0dbe6257b2c7
+      device_id: 059ae17009ef7ad0ee4230d22915434c
+      entity_id: 8f9497863266e0af4455a8c24b5f8913
       domain: binary_sensor
+      trigger: device
+      alias: Garage Door opened
     - type: opened
-      platform: device
-      device_id: 3dbd7ad9cc1ea49a2c10227fd8d7854a
-      entity_id: 0096705ba6c964f1ac76e7b8296199c9
+      device_id: 253599d6cfa16c07834bd350ed16b6fa
+      entity_id: e00a75e81f5fa6981a912527391ecaff
       domain: binary_sensor
-  condition:
+      trigger: device
+      alias: Back Yard Door opened
+  conditions:
     - condition: device
       device_id: 93bb9cc2c571926bfbcc747d50237b45
       domain: device_tracker
       entity_id: 00a03a286bc9472f94402cb92731fd30
       type: is_not_home
-  action:
-    - service: notify.mobile_app_sm_s901b
-      metadata: {}
+      enabled: true
+  actions:
+    - metadata: {}
       data:
-        title: Door opened
+        title: "{{ trigger.alias }}"
         message:
-          "{{ trigger.entity_id }}, Date: {{ now().strftime('%Y-%m-%d') }},
-          Time: {{ now().strftime('%H:%M:%S') }}'"
+          "{{ trigger.alias }} @ {{ now().strftime('%Y-%m-%d') }} {{ now().strftime('%H:%M:%S')
+          }}"
         data:
           ttl: 0
           priority: high
+      action: notify.mobile_app_sm_s901b
   mode: single
 - id: "1715862234975"
   alias: PVoutput
