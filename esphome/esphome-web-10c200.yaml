@@ -523,7 +523,7 @@ sensor:
   # Read-only 32-bit counters
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "44001/2 Lifetime counter"
+    name: "44001-2 Lifetime counter"
     id: hru_lifetime_counter
     register_type: holding
     address: 4000 # 0x000E
@@ -533,7 +533,7 @@ sensor:
     icon: mdi:counter
   - platform: modbus_controller
     modbus_controller_id: hru
-    name: "44003/4 Mixed flow counter"
+    name: "44003-4 Mixed flow counter"
     id: hru_mixed_flow_counter
     register_type: holding
     address: 4002 # 0x000E
