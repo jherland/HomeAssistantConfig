@@ -1,472 +1,73 @@
-customize_glob:
-  # Collect all Nibe sensors under one Nibe device
-  "sensor.nibe_*":
-    device:
-      name: "Nibe F1255-6R Heat Pump"
-      manufacturer: "Nibe"
-      model: "F1255-6R"
-      identifiers:
-        - nibe
-      configuration_url: http://192.168.1.96:1880/ui/
+# Provide missing state_class for Growatt sensors
+sensor.solar_inverter_inputpower:
+  state_class: measurement
+sensor.solar_inverter_pv1voltage:
+  state_class: measurement
+sensor.solar_inverter_pv1inputcurrent:
+  state_class: measurement
+sensor.solar_inverter_pv1inputpower:
+  state_class: measurement
+sensor.solar_inverter_pv2voltage:
+  state_class: measurement
+sensor.solar_inverter_pv2inputcurrent:
+  state_class: measurement
+sensor.solar_inverter_pv2inputpower:
+  state_class: measurement
+sensor.solar_inverter_outputpower:
+  state_class: measurement
+sensor.solar_inverter_gridfrequency:
+  state_class: measurement
+sensor.solar_inverter_l1threephasegridvoltage:
+  state_class: measurement
+sensor.solar_inverter_l1threephasegridoutputcurrent:
+  state_class: measurement
+sensor.solar_inverter_l1threephasegridoutputpower:
+  state_class: measurement
+sensor.solar_inverter_l2threephasegridvoltage:
+  state_class: measurement
+sensor.solar_inverter_l2threephasegridoutputcurrent:
+  state_class: measurement
+sensor.solar_inverter_l2threephasegridoutputpower:
+  state_class: measurement
+sensor.solar_inverter_l3threephasegridvoltage:
+  state_class: measurement
+sensor.solar_inverter_l3threephasegridoutputcurrent:
+  state_class: measurement
+sensor.solar_inverter_l3threephasegridoutputpower:
+  state_class: measurement
+sensor.solar_inverter_invertertemperature:
+  state_class: measurement
+sensor.solar_inverter_temperatureinsideipm:
+  state_class: measurement
+sensor.solar_inverter_boosttemperature:
+  state_class: measurement
+sensor.solar_inverter_dischargepower:
+  state_class: measurement
+sensor.solar_inverter_chargepower:
+  state_class: measurement
+sensor.solar_inverter_batteryvoltage:
+  state_class: measurement
+sensor.solar_inverter_soc:
+  state_class: measurement
+sensor.solar_inverter_acpowertouser:
+  state_class: measurement
+sensor.solar_inverter_acpowertogrid:
+  state_class: measurement
+sensor.solar_inverter_invpowertolocalload:
+  state_class: measurement
+sensor.solar_inverter_batterytemperature:
+  state_class: measurement
 
-customize:
-  # Provide missing unique_id and state_class for Nibe sensors
-  # sensor.nibe_alarm:
-  # sensor.nibe_allow_additive_heating:
-  # sensor.nibe_allow_cooling:
-  # sensor.nibe_allow_heating:
-  # sensor.nibe_brine_pump_state_ep14:
-  # sensor.nibe_bt1_average:
-  # sensor.nibe_bt1_average_1h:
-  # sensor.nibe_bt1_average_24h:
-  sensor.nibe_bt1_outdoor_temperature:
-    # 40004 (R) (s16): BT1 Outdoor Temperature
-    # Current outdoor temperature
-    unique_id: "f459bc67bb_40004"
-    state_class: measurement
-  # sensor.nibe_bt2_supply_temp_s1:
-  # sensor.nibe_bt25_ext_supply:
-  # sensor.nibe_bt6_hw_load:
-  # sensor.nibe_bt7_hw_top:
-  # sensor.nibe_calc_cooling_supply_s1:
-  # sensor.nibe_calc_cooling_supply_s2:
-  # sensor.nibe_calc_cooling_supply_s3:
-  # sensor.nibe_calc_cooling_supply_s4:
-  # sensor.nibe_calc_cooling_supply_s5:
-  # sensor.nibe_calc_cooling_supply_s6:
-  # sensor.nibe_calc_cooling_supply_s7:
-  # sensor.nibe_calc_cooling_supply_s8:
-  # sensor.nibe_calc_supply_s1:
-  # sensor.nibe_calc_supply_s2:
-  # sensor.nibe_calc_supply_s3:
-  # sensor.nibe_calc_supply_s4:
-  # sensor.nibe_calc_supply_s6:
-  # sensor.nibe_calc_supply_s7:
-  # sensor.nibe_calc_supply_s8:
-  # sensor.nibe_calculated_supply_s5:
-  # sensor.nibe_compr_current_max_freq:
-  # sensor.nibe_compr_current_min_freq:
-  # sensor.nibe_compr_in_power:
-  # sensor.nibe_compr_in_power_mean:
-  # sensor.nibe_compressor_frequency_actual:
-  # sensor.nibe_compressor_frequency_target:
-  # sensor.nibe_compressor_starts_eb100_ep14:
-  # sensor.nibe_compressor_state_ep14:
-  # sensor.nibe_cool_at_room_over_temp:
-  # sensor.nibe_cool_degree_minutes:
-  # sensor.nibe_cooling_allowed:
-  # sensor.nibe_cooling_blocked:
-  # sensor.nibe_cooling_with_room_sensor:
-  # sensor.nibe_cpr_status_ep14:
-  # sensor.nibe_degree_minutes_16_bit:
-  # sensor.nibe_degree_minutes_32_bit:
-  # sensor.nibe_delta_brine_pump_passive_cooling:
-  # sensor.nibe_delta_t_at_dot:
-  # sensor.nibe_dm_start_heating:
-  # sensor.nibe_dot:
-  # sensor.nibe_eb100_ep14_bt10_brine_in_temp:
-  # sensor.nibe_eb100_ep14_bt11_brine_out_temp:
-  # sensor.nibe_eb100_ep14_bt12_condensor_out:
-  # sensor.nibe_eb100_ep14_bt14_hot_gas_temp:
-  # sensor.nibe_eb100_ep14_bt15_liquid_line:
-  # sensor.nibe_eb100_ep14_bt17_suction:
-  # sensor.nibe_eb100_ep14_bt3_return_temp:
-  # sensor.nibe_ep14_gp2_brine_pump_status_ep14:
-  # sensor.nibe_eq1_state_acs_thermostat:
-  # sensor.nibe_eq1_state_acs_thermostat_heat_dump:
-  # sensor.nibe_eq1_gp20_acs_dump_signal:
-  # sensor.nibe_eq1_qn12_acs_valve:
-  # sensor.nibe_eq1_qn18_state_acs_cool_dump:
-  # sensor.nibe_eq1_qn25_state_acs_heat_dump:
-  # sensor.nibe_exhaust_fan_speed_1:
-  # sensor.nibe_exhaust_fan_speed_2:
-  # sensor.nibe_exhaust_fan_speed_3:
-  # sensor.nibe_exhaust_fan_speed_4:
-  # sensor.nibe_exhaust_fan_speed_normal:
-  # sensor.nibe_fan_mode:
-  # sensor.nibe_fan_return_time_1:
-  # sensor.nibe_fan_return_time_2:
-  # sensor.nibe_fan_return_time_3:
-  # sensor.nibe_fan_return_time_4:
-  # sensor.nibe_freeze_protection_status:
-  # sensor.nibe_gmz:
-  # sensor.nibe_gp13_passive_cool_pool:
-  # sensor.nibe_heat_at_room_under_temp:
-  # sensor.nibe_heat_curve_s1:
-  # sensor.nibe_heat_curve_s7:
-  # sensor.nibe_heat_curve_s8:
-  # sensor.nibe_heat_medium_flow_dt_actual:
-  # sensor.nibe_heat_medium_flow_dt_set_point:
-  # sensor.nibe_heat_meter_heat_cpr_and_add_total_system:
-  # sensor.nibe_heat_meter_heat_cpr_and_add_ep14:
-  # sensor.nibe_heat_meter_hw_cpr_and_add_total_system:
-  # sensor.nibe_heat_meter_hw_cpr_and_add_ep14:
-  # sensor.nibe_heat_offset_s1:
-  # sensor.nibe_heating_allowed:
-  # sensor.nibe_high_brine_in_temp:
-  # sensor.nibe_holiday_activated:
-  # sensor.nibe_hot_water_comfort_mode:
-  # sensor.nibe_hot_water_high_power_mode:
-  # sensor.nibe_hw_comfort:
-  # sensor.nibe_hw_comfort_add_status:
-  # sensor.nibe_hw_comfort_add:
-  # sensor.nibe_hw_comfort_hotwater_temperature:
-  # sensor.nibe_hw_comfort_shunt_state:
-  # sensor.nibe_hw_production:
-  # sensor.nibe_hwc_pump_status_gp11:
-  # sensor.nibe_int_el_add_power:
-  # sensor.nibe_internal_cooling_blocked:
-  # sensor.nibe_inverter_temperature:
-  # sensor.nibe_low_brine_out_temp_ep14:
-  # sensor.nibe_max_diff_vbf_bervbf:
-  # sensor.nibe_mixing_valve_state_s1:
-  # sensor.nibe_mixing_valve_state_s2:
-  # sensor.nibe_mixing_valve_state_s3:
-  # sensor.nibe_mixing_valve_state_s4:
-  # sensor.nibe_mixing_valve_state_s5:
-  # sensor.nibe_mixing_valve_state_s6:
-  # sensor.nibe_mixing_valve_state_s7:
-  # sensor.nibe_mixing_valve_state_s8:
-  # sensor.nibe_modbus40_disable_log_set:
-  # sensor.nibe_modbus40_word_swap:
-  # sensor.nibe_nibe_inverter_216_state:
-  # sensor.nibe_night_cooling:
-  # sensor.nibe_night_cooling_min_diff:
-  # sensor.nibe_night_cooling_min_diff_2:
-  # sensor.nibe_operational_mode:
-  # sensor.nibe_operational_mode_brine_medium_pump:
-  # sensor.nibe_operational_mode_heat_medium_pump:
-  # sensor.nibe_operational_mode_heat_medium_pump_cooling:
-  # sensor.nibe_passive_cool_shunt:
-  # sensor.nibe_period_heat:
-  # sensor.nibe_period_hw:
-  # sensor.nibe_period_pool:
-  sensor.nibe_periodic_hw:
-    # 47050 (R/W) (s8): Periodic HW
-    # Activates the periodic hot water generation
-    unique_id: "f459bc67bb_47050"
-    state_class: measurement
-  sensor.nibe_periodic_hw_interval:
-    # 47051 (R/W) (s8): Periodic HW Interval
-    # Interval between Periodic hot water sessions
-    unique_id: "f459bc67bb_47051"
-    state_class: measurement
-  sensor.nibe_preset_flow_clim_sys:
-    # 47442 (R/W) (u8): preset flow clim. sys.
-    # Preset flow setting for climate system. 0 = manual setting, 1 = radiator, 2 = floor heating, 3 = radiator + floor heating.
-    unique_id: "f459bc67bb_47442"
-    # state_class: measurement
-  sensor.nibe_prio:
-    # 43086 (R) (u8): Prio
-    # Indicates what heating action (HW/heat/pool) currently prioritised 10=Off 20=Hot Water 30=Heat 40=Pool 41=Pool 2 50=Transfer 60=Cooling
-    unique_id: "f459bc67bb_43086"
-    # state_class: measurement
-  sensor.nibe_room_sensor_factor_s1:
-    # 47402 (R/W) (u8): Room sensor factor S1
-    # Setting of how much the difference between set and actual room temperature should affect the supply temperature.
-    unique_id: "f459bc67bb_47402"
-    state_class: measurement
-  sensor.nibe_room_sensor_setpoint_s1:
-    # 47398 (R/W) (s16): Room sensor setpoint S1
-    # Sets the room temperature setpoint for the system
-    unique_id: "f459bc67bb_47398"
-    state_class: measurement
-  sensor.nibe_room_sensor_setpoint_s2:
-    # 47397 (R/W) (s16): Room sensor setpoint S2
-    # Sets the room temperature setpoint for the system
-    unique_id: "f459bc67bb_47397"
-    state_class: measurement
-  sensor.nibe_room_sensor_setpoint_s3:
-    # 47396 (R/W) (s16): Room sensor setpoint S3
-    # Sets the room temperature setpoint for the system
-    unique_id: "f459bc67bb_47396"
-    state_class: measurement
-  sensor.nibe_room_sensor_setpoint_s4:
-    # 47395 (R/W) (s16): Room sensor setpoint S4
-    # Sets the room temperature setpoint for the system
-    unique_id: "f459bc67bb_47395"
-    state_class: measurement
-  sensor.nibe_room_sensor_setpoint_s5:
-    # 48683 (R/W) (s16): Room sensor setpoint S5
-    # Sets the room temperature setpoint for the system
-    unique_id: "f459bc67bb_48683"
-    state_class: measurement
-  sensor.nibe_room_sensor_setpoint_s6:
-    # 48682 (R/W) (s16): Room sensor setpoint S6
-    # Sets the room temperature setpoint for the system
-    unique_id: "f459bc67bb_48682"
-    state_class: measurement
-  sensor.nibe_room_sensor_setpoint_s7:
-    # 48681 (R/W) (s16): Room sensor setpoint S7
-    # Sets the room temperature setpoint for the system
-    unique_id: "f459bc67bb_48681"
-    state_class: measurement
-  sensor.nibe_room_sensor_setpoint_s8:
-    # 48680 (R/W) (s16): Room sensor setpoint S8
-    # Sets the room temperature setpoint for the system
-    unique_id: "f459bc67bb_48680"
-    state_class: measurement
-  sensor.nibe_run_time_hwc:
-    # 47054 (R/W) (s8): Run time HWC
-    # Run time for the hot water circulation system
-    unique_id: "f459bc67bb_47054"
-    state_class: measurement
-  sensor.nibe_software_version:
-    # 43001 (R) (u16): Software version
-    unique_id: "f459bc67bb_43001"
-    # state_class: measurement
-  sensor.nibe_speed_brine_pump_passive_cooling:
-    # 48459 (R/W) (u8): Speed brine pump passive cooling
-    unique_id: "f459bc67bb_48459"
-    state_class: measurement
-  sensor.nibe_speed_circulation_pump_active_cooling_ep14:
-    # 48487 (R/W) (u8): Speed Circulation Pump Active Cooling EP14
-    unique_id: "f459bc67bb_48487"
-    state_class: measurement
-  sensor.nibe_start_active_cooling_dm:
-    # 47343 (R/W) (s16): Start Active Cooling DM
-    # Value the degree minutes have to reach to start active cooling
-    unique_id: "f459bc67bb_47343"
-    state_class: measurement
-  sensor.nibe_start_passive_cooling_dm:
-    # 47342 (R/W) (s16): Start Passive Cooling DM
-    # Value the degree minutes have to reach to start passive cooling
-    unique_id: "f459bc67bb_47342"
-    state_class: measurement
-  sensor.nibe_start_room_temp_night_cooling:
-    # 47538 (R/W) (u8): Start room temp. night cooling
-    unique_id: "f459bc67bb_47538"
-    state_class: measurement
-  sensor.nibe_start_room_temp_night_cooling_2:
-    # 49361 (R/W) (u8): Start room temp. night cooling
-    unique_id: "f459bc67bb_49361"
-    state_class: measurement
-  sensor.nibe_start_temperature_cooling:
-    # 47374 (R/W) (s16): Start Temperature Cooling
-    # Start temperature for cooling, as set in menu 4.9.2 0=Off 1=On
-    unique_id: "f459bc67bb_47374"
-    state_class: measurement
-  sensor.nibe_start_temperature_hw_economy:
-    # 47045 (R/W) (s16): Start temperature HW Economy
-    # Start temperature for heating water
-    unique_id: "f459bc67bb_47045"
-    state_class: measurement
-  sensor.nibe_start_temperature_hw_luxury:
-    # 47043 (R/W) (s16): Start temperature HW Luxury
-    # Start temperature for heating water
-    unique_id: "f459bc67bb_47043"
-    state_class: measurement
-  sensor.nibe_start_temperature_hw_normal:
-    # 47044 (R/W) (s16): Start temperature HW Normal
-    # Start temperature for heating water
-    unique_id: "f459bc67bb_47044"
-    state_class: measurement
-  sensor.nibe_state_ground_water_pump:
-    # 44756 (R) (u8): State ground water pump
-    unique_id: "f459bc67bb_44756"
-    # state_class: measurement
-  sensor.nibe_status_cooling:
-    # 43024 (R) (u8): Status Cooling
-    # 0=Off 1=On
-    unique_id: "f459bc67bb_43024"
-    # state_class: measurement
-  sensor.nibe_status_of_the_shunt_controlled_additional_heat_accessory:
-    # 43097 (R) (u8): Status of the shunt controlled additional heat accessory
-    # 10 = Off, 20 = Running, 30 = Passive
-    unique_id: "f459bc67bb_43097"
-    # state_class: measurement
-  sensor.nibe_still_time_hwc:
-    # 47055 (R/W) (s8): Still time HWC
-    # Still time for the hot water circulation system
-    unique_id: "f459bc67bb_47055"
-    state_class: measurement
-  sensor.nibe_stop_temperature_additive:
-    # 47376 (R/W) (s16): Stop Temperature Additive
-    # Stop temperature for additive, as set in menu 4.9.2
-    unique_id: "f459bc67bb_47376"
-    state_class: measurement
-  sensor.nibe_stop_temperature_heating:
-    # 47375 (R/W) (s16): Stop Temperature Heating
-    # Stop temperature for heating, as set in menu 4.9.2
-    unique_id: "f459bc67bb_47375"
-    state_class: measurement
-  sensor.nibe_stop_temperature_hw_economy:
-    # 47049 (R/W) (s16): Stop temperature HW Economy
-    # Temperature where hot water generation will stop
-    unique_id: "f459bc67bb_47049"
-    state_class: measurement
-  sensor.nibe_stop_temperature_hw_luxury:
-    # 47047 (R/W) (s16): Stop temperature HW Luxury
-    # Temperature where hot water generation will stop
-    unique_id: "f459bc67bb_47047"
-    state_class: measurement
-  sensor.nibe_stop_temperature_hw_normal:
-    # 47048 (R/W) (s16): Stop temperature HW Normal
-    # Temperature where hot water generation will stop
-    unique_id: "f459bc67bb_47048"
-    state_class: measurement
-  sensor.nibe_stop_temperature_periodic_hw:
-    # 47046 (R/W) (s16): Stop temperature Periodic HW
-    # Temperature where hot water generation will stop
-    unique_id: "f459bc67bb_47046"
-    state_class: measurement
-  sensor.nibe_supply_pump_speed_ep14:
-    # 43437 (R) (u8): Supply Pump Speed EP14
-    # Supply pump speed in %
-    unique_id: "f459bc67bb_43437"
-    state_class: measurement
-  sensor.nibe_supply_pump_state_ep14:
-    # 43431 (R) (u8): Supply Pump State EP14
-    # 10=off,15=starting,20=on,40=10-day mode,80=calibration
-    unique_id: "f459bc67bb_43431"
-    # state_class: measurement
-  sensor.nibe_temporary_lux:
-    # 48132 (R/W) (s8): Temporary Lux
-    # 0=Off, 1=3h, 2=6h, 3=12h, 4=One time increase
-    unique_id: "f459bc67bb_48132"
-    # state_class: measurement
-  sensor.nibe_time_betw_switch_heat_cool:
-    # 47335 (R/W) (s8): Time betw. switch heat/cool
-    # Time between switching from heating to cooling or vice versa.
-    unique_id: "f459bc67bb_47335"
-    state_class: measurement
-  sensor.nibe_tot_hw_op_time_add:
-    # 43239 (R) (s32): Tot. HW op.time add.
-    # Total electric additive operation time in hot water mode
-    unique_id: "f459bc67bb_43239"
-    state_class: total_increasing
-  sensor.nibe_tot_hw_op_time_compr_eb100_ep14:
-    # 43424 (R) (s32): Tot. HW op.time compr. EB100-EP14
-    # Total compressorer operation time in hot water mode
-    unique_id: "f459bc67bb_43424"
-    state_class: total_increasing
-  sensor.nibe_tot_op_time_add:
-    # 43081 (R) (s32): Tot. op.time add.
-    # Total electric additive operation time
-    unique_id: "f459bc67bb_43081"
-    state_class: total_increasing
-  sensor.nibe_tot_op_time_compr_eb100_ep14:
-    # 43420 (R) (s32): Tot. op.time compr. EB100-EP14
-    # Total compressorer operation time
-    unique_id: "f459bc67bb_43420"
-    state_class: total_increasing
-  sensor.nibe_use_room_sensor_s1:
-    # 47394 (R/W) (u8): Use room sensor S1
-    # When activated the system uses the room sensor 0=Off 1=On
-    unique_id: "f459bc67bb_47394"
-    # state_class: measurement
-  sensor.nibe_use_room_sensor_s2:
-    # 47393 (R/W) (u8): Use room sensor S2
-    # When activated the system uses the room sensor 0=Off 1=On
-    unique_id: "f459bc67bb_47393"
-    # state_class: measurement
-  sensor.nibe_use_room_sensor_s3:
-    # 47392 (R/W) (u8): Use room sensor S3
-    # When activated the system uses the room sensor 0=Off 1=On
-    unique_id: "f459bc67bb_47392"
-    # state_class: measurement
-  sensor.nibe_use_room_sensor_s4:
-    # 47391 (R/W) (u8): Use room sensor S4
-    # When activated the system uses the room sensor 0=Off 1=On
-    unique_id: "f459bc67bb_47391"
-    # state_class: measurement
-  sensor.nibe_use_room_sensor_s5:
-    # 48678 (R/W) (u8): Use room sensor S5
-    # When activated the system uses the room sensor
-    unique_id: "f459bc67bb_48678"
-    # state_class: measurement
-  sensor.nibe_use_room_sensor_s6:
-    # 48677 (R/W) (u8): Use room sensor S6
-    # When activated the system uses the room sensor
-    unique_id: "f459bc67bb_48677"
-    # state_class: measurement
-  sensor.nibe_use_room_sensor_s7:
-    # 48676 (R/W) (u8): Use room sensor S7
-    # When activated the system uses the room sensor
-    unique_id: "f459bc67bb_48676"
-    # state_class: measurement
-  sensor.nibe_use_room_sensor_s8:
-    # 48675 (R/W) (u8): Use room sensor S8
-    # When activated the system uses the room sensor
-    unique_id: "f459bc67bb_48675"
-    # state_class: measurement
-  sensor.nibe_used_heating_power_average_24h:
-    # 42101 (R) (s16): Used heating power average, 24h
-    # Used heating power average, 24h
-    unique_id: "f459bc67bb_42101"
-    state_class: measurement
-
-  # Provide missing state_class for Growatt sensors
-  sensor.solar_inverter_inputpower:
-    state_class: measurement
-  sensor.solar_inverter_pv1voltage:
-    state_class: measurement
-  sensor.solar_inverter_pv1inputcurrent:
-    state_class: measurement
-  sensor.solar_inverter_pv1inputpower:
-    state_class: measurement
-  sensor.solar_inverter_pv2voltage:
-    state_class: measurement
-  sensor.solar_inverter_pv2inputcurrent:
-    state_class: measurement
-  sensor.solar_inverter_pv2inputpower:
-    state_class: measurement
-  sensor.solar_inverter_outputpower:
-    state_class: measurement
-  sensor.solar_inverter_gridfrequency:
-    state_class: measurement
-  sensor.solar_inverter_l1threephasegridvoltage:
-    state_class: measurement
-  sensor.solar_inverter_l1threephasegridoutputcurrent:
-    state_class: measurement
-  sensor.solar_inverter_l1threephasegridoutputpower:
-    state_class: measurement
-  sensor.solar_inverter_l2threephasegridvoltage:
-    state_class: measurement
-  sensor.solar_inverter_l2threephasegridoutputcurrent:
-    state_class: measurement
-  sensor.solar_inverter_l2threephasegridoutputpower:
-    state_class: measurement
-  sensor.solar_inverter_l3threephasegridvoltage:
-    state_class: measurement
-  sensor.solar_inverter_l3threephasegridoutputcurrent:
-    state_class: measurement
-  sensor.solar_inverter_l3threephasegridoutputpower:
-    state_class: measurement
-  sensor.solar_inverter_invertertemperature:
-    state_class: measurement
-  sensor.solar_inverter_temperatureinsideipm:
-    state_class: measurement
-  sensor.solar_inverter_boosttemperature:
-    state_class: measurement
-  sensor.solar_inverter_dischargepower:
-    state_class: measurement
-  sensor.solar_inverter_chargepower:
-    state_class: measurement
-  sensor.solar_inverter_batteryvoltage:
-    state_class: measurement
-  sensor.solar_inverter_soc:
-    state_class: measurement
-  sensor.solar_inverter_acpowertouser:
-    state_class: measurement
-  sensor.solar_inverter_acpowertogrid:
-    state_class: measurement
-  sensor.solar_inverter_invpowertolocalload:
-    state_class: measurement
-  sensor.solar_inverter_batterytemperature:
-    state_class: measurement
-
-  # Fix incorrent details on some Growatt entities
-  sensor.solar_inverter_tworktimetotal:
-    device_class: duration
-  sensor.solar_inverter_acpowertousertotal:
-    unit_of_measurement: "kWh"
-  sensor.solar_inverter_acpowertogridtotal:
-    unit_of_measurement: "kWh"
-  sensor.solar_inverter_invpowertolocalloadtotal:
-    unit_of_measurement: "kWh"
-
-  # Add configuration_url for NRG-ITHO-B298
-  # fan.nrg_itho_b298_fan:
-  #   device:
-  #     configuration_url: http://192.168.1.63
+# Fix incorrent details on some Growatt entities
+sensor.solar_inverter_tworktimetotal:
+  device_class: duration
+sensor.solar_inverter_acpowertousertotal:
+  unit_of_measurement: "kWh"
+sensor.solar_inverter_acpowertogridtotal:
+  unit_of_measurement: "kWh"
+sensor.solar_inverter_invpowertolocalloadtotal:
+  unit_of_measurement: "kWh"
+# Add configuration_url for NRG-ITHO-B298
+# fan.nrg_itho_b298_fan:
+#   device:
+#     configuration_url: http://192.168.1.63
