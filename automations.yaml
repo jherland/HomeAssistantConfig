@@ -1207,252 +1207,6 @@
         message: Ventilation unit error!
       action: notify.mobile_app_sm_s901b
   mode: single
-- id: "1768163821773"
-  alias: Robb smarrt 8-button switch
-  description: ""
-  use_blueprint:
-    path: Bekkie/robb-smarrt-8-switch-ROB_200-007-0.yaml
-    input:
-      remote: 6f789cc07e6a01b3d6ff901ed1b1c23c
-      on_button_1_short:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            transition: 1
-          target:
-            entity_id: light.lounge_spot_1_light
-        - choose:
-            - conditions:
-                - condition: device
-                  type: is_off
-                  device_id: e40d3eab4778acf65130fb07fbdd0ce9
-                  entity_id: 1d31cb69aede9f6696a9b254dc56ba62
-                  domain: light
-              sequence:
-                - action: light.turn_on
-                  metadata: {}
-                  data:
-                    transition: 1
-                  target:
-                    entity_id: light.lounge_spot_1_light
-          default:
-            - action: light.turn_on
-              metadata: {}
-              data:
-                brightness_step_pct: 10
-              target:
-                entity_id: light.lounge_spot_1_light
-      off_button_1_short:
-        - action: light.turn_off
-          metadata: {}
-          data:
-            transition: 1
-          target:
-            entity_id: light.lounge_spot_1_light
-      on_button_1_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: 25
-          target:
-            entity_id: light.lounge_spot_1_light
-      off_button_1_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: -25
-          target:
-            entity_id: light.lounge_spot_1_light
-      on_button_2_short:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            transition: 1
-          target:
-            entity_id: light.lounge_spot_2_light
-      on_button_3_short:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            transition: 1
-          target:
-            entity_id: light.lounge_spot_3_light
-      on_button_4_short:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            transition: 1
-          target:
-            entity_id: light.lounge_spot_4_light
-      off_button_2_short:
-        - action: light.turn_off
-          metadata: {}
-          data:
-            transition: 1
-          target:
-            entity_id: light.lounge_spot_2_light
-      off_button_3_short:
-        - action: light.turn_off
-          metadata: {}
-          data:
-            transition: 1
-          target:
-            entity_id: light.lounge_spot_3_light
-      off_button_4_short:
-        - action: light.turn_off
-          metadata: {}
-          data:
-            transition: 1
-          target:
-            entity_id: light.lounge_spot_4_light
-      on_button_2_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: 25
-          target:
-            entity_id: light.lounge_spot_2_light
-      on_button_3_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: 25
-          target:
-            entity_id: light.lounge_spot_3_light
-      on_button_4_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: 25
-          target:
-            entity_id: light.lounge_spot_4_light
-      off_button_2_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: -25
-          target:
-            entity_id: light.lounge_spot_2_light
-      off_button_3_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: -25
-          target:
-            entity_id: light.lounge_spot_3_light
-      off_button_4_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: -25
-          target:
-            entity_id: light.lounge_spot_4_light
-- id: "1768168113790"
-  alias: Living Room North Dimmer Button
-  description: ""
-  use_blueprint:
-    path: homeassistant/robb-smarrt-rotary-button.yaml
-    input:
-      remote: 22e7b0e75bd7cfe4ed26b12bcc394f66
-      light: bb786a051e5065260a041e15285f834c
-      input_button: 22e7b0e75bd7cfe4ed26b12bcc394f66
-      target_light:
-        entity_id: light.lounge_lights
-- id: "1768868216213"
-  alias: Kitchen North Left Switch
-  description:
-    Program the battery-powered switch on the protruding wall between the
-    kitchen sink and the bookcase. Right switch controls Kitchen Bench Lights. Left
-    switch controls bookcase lights
-  use_blueprint:
-    path: homeassistant/robb-smarrt-2-switch-ROB_200-081-0.yaml
-    input:
-      remote: a116f61b527fa742bfb1de47567ef615
-      on_button_1_short:
-        - choose:
-            - conditions:
-                - condition: state
-                  entity_id: light.kitchen_bench_lights
-                  state:
-                    - "on"
-              sequence:
-                - action: light.turn_on
-                  metadata: {}
-                  target:
-                    entity_id: light.kitchen_bench_lights
-                  data:
-                    brightness_step_pct: 10
-          default:
-            - action: light.turn_on
-              metadata: {}
-              target:
-                entity_id: light.kitchen_bench_lights
-              data: {}
-      off_button_1_short:
-        - action: light.turn_off
-          metadata: {}
-          target:
-            entity_id: light.kitchen_bench_lights
-          data: {}
-      off_button_2_short:
-        - action: light.turn_off
-          metadata: {}
-          data:
-            transition: 0.2
-          target:
-            entity_id: light.bookcase
-      on_button_2_short:
-        - choose:
-            - conditions:
-                - condition: state
-                  entity_id: light.bookcase
-                  state:
-                    - "on"
-              sequence:
-                - action: light.turn_on
-                  metadata: {}
-                  data:
-                    brightness_step_pct: 10
-                    transition: 0.1
-                  target:
-                    entity_id: light.bookcase
-          default:
-            - action: light.turn_on
-              metadata: {}
-              data:
-                transition: 0.2
-              target:
-                entity_id: light.bookcase
-      on_button_1_long:
-        - action: light.turn_on
-          metadata: {}
-          target:
-            entity_id: light.kitchen_bench_lights
-          data:
-            brightness_step_pct: 10
-      off_button_1_long:
-        - action: light.turn_on
-          metadata: {}
-          target:
-            entity_id: light.kitchen_bench_lights
-          data:
-            brightness_step_pct: -10
-      on_button_2_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: 10
-            transition: 0.1
-          target:
-            entity_id: light.bookcase
-      off_button_2_long:
-        - action: light.turn_on
-          metadata: {}
-          data:
-            brightness_step_pct: -10
-            transition: 0.1
-          target:
-            entity_id: light.bookcase
 - id: "1769194346264"
   alias:
     Kitchen Island Lights controlled by Kitchen Island Light Switch on south
@@ -1469,6 +1223,108 @@
     - action: light.toggle
       metadata: {}
       target:
-        entity_id: light.kitchen_island_lights
+        entity_id:
+          - light.kitchen_island_lights_2
       data: {}
   mode: single
+- id: "1769358177280"
+  alias: Living Room Cube 2 (Z2M)
+  description: ""
+  use_blueprint:
+    path: hugalafutro/Z2M_Aqara_Magic_Cube.yaml
+    input:
+      action_rotate_left:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.lounge_lights_2
+          data:
+            brightness_step_pct: -10
+      action_rotate_right:
+        - action: light.turn_on
+          metadata: {}
+          target:
+            entity_id:
+              - light.lounge_lights_2
+          data:
+            brightness_step_pct: 10
+      action_tap:
+        - action: light.toggle
+          metadata: {}
+          target:
+            entity_id:
+              - light.lounge_lights_2
+          data: {}
+      action_flip:
+        - delay:
+            hours: 0
+            minutes: 0
+            seconds: 0
+            milliseconds: 1
+      action_slide:
+        - delay:
+            hours: 0
+            minutes: 0
+            seconds: 0
+            milliseconds: 1
+      action_shake:
+        - delay:
+            hours: 0
+            minutes: 0
+            seconds: 0
+            milliseconds: 1
+      cube_action: zigbee2mqtt/Living Room Cube/action
+- id: "1769705522619"
+  alias: Dining Area Auto Lights
+  description: ""
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.dining_area_occupancy
+      light_target:
+        area_id: dining_area
+      no_motion_wait: 60
+- id: "1769713154225"
+  alias: Lounge Auto Lights
+  description: ""
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.lounge_occupancy
+      light_target:
+        entity_id:
+          - light.lounge_lights_2
+      no_motion_wait: 60
+- id: "1769713329103"
+  alias: Kitchen North Side Auto Lights
+  description: ""
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.kitchen_north_occupancy
+      light_target:
+        device_id: 7dee516b5305604ebf81fffab3c9c26b
+      no_motion_wait: 60
+- id: "1769713402639"
+  alias: Kitchen South Side Auto Lights
+  description: ""
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.kitchen_south_occupancy
+      light_target:
+        entity_id:
+          - light.kitchen_cupboards
+      no_motion_wait: 60
+- id: "1769896050147"
+  alias: Kitchen Island Auto Lights
+  description: ""
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.kitchen_occupancy
+      light_target:
+        entity_id:
+          - light.kitchen_island_lights_2
+      no_motion_wait: 60
