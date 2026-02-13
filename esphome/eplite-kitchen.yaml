@@ -1,6 +1,6 @@
 substitutions:
   name: "eplite-kitchen"
-  friendly_name: Everything Presence Lite Kitchen w/CO2
+  friendly_name: Everything Presence Lite Kitchen
 packages:
   EverythingSmartTechnology.Everything_Presence_Lite: github://everythingsmarthome/everything-presence-lite/everything-presence-lite-ha-co2.yaml@main
 esphome:
